@@ -14,10 +14,11 @@ export default NoCases
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        justifyContent:'center'
+        justifyContent:'center',
+        paddingBottom:100,
     },
     textCase:{
-        fontSize: 10,
+        fontSize: 15,
         textAlign:"center",
         backgroundColor: "#f0f0f0",
         color: "#000000",
