@@ -9,6 +9,8 @@ import {
   AppRegistry,
   TouchableOpacity,
   View,
+  ScrollView,
+  SafeAreaView,
 } from "react-native";
 import {
   BottomSheetModal,
@@ -19,7 +21,8 @@ import ButtonAddCase from "../components/ButtonAddCase";
 import ModalAddCase from "../components/ModalAddCase";
 import NoCases from "../components/NoCases";
 import CardCases from "../components/CardCases";
-import { ScrollView } from "react-native-gesture-handler";
+import "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 function HomeScreen() {
   const bottomSheetModalRef = React.useRef(null);
@@ -29,21 +32,31 @@ function HomeScreen() {
     bottomSheetModalRef.current?.present();
   };
 
-
-
   return (
-    <BottomSheetModalProvider>
-      <View style={{ flex: 1, backgroundColor: "#f0f0f0" }}>
-        <Text style={styles.textMyCases}>My Cases</Text>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <BottomSheetModalProvider>
         <StatusBar style="auto" />
-        <ButtonAddCase style={styles.addCaseButton} onPress={handlerModal} />
-        <ModalAddCase bottomSheetModalRef={bottomSheetModalRef} snapPoints={snapPoints} />
-        <CardCases/>
-        <CardCases/>
-        <CardCases/>
+        <Text style={styles.textMyCases}>My Cases</Text>
+        {/* <ScrollView style={styles.containerScroll}>
+        <CardCases />
+        <CardCases />
+        <CardCases />
+        <CardCases />
+        <CardCases />
+        <CardCases />
+        <CardCases />
 
-      </View>
-    </BottomSheetModalProvider>
+      </ScrollView> */}
+        <NoCases />
+        <View style={styles.containerAddCaseButton}>
+          <ButtonAddCase style={styles.addCaseButton} onPress={handlerModal} />
+          <ModalAddCase
+            bottomSheetModalRef={bottomSheetModalRef}
+            snapPoints={snapPoints}
+          />
+        </View>
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   );
 }
 
@@ -51,16 +64,13 @@ AppRegistry.registerComponent("HomeScreen", () => HomeScreen);
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+  containerScroll: {
+    flex: 1,
+  },
   container: {
     flex: 1,
-    padding: 24,
     backgroundColor: "#000511",
   },
-  contentContainer: {
-    flex: 1,
-    alignItems: "center",
-  },
- 
   textMyCases: {
     fontSize: 28,
     textAlign: "left",
@@ -71,11 +81,13 @@ const styles = StyleSheet.create({
     fontFamily: "sans-serif-condensed",
   },
   addCaseButton: {
-    width: 45,
     borderRadius: 25,
-    position: "absolute",
-    right: "5%",
-    bottom: "3%",
+    marginRight: 10,
+   
   },
- 
+  containerAddCaseButton: {
+    // backgroundColor: "red",
+    height: "8%",
+    alignItems: "flex-end",
+  },
 });

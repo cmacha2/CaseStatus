@@ -18,17 +18,8 @@ const ModalAddCase = ({bottomSheetModalRef,snapPoints}) => {
     >
       <View style={styles.containerAddCase}>
         <BottomSheetTextInput style={styles.input} />
-        <ButtonAddCase />
+        <ButtonAddCase style={styles.addCaseButton}/>
       </View>
-      {/* <TouchableOpacity
-      style={{
-        width: 25,
-        borderRadius: 25,
-      }}
-      onPress={() => bottomSheetModalRef.current?.close()}
-    >
-      <AntDesign name="close" size={25} color="black" />
-    </TouchableOpacity> */}
     </BottomSheetModal>
   );
 };
@@ -50,4 +41,7 @@ const styles = StyleSheet.create({
         lineHeight: 20,
         backgroundColor: "rgba(151, 151, 151, 0.25)",
       },
+      addCaseButton:{
+        // backgroundColor:'red'
+      }
 });
