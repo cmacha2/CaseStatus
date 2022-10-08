@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { Icon } from "@rneui/themed";
 import SVGImg from "../assets/received.svg";
 import Loader from "./Icons";
@@ -12,7 +12,8 @@ const data = {
   typeForm: "I-765",
 };
 
-const CardCases = () => {
+const CardCases = ({data}) => {
+
   return (
 
       <View style={styles.containerCards}>

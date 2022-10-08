@@ -27,32 +27,28 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 function HomeScreen() {
   const bottomSheetModalRef = React.useRef(null);
   const snapPoints = React.useMemo(() => ["18%"], []);
-
+  const [data,setData]=React.useState([])
   const handlerModal = () => {
     bottomSheetModalRef.current?.present();
   };
+  console.log(data)
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
         <StatusBar style="auto" />
         <Text style={styles.textMyCases}>My Cases</Text>
-        {/* <ScrollView style={styles.containerScroll}>
-        <CardCases />
-        <CardCases />
-        <CardCases />
-        <CardCases />
-        <CardCases />
-        <CardCases />
-        <CardCases />
+        {data.length ?  <ScrollView style={styles.containerScroll}>
+        {data?.map(dataCase=><CardCases data={dataCase}/>)}
 
-      </ScrollView> */}
-        <NoCases />
+      </ScrollView> :
+        <NoCases />}
         <View style={styles.containerAddCaseButton}>
-          <ButtonAddCase style={styles.addCaseButton} onPress={handlerModal} />
+          <ButtonAddCase style={styles.addCaseButton} onPress={handlerModal}/>
           <ModalAddCase
             bottomSheetModalRef={bottomSheetModalRef}
             snapPoints={snapPoints}
+            setData={setData} 
           />
         </View>
       </BottomSheetModalProvider>
