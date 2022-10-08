@@ -19,6 +19,7 @@ import ButtonAddCase from "../components/ButtonAddCase";
 import ModalAddCase from "../components/ModalAddCase";
 import NoCases from "../components/NoCases";
 import CardCases from "../components/CardCases";
+import { ScrollView } from "react-native-gesture-handler";
 
 function HomeScreen() {
   const bottomSheetModalRef = React.useRef(null);
@@ -38,6 +39,9 @@ function HomeScreen() {
         <ButtonAddCase style={styles.addCaseButton} onPress={handlerModal} />
         <ModalAddCase bottomSheetModalRef={bottomSheetModalRef} snapPoints={snapPoints} />
         <CardCases/>
+        <CardCases/>
+        <CardCases/>
+
       </View>
     </BottomSheetModalProvider>
   );
