@@ -39,7 +39,7 @@ function HomeScreen() {
         <StatusBar style="auto" />
         <Text style={styles.textMyCases}>My Cases</Text>
         {data.length ?  <ScrollView style={styles.containerScroll}>
-        {data?.map(dataCase=><CardCases data={dataCase}/>)}
+        {data?.map((dataCase,i)=><CardCases data={dataCase} key={i}/>)}
 
       </ScrollView> :
         <NoCases />}

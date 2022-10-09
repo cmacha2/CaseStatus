@@ -16,6 +16,7 @@
     "@react-navigation/native-stack": "^6.9.0",
     "@rneui/base": "^0.0.0-edge.2",
     "@rneui/themed": "^0.0.0-edge.2",
+    "aws-amplify": "^4.3.37",
     "expo": "~46.0.9",
     "expo-status-bar": "~1.4.0",
     "react": "18.0.0",
