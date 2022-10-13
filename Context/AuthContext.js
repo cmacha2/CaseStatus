@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Auth,API,graphqlOperation } from "aws-amplify";
+import { Auth, API, graphqlOperation } from "aws-amplify";
 import {createUser} from "../graphql/mutations"
 import {useDispatch} from 'react-redux'
 import { setUser } from "../src/features/user";
@@ -102,7 +102,6 @@ function AuthProvider({ children }) {
         username: email,
         password,
       });
-      console.log(user)
       await saveUserToDatabase(user);
       alert("Welcome, account created succesfully");
       setIsLoading(false);
@@ -161,7 +160,6 @@ function AuthProvider({ children }) {
 
   async function saveUserToDatabase(user) {
     const { attributes } = user;
-    console.log(attributes)
     const userToSave = {
       id: attributes.sub,
       firstName: attributes.given_name,
@@ -177,7 +175,6 @@ function AuthProvider({ children }) {
           input: userToSave,
         })
       );
-      console.log(userFromDB)
       dispatch(setUser(userToSave));
       console.log("user saved to DB and Redux", userFromDB);
     } catch (e) {

@@ -28,14 +28,15 @@ export default function Root({ colorScheme }) {
 
 function BottomNavigator() {
   return (
-    <Tab.Navigator initialRouteName="HomeStack" screenOptions={{headerShown:false}}>
+    <Tab.Navigator initialRouteName="HomeStack">
       <Tab.Screen
         name="HomeStack"
         component={HomeStack}
         
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-home" color={color} />,
-          tabBarLabel:'Home'
+          tabBarLabel:'Home',
+          headerShown:false
         }}
       />
       <Tab.Screen
@@ -44,7 +45,8 @@ function BottomNavigator() {
         
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="md-chatbubbles" color={color} />,
-          tabBarLabel:'Chats'
+          tabBarLabel:'Chats',
+          headerShown:false
         }}
       />
       <Tab.Screen

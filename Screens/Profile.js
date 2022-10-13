@@ -3,21 +3,14 @@ import MyText from "../components/MyText";
 import MyButton from "../components/MyButton";
 import { Auth } from "aws-amplify";
 import { View } from "../components/theme/Themed";
+import { useSelector } from "react-redux";
+import { StatusBar, useColorScheme } from "react-native";
+import ProfilePicture from "../components/ProfilePicture";
 
 
 export default function Profile() {
-  const [user, setUser] = React.useState(null);
-
-  React.useEffect(() => {
-    (async () => {
-      try {
-        const { attributes } = await Auth.currentAuthenticatedUser();
-        setUser(attributes);
-      } catch (e) {
-        console.log(e);
-      }
-    })();
-  }, []);
+  const user = useSelector((state)=>state.user)
+  const theme = useColorScheme()
 
   async function handleSignOut() {
     try {
@@ -30,10 +23,10 @@ export default function Profile() {
 
   return (
     <View style={{ flex: 1 }}>
-      <MyText type="title">Welcome back! 🚀</MyText>
-      <MyText>{user?.sub}</MyText>
-      <MyText>{user?.email}</MyText>
-      <MyButton title={"Sign Out"} onPress={handleSignOut} />
+      <ProfilePicture/>
+      <StatusBar
+        barStyle={theme === "dark" ? "light-content" : "dark-content"}
+      />
     </View>
   );
 }

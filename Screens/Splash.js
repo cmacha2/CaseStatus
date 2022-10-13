@@ -15,7 +15,6 @@ export default function Splash({ setIsLoading }) {
         const { data } = await API.graphql(
           graphqlOperation(getUser, { id: attributes.sub })
         );
-        console.log(data);
         dispatch(
           setUser({
             id: attributes.sub,
