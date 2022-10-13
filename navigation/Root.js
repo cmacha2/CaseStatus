@@ -66,9 +66,11 @@ function TabBarIcon(props) {
 
 function HomeStack(){
   return (
-    <Stack.Navigator initialRouteName="Home" screenOptions={{headerShon:false}}>
-      <Stack.Screen name="Home" component={Home}/> 
-      <Stack.Screen name="Onbording" component={Onbording}/>
+    <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown:false}}>
+      <Stack.Screen name="Home" component={Home} /> 
+      <Stack.Screen name="Onbording" component={Onbording} options={{
+        presentation:'fullScreenModal'
+      }}/>
     </Stack.Navigator>
   )
 }

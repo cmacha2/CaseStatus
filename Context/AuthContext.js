@@ -1,5 +1,8 @@
 import * as React from "react";
-import { Auth } from "aws-amplify";
+import { Auth,API,graphqlOperation } from "aws-amplify";
+import {createUser} from "../graphql/mutations"
+import {useDispatch} from 'react-redux'
+import { setUser } from "../src/features/user";
 
 const AuthContext = React.createContext({
   authState: "default",
@@ -8,18 +11,21 @@ const AuthContext = React.createContext({
   setEmail: () => {},
   password: "",
   setPassword: () => {},
-  setVerificationCode: () => {},
   verificationCode: "",
+  setVerificationCode: () => {},
   isLoading: false,
-  firtsName:'',
-  setFirstName:()=>{},
-  lastName:'',
-  setLastName:()=>{},
-  confirmPassword:'',
-  setconfirmPassword:()=>{},
+  firstName: "",
+  setLastName: () => {},
+  lastName: "",
+  confirmPassword: "",
+  setConfirmPassword: () => {},
+  setFirstName: () => {},
   handleSignIn: () => {},
   handleSignUp: () => {},
   handleConfirmSignUp: () => {},
+  handleForgotPassword: () => {},
+  handleResetPassword: () => {},
+  handleResendVerificationCode: () => {},
 });
 
 const { Provider } = AuthContext;
@@ -30,13 +36,14 @@ function AuthProvider({ children }) {
   const [password, setPassword] = React.useState("");
   const [verificationCode, setVerificationCode] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
-  const [firstName,setFirstName] = React.useState('')
-  const [lastName,setLastName] = React.useState('')
-  const [confirmPassword,setConfirmPassword] = React.useState('')
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
+  const dispatch = useDispatch();
 
   async function handleSignIn() {
     if (!email || !password) {
-      alert("Please enter an email and password");
+      alert("please enter an email and password");
       return;
     }
     try {
@@ -45,13 +52,13 @@ function AuthProvider({ children }) {
         username: email,
         password,
       });
-      setIsLoading(false)
-      console.log("user", user);
-      setAuthState("signedIn");
-    } catch (error) {
-      alert(error.message);
       setIsLoading(false);
-      console.log(error);
+      console.log("user signed In");
+      setAuthState("signedIn");
+    } catch (e) {
+      alert(e.message);
+      setIsLoading(false);
+      console.log(e);
     }
   }
 
@@ -60,18 +67,19 @@ function AuthProvider({ children }) {
       alert("Please enter an email and password");
       return;
     }
-    if(password!==confirmPassword){
-      return alert('Passwords do not match')
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
     }
     try {
       setIsLoading(true);
       await Auth.signUp({
         username: email,
         password,
-        attributes:{
-          given_name:firstName,
-          family_name:lastName
-        }
+        attributes: {
+          given_name: firstName,
+          family_name: lastName,
+        },
       });
       setAuthState("confirmSignUp");
       setIsLoading(false);
@@ -90,8 +98,13 @@ function AuthProvider({ children }) {
     try {
       setIsLoading(true);
       await Auth.confirmSignUp(email, verificationCode);
-      alert("Confirmed", "You can now sign in.");
-      setAuthState("signIn");
+      const user = await Auth.signIn({
+        username: email,
+        password,
+      });
+      console.log(user)
+      await saveUserToDatabase(user);
+      alert("Welcome, account created succesfully");
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -110,44 +123,67 @@ function AuthProvider({ children }) {
       await Auth.forgotPassword(email);
       setAuthState("confirmForgotPassword");
       setIsLoading(false);
-    } catch (error) {
+    } catch (e) {
+      alert(e.message);
       setIsLoading(false);
-      alert(error.message);
-      console.log(error);
     }
   }
 
   async function handleResetPassword() {
     if (!verificationCode || verificationCode.length !== 6) {
-      alert("Please enter a verification code");
+      alert("Please enter a valid verification code");
       return;
     }
-    if(password!==confirmPassword){
-      return alert('Passwords do not match')
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
     }
     try {
       setIsLoading(true);
-      await Auth.forgotPasswordSubmit(email,verificationCode,password);
-      alert("Password reset successfully, Now you can Sign In")
+      await Auth.forgotPasswordSubmit(email, verificationCode, password);
+      alert("Password reset successfully, Now you can Sign In");
       setAuthState("signIn");
       setIsLoading(false);
-    } catch (error) {
+    } catch (e) {
+      alert(e.message);
       setIsLoading(false);
-      alert(error.message);
-      console.log(error);
     }
   }
 
   async function handleResendVerificationCode() {
     try {
       await Auth.resendSignUp(email);
-      alert(`Successfully resent confirmation code to ${email}`)
-    } catch (error) {
-      alert(error.message);
-      console.log(error);
+      alert(`Successfully resent confirmation code to ${email}`);
+    } catch (e) {
+      alert(e);
     }
   }
 
+  async function saveUserToDatabase(user) {
+    const { attributes } = user;
+    console.log(attributes)
+    const userToSave = {
+      id: attributes.sub,
+      firstName: attributes.given_name,
+      lastName: attributes.family_name,
+      profilePicture: null,
+      email: attributes.email.toLowerCase(),
+      status: null,
+      notificationToken: null,
+    };
+    try {
+      const userFromDB = await API.graphql(
+        graphqlOperation(createUser, {
+          input: userToSave,
+        })
+      );
+      console.log(userFromDB)
+      dispatch(setUser(userToSave));
+      console.log("user saved to DB and Redux", userFromDB);
+    } catch (e) {
+      console.log("error saving user", e);
+    }
+  }
   return (
     <Provider
       value={{
@@ -169,8 +205,8 @@ function AuthProvider({ children }) {
         setLastName,
         confirmPassword,
         setConfirmPassword,
-        handleResendVerificationCode,
         handleForgotPassword,
+        handleResendVerificationCode,
         handleResetPassword,
       }}
     >

@@ -4,23 +4,41 @@ import awsconfig from "./src/aws-exports";
 import AuthScreen from "./Screens/Auth";
 import Root from "./navigation/Root";
 import Splash from "./Screens/Splash";
+import { store } from "./src/app/store";
+import {Provider,useSelector,useDispatch} from "react-redux"
+import { setUser, resetUser } from "./src/features/user"
 
 Amplify.configure(awsconfig);
 
-export default function App() {
-  const [user, setUser] = React.useState(null);
+export default function Wrapper(){
+  return (
+    <Provider store={store}>
+      <App/>
+    </Provider>
+  )
+}
+
+function App() {
+  const user = useSelector((state)=>state.user)
   const [isLoading, setIsLoading] = React.useState(true);
+  const dispatch = useDispatch()
 
   const listener = (data) => {
     switch (data.payload.event) {
       case "signIn":
-        const { attributes } = data.payload.data;
-        console.log("hello world", attributes);
-        setUser(attributes);
+        dispatch(setUser({
+          id:data.payload.data.attributes.sub,
+          firstName: data.payload.data.attributes.given_name,
+          lastName: data.payload.data.attributes.family_name,
+          profilePicture:null,
+          email: data.payload.data.attributes.email,
+          status:null,
+          notificationToken:null
+        }))
         console.log("user signed in");
         break;
       case "signOut":
-        setUser(null);
+          dispatch(resetUser())
         console.log("user signed out");
         break;
       default:
@@ -31,6 +49,6 @@ export default function App() {
   Hub.listen("auth", listener);
 
   if (isLoading)
-    return <Splash setUser={setUser} setIsLoading={setIsLoading} />;
-  return user ? <Root user={user} /> : <AuthScreen />;
+    return <Splash setIsLoading={setIsLoading} />;
+  return user.email ? <Root user={user} /> : <AuthScreen />;
 }
