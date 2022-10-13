@@ -14,6 +14,8 @@ export const createUser = /* GraphQL */ `
       email
       status
       notificationToken
+      latitude
+      longitude
       chatRooms {
         items {
           id
@@ -42,6 +44,8 @@ export const updateUser = /* GraphQL */ `
       email
       status
       notificationToken
+      latitude
+      longitude
       chatRooms {
         items {
           id
@@ -70,6 +74,8 @@ export const deleteUser = /* GraphQL */ `
       email
       status
       notificationToken
+      latitude
+      longitude
       chatRooms {
         items {
           id
@@ -116,6 +122,8 @@ export const createChatRoom = /* GraphQL */ `
           email
           status
           notificationToken
+          latitude
+          longitude
           createdAt
           updatedAt
         }
@@ -172,6 +180,8 @@ export const updateChatRoom = /* GraphQL */ `
           email
           status
           notificationToken
+          latitude
+          longitude
           createdAt
           updatedAt
         }
@@ -228,6 +238,8 @@ export const deleteChatRoom = /* GraphQL */ `
           email
           status
           notificationToken
+          latitude
+          longitude
           createdAt
           updatedAt
         }
@@ -269,6 +281,8 @@ export const createPost = /* GraphQL */ `
         email
         status
         notificationToken
+        latitude
+        longitude
         chatRooms {
           nextToken
         }
@@ -300,6 +314,8 @@ export const updatePost = /* GraphQL */ `
         email
         status
         notificationToken
+        latitude
+        longitude
         chatRooms {
           nextToken
         }
@@ -331,6 +347,8 @@ export const deletePost = /* GraphQL */ `
         email
         status
         notificationToken
+        latitude
+        longitude
         chatRooms {
           nextToken
         }
@@ -343,6 +361,105 @@ export const deletePost = /* GraphQL */ `
       createdAt
       updatedAt
       postAuthorId
+    }
+  }
+`;
+export const createCase = /* GraphQL */ `
+  mutation CreateCase(
+    $input: CreateCaseInput!
+    $condition: ModelCaseConditionInput
+  ) {
+    createCase(input: $input, condition: $condition) {
+      id
+      author {
+        id
+        firstName
+        lastName
+        profilePicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      receiptNumber
+      receiptDate
+      titleCase
+      typeForm
+      createdAt
+      updatedAt
+      caseAuthorId
+    }
+  }
+`;
+export const updateCase = /* GraphQL */ `
+  mutation UpdateCase(
+    $input: UpdateCaseInput!
+    $condition: ModelCaseConditionInput
+  ) {
+    updateCase(input: $input, condition: $condition) {
+      id
+      author {
+        id
+        firstName
+        lastName
+        profilePicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      receiptNumber
+      receiptDate
+      titleCase
+      typeForm
+      createdAt
+      updatedAt
+      caseAuthorId
+    }
+  }
+`;
+export const deleteCase = /* GraphQL */ `
+  mutation DeleteCase(
+    $input: DeleteCaseInput!
+    $condition: ModelCaseConditionInput
+  ) {
+    deleteCase(input: $input, condition: $condition) {
+      id
+      author {
+        id
+        firstName
+        lastName
+        profilePicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      receiptNumber
+      receiptDate
+      titleCase
+      typeForm
+      createdAt
+      updatedAt
+      caseAuthorId
     }
   }
 `;
@@ -362,6 +479,8 @@ export const createMessage = /* GraphQL */ `
         email
         status
         notificationToken
+        latitude
+        longitude
         chatRooms {
           nextToken
         }
@@ -392,6 +511,8 @@ export const updateMessage = /* GraphQL */ `
         email
         status
         notificationToken
+        latitude
+        longitude
         chatRooms {
           nextToken
         }
@@ -422,6 +543,8 @@ export const deleteMessage = /* GraphQL */ `
         email
         status
         notificationToken
+        latitude
+        longitude
         chatRooms {
           nextToken
         }
@@ -453,6 +576,8 @@ export const createUserChatRooms = /* GraphQL */ `
         email
         status
         notificationToken
+        latitude
+        longitude
         chatRooms {
           nextToken
         }
@@ -503,6 +628,8 @@ export const updateUserChatRooms = /* GraphQL */ `
         email
         status
         notificationToken
+        latitude
+        longitude
         chatRooms {
           nextToken
         }
@@ -553,6 +680,8 @@ export const deleteUserChatRooms = /* GraphQL */ `
         email
         status
         notificationToken
+        latitude
+        longitude
         chatRooms {
           nextToken
         }

@@ -11,6 +11,8 @@ export const getUser = /* GraphQL */ `
       email
       status
       notificationToken
+      latitude
+      longitude
       chatRooms {
         items {
           id
@@ -41,6 +43,8 @@ export const listUsers = /* GraphQL */ `
         email
         status
         notificationToken
+        latitude
+        longitude
         chatRooms {
           nextToken
         }
@@ -79,6 +83,8 @@ export const getChatRoom = /* GraphQL */ `
           email
           status
           notificationToken
+          latitude
+          longitude
           createdAt
           updatedAt
         }
@@ -150,6 +156,8 @@ export const getPost = /* GraphQL */ `
         email
         status
         notificationToken
+        latitude
+        longitude
         chatRooms {
           nextToken
         }
@@ -183,6 +191,8 @@ export const listPosts = /* GraphQL */ `
           email
           status
           notificationToken
+          latitude
+          longitude
           createdAt
           updatedAt
         }
@@ -192,6 +202,70 @@ export const listPosts = /* GraphQL */ `
         createdAt
         updatedAt
         postAuthorId
+      }
+      nextToken
+    }
+  }
+`;
+export const getCase = /* GraphQL */ `
+  query GetCase($id: ID!) {
+    getCase(id: $id) {
+      id
+      author {
+        id
+        firstName
+        lastName
+        profilePicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      receiptNumber
+      receiptDate
+      titleCase
+      typeForm
+      createdAt
+      updatedAt
+      caseAuthorId
+    }
+  }
+`;
+export const listCases = /* GraphQL */ `
+  query ListCases(
+    $filter: ModelCaseFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCases(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        author {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        receiptNumber
+        receiptDate
+        titleCase
+        typeForm
+        createdAt
+        updatedAt
+        caseAuthorId
       }
       nextToken
     }
@@ -210,6 +284,8 @@ export const getMessage = /* GraphQL */ `
         email
         status
         notificationToken
+        latitude
+        longitude
         chatRooms {
           nextToken
         }
@@ -242,6 +318,8 @@ export const listMessages = /* GraphQL */ `
           email
           status
           notificationToken
+          latitude
+          longitude
           createdAt
           updatedAt
         }
@@ -269,6 +347,8 @@ export const getUserChatRooms = /* GraphQL */ `
         email
         status
         notificationToken
+        latitude
+        longitude
         chatRooms {
           nextToken
         }
@@ -321,6 +401,8 @@ export const listUserChatRooms = /* GraphQL */ `
           email
           status
           notificationToken
+          latitude
+          longitude
           createdAt
           updatedAt
         }
@@ -366,6 +448,8 @@ export const postsByDate = /* GraphQL */ `
           email
           status
           notificationToken
+          latitude
+          longitude
           createdAt
           updatedAt
         }
@@ -408,6 +492,8 @@ export const messagesByChatRoom = /* GraphQL */ `
           email
           status
           notificationToken
+          latitude
+          longitude
           createdAt
           updatedAt
         }

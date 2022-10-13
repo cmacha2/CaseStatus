@@ -11,6 +11,8 @@ type User @model {
   email: String
   status: String
   notificationToken: String
+  latitude: String
+  longitude: String
   chatRooms: [ChatRoom] @manyToMany(relationName: "UserChatRooms")
 }
 
@@ -37,6 +39,17 @@ type Post @model {
   content: String
   numberOfLikes: Int
   likedBy: [ID]
+  createdAt: String
+  updatedAt: String
+}
+
+type Case @model {
+  id:ID!
+  author: User @hasOne
+  receiptNumber: String
+  receiptDate: String
+  titleCase: String
+  typeForm: String
   createdAt: String
   updatedAt: String
 }

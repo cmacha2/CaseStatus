@@ -11,6 +11,8 @@ export const onCreateUser = /* GraphQL */ `
       email
       status
       notificationToken
+      latitude
+      longitude
       chatRooms {
         items {
           id
@@ -36,6 +38,8 @@ export const onUpdateUser = /* GraphQL */ `
       email
       status
       notificationToken
+      latitude
+      longitude
       chatRooms {
         items {
           id
@@ -61,6 +65,8 @@ export const onDeleteUser = /* GraphQL */ `
       email
       status
       notificationToken
+      latitude
+      longitude
       chatRooms {
         items {
           id
@@ -104,6 +110,8 @@ export const onCreateChatRoom = /* GraphQL */ `
           email
           status
           notificationToken
+          latitude
+          longitude
           createdAt
           updatedAt
         }
@@ -157,6 +165,8 @@ export const onUpdateChatRoom = /* GraphQL */ `
           email
           status
           notificationToken
+          latitude
+          longitude
           createdAt
           updatedAt
         }
@@ -210,6 +220,8 @@ export const onDeleteChatRoom = /* GraphQL */ `
           email
           status
           notificationToken
+          latitude
+          longitude
           createdAt
           updatedAt
         }
@@ -248,6 +260,8 @@ export const onCreatePost = /* GraphQL */ `
         email
         status
         notificationToken
+        latitude
+        longitude
         chatRooms {
           nextToken
         }
@@ -276,6 +290,8 @@ export const onUpdatePost = /* GraphQL */ `
         email
         status
         notificationToken
+        latitude
+        longitude
         chatRooms {
           nextToken
         }
@@ -304,6 +320,8 @@ export const onDeletePost = /* GraphQL */ `
         email
         status
         notificationToken
+        latitude
+        longitude
         chatRooms {
           nextToken
         }
@@ -316,6 +334,96 @@ export const onDeletePost = /* GraphQL */ `
       createdAt
       updatedAt
       postAuthorId
+    }
+  }
+`;
+export const onCreateCase = /* GraphQL */ `
+  subscription OnCreateCase {
+    onCreateCase {
+      id
+      author {
+        id
+        firstName
+        lastName
+        profilePicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      receiptNumber
+      receiptDate
+      titleCase
+      typeForm
+      createdAt
+      updatedAt
+      caseAuthorId
+    }
+  }
+`;
+export const onUpdateCase = /* GraphQL */ `
+  subscription OnUpdateCase {
+    onUpdateCase {
+      id
+      author {
+        id
+        firstName
+        lastName
+        profilePicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      receiptNumber
+      receiptDate
+      titleCase
+      typeForm
+      createdAt
+      updatedAt
+      caseAuthorId
+    }
+  }
+`;
+export const onDeleteCase = /* GraphQL */ `
+  subscription OnDeleteCase {
+    onDeleteCase {
+      id
+      author {
+        id
+        firstName
+        lastName
+        profilePicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      receiptNumber
+      receiptDate
+      titleCase
+      typeForm
+      createdAt
+      updatedAt
+      caseAuthorId
     }
   }
 `;
@@ -332,6 +440,8 @@ export const onCreateMessage = /* GraphQL */ `
         email
         status
         notificationToken
+        latitude
+        longitude
         chatRooms {
           nextToken
         }
@@ -359,6 +469,8 @@ export const onUpdateMessage = /* GraphQL */ `
         email
         status
         notificationToken
+        latitude
+        longitude
         chatRooms {
           nextToken
         }
@@ -386,6 +498,8 @@ export const onDeleteMessage = /* GraphQL */ `
         email
         status
         notificationToken
+        latitude
+        longitude
         chatRooms {
           nextToken
         }
@@ -414,6 +528,8 @@ export const onCreateUserChatRooms = /* GraphQL */ `
         email
         status
         notificationToken
+        latitude
+        longitude
         chatRooms {
           nextToken
         }
@@ -461,6 +577,8 @@ export const onUpdateUserChatRooms = /* GraphQL */ `
         email
         status
         notificationToken
+        latitude
+        longitude
         chatRooms {
           nextToken
         }
@@ -508,6 +626,8 @@ export const onDeleteUserChatRooms = /* GraphQL */ `
         email
         status
         notificationToken
+        latitude
+        longitude
         chatRooms {
           nextToken
         }

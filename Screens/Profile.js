@@ -2,10 +2,11 @@ import * as React from "react";
 import MyText from "../components/MyText";
 import MyButton from "../components/MyButton";
 import { Auth } from "aws-amplify";
-import { View } from "../components/theme/Themed";
+import { ScrollView } from "../components/theme/Themed";
 import { useSelector } from "react-redux";
 import { StatusBar, useColorScheme } from "react-native";
 import ProfilePicture from "../components/ProfilePicture";
+import ProfileInformation from "../components/ProfileInformation";
 
 
 export default function Profile() {
@@ -22,11 +23,12 @@ export default function Profile() {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <ScrollView style={{ flex: 1 }}>
       <ProfilePicture/>
+      <ProfileInformation />
       <StatusBar
         barStyle={theme === "dark" ? "light-content" : "dark-content"}
       />
-    </View>
+    </ScrollView>
   );
 }
