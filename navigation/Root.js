@@ -12,6 +12,7 @@ import Profile from "../Screens/Profile";
 import Onbording from "../Screens/Onbording";
 import {Ionicons} from "@expo/vector-icons"
 import Chats from "../Screens/Chats";
+import NewPost from "../Screens/NewPost";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -73,6 +74,7 @@ function HomeStack(){
       <Stack.Screen name="Onbording" component={Onbording} options={{
         presentation:'fullScreenModal'
       }}/>
+      <Stack.Screen name="newPost" component={NewPost} options={{presentation:'modal'}}/>
     </Stack.Navigator>
   )
 }

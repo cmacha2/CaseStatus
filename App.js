@@ -7,6 +7,16 @@ import Splash from "./Screens/Splash";
 import { store } from "./src/app/store";
 import {Provider,useSelector,useDispatch} from "react-redux"
 import { setUser, resetUser } from "./src/features/user"
+import {setNotificationHandler} from "expo-notifications"
+
+setNotificationHandler({
+  handleNotification: async ()=> ({
+    shouldShowAlert:true,
+    shouldPlaySound:false,
+    shouldSetBadge:false
+  })
+})
+
 
 Amplify.configure(awsconfig);
 

@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { StatusBar, useColorScheme } from "react-native";
 import ProfilePicture from "../components/ProfilePicture";
 import ProfileInformation from "../components/ProfileInformation";
+import ProfilePermissions from "../components/ProfilePermissions";
 
 
 export default function Profile() {
@@ -26,6 +27,7 @@ export default function Profile() {
     <ScrollView style={{ flex: 1 }}>
       <ProfilePicture/>
       <ProfileInformation />
+      <ProfilePermissions/>
       <StatusBar
         barStyle={theme === "dark" ? "light-content" : "dark-content"}
       />

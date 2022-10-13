@@ -6,17 +6,27 @@ import { Image, StyleSheet, View as DefaultView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View } from "../components/theme/Themed";
+import { useDispatch, useSelector } from "react-redux";
+import { registerForPushNotificationsAsync } from "../src/utils/registerForPushNotificationsAsync";
+import { updateUserNotificationToken } from "../src/utils/userOperations";
+import { resetNotificationToken } from "../src/features/user";
 
 export default function Onboarding() {
   const navigation = useNavigation();
+  const {id} = useSelector(state=>state.user)
+  const dispatch = useDispatch()
+
 
   async function handleOnContinue() {
     try {
+      const token = await registerForPushNotificationsAsync()
+      if(token!==null){
+        await updateUserNotificationToken(id,token)
+        dispatch(resetNotificationToken(token))
+      }
       await AsyncStorage.setItem("@firstLaunch", "true");
       navigation.navigate("Home");
-      // to do
-      // ask permitions
-      // get token and location
+      
     } catch (e) {
       console.log("Onboarding error", e);
     }

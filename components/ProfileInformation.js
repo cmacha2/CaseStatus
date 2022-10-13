@@ -5,6 +5,7 @@ import {
   useColorScheme,
   View,
 } from "react-native";
+import { Auth, API, graphqlOperation } from "aws-amplify";
 import React from "react";
 import MyText from "./MyText";
 import Colors from "../constants/colors";
@@ -16,7 +17,7 @@ const ProfileInformation = () => {
   const user = useSelector((state) => state.user);
   const theme = useColorScheme();
   return (
-    <View>
+    <View  style={{paddingBottom:35}}>
       <MyText
         type="caption"
         style={{ fontWeight: "600", color: Colors[theme].text + "40" }}
@@ -71,7 +72,7 @@ function InfoField({
   const dispatch = useDispatch();
 
   return (
-    <View style={styles.fieldContainer}>
+    <View style={[styles.fieldContainer,{borderBottomColor:Colors[theme].text + '80'}]}>
       <MyText
         type="caption"
         style={{
