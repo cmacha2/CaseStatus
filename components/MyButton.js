@@ -1,12 +1,12 @@
 import {
-  TouchableOpacity,
   Text,
-  StyleSheet,
+  TouchableOpacity,
   useColorScheme,
+  StyleSheet,
 } from "react-native";
 import Colors from "../constants/colors";
 
-export default function MyButton({ title, onPress, type = "primary", style }) {
+export default function MyButton({ title, onPress, type = "primary", style, ...otherProps}) {
   const theme = useColorScheme();
 
   const buttonStyle =
@@ -18,18 +18,22 @@ export default function MyButton({ title, onPress, type = "primary", style }) {
       ? styles.primaryDark
       : styles.secondaryDark;
 
-      const textStyle =
-      theme === "light" && type === "primary"
-        ? Colors.light.background
-        : theme === "light" && type === "secondary"
-        ? Colors.light.text
-        : theme === "dark" && type === "primary"
-        ? Colors.dark.background
-        : Colors.light.background;
+  const textStyle =
+    theme === "light" && type === "primary"
+      ? Colors.light.background
+      : theme === "light" && type === "secondary"
+      ? Colors.light.text
+      : theme === "dark" && type === "primary"
+      ? Colors.dark.background
+      : Colors.light.background;
 
   return (
-    <TouchableOpacity style={[styles.button, buttonStyle]} onPress={onPress}>
-      <Text style={[styles.buttonText,{color:textStyle}]}>{title}</Text>
+    <TouchableOpacity
+      style={[styles.button, buttonStyle, style]}
+      onPress={onPress}
+      {...otherProps}
+    >
+      <Text style={[styles.buttonText, { color: textStyle }]}>{title}</Text>
     </TouchableOpacity>
   );
 }
@@ -37,7 +41,7 @@ export default function MyButton({ title, onPress, type = "primary", style }) {
 const styles = StyleSheet.create({
   button: {
     width: "100%",
-    height: 45,
+    height: 50,
     padding: 10,
     marginVertical: 10,
     borderRadius: 8,

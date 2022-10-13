@@ -10,7 +10,7 @@ export default function Splash({ setUser, setIsLoading }) {
         const { attributes } = await Auth.currentAuthenticatedUser();
         setUser(attributes);
         setIsLoading(false);
-        console.log(attributes);
+        // console.log(attributes);
       } catch (e) {
         console.log(e);
         setIsLoading(false);
