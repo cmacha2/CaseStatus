@@ -32,9 +32,7 @@ export const getUser = /* GraphQL */ `
           typeForm
           createdAt
           updatedAt
-          userCaseID
           userCasesId
-          caseAuthorId
         }
         nextToken
       }
@@ -257,9 +255,7 @@ export const getCase = /* GraphQL */ `
       typeForm
       createdAt
       updatedAt
-      userCaseID
       userCasesId
-      caseAuthorId
     }
   }
 `;
@@ -291,9 +287,7 @@ export const listCases = /* GraphQL */ `
         typeForm
         createdAt
         updatedAt
-        userCaseID
         userCasesId
-        caseAuthorId
       }
       nextToken
     }
@@ -493,52 +487,6 @@ export const postsByDate = /* GraphQL */ `
         createdAt
         updatedAt
         postAuthorId
-      }
-      nextToken
-    }
-  }
-`;
-export const caseByUser = /* GraphQL */ `
-  query CaseByUser(
-    $userCaseID: ID!
-    $createdAt: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelCaseFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    caseByUser(
-      userCaseID: $userCaseID
-      createdAt: $createdAt
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        author {
-          id
-          firstName
-          lastName
-          profilePicture
-          email
-          status
-          notificationToken
-          latitude
-          longitude
-          createdAt
-          updatedAt
-        }
-        receiptNumber
-        receiptDate
-        titleCase
-        typeForm
-        createdAt
-        updatedAt
-        userCaseID
-        userCasesId
-        caseAuthorId
       }
       nextToken
     }

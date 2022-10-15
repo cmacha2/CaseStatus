@@ -35,9 +35,7 @@ export const createUser = /* GraphQL */ `
           typeForm
           createdAt
           updatedAt
-          userCaseID
           userCasesId
-          caseAuthorId
         }
         nextToken
       }
@@ -80,9 +78,7 @@ export const updateUser = /* GraphQL */ `
           typeForm
           createdAt
           updatedAt
-          userCaseID
           userCasesId
-          caseAuthorId
         }
         nextToken
       }
@@ -125,9 +121,7 @@ export const deleteUser = /* GraphQL */ `
           typeForm
           createdAt
           updatedAt
-          userCaseID
           userCasesId
-          caseAuthorId
         }
         nextToken
       }
@@ -450,9 +444,7 @@ export const createCase = /* GraphQL */ `
       typeForm
       createdAt
       updatedAt
-      userCaseID
       userCasesId
-      caseAuthorId
     }
   }
 `;
@@ -488,9 +480,7 @@ export const updateCase = /* GraphQL */ `
       typeForm
       createdAt
       updatedAt
-      userCaseID
       userCasesId
-      caseAuthorId
     }
   }
 `;
@@ -526,9 +516,7 @@ export const deleteCase = /* GraphQL */ `
       typeForm
       createdAt
       updatedAt
-      userCaseID
       userCasesId
-      caseAuthorId
     }
   }
 `;

@@ -14,7 +14,7 @@ type User @model {
   latitude: String
   longitude: String
   chatRooms: [ChatRoom] @manyToMany(relationName: "UserChatRooms")
-  cases: [Case] @belongsTo
+  cases: [Case] @hasMany(indexName: "byUser", fields: ["id"])
 }
 
 type ChatRoom @model {
@@ -46,7 +46,8 @@ type Post @model {
 
 type Case @model {
   id:ID!
-  author: User @hasOne
+  userCaseID: ID! @index(name: "byUser", sortKeyFields: ["createdAt"])
+  author: User @belongsTo(fields: ["userCaseID"])
   receiptNumber: String
   receiptDate: String
   titleCase: String
