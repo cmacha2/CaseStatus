@@ -2,8 +2,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { Button, StatusBar, useColorScheme } from "react-native";
-import ListTodos from "../components/ListTodos";
-import MyText from "../components/MyText";
 import { View } from "../components/theme/Themed";
 import { API, graphqlOperation } from "aws-amplify";
 import { postsByDate } from "../graphql/queries";

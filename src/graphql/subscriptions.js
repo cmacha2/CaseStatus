@@ -23,6 +23,21 @@ export const onCreateUser = /* GraphQL */ `
         }
         nextToken
       }
+      cases {
+        items {
+          id
+          receiptNumber
+          receiptDate
+          titleCase
+          typeForm
+          createdAt
+          updatedAt
+          userCaseID
+          userCasesId
+          caseAuthorId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -50,6 +65,21 @@ export const onUpdateUser = /* GraphQL */ `
         }
         nextToken
       }
+      cases {
+        items {
+          id
+          receiptNumber
+          receiptDate
+          titleCase
+          typeForm
+          createdAt
+          updatedAt
+          userCaseID
+          userCasesId
+          caseAuthorId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -74,6 +104,21 @@ export const onDeleteUser = /* GraphQL */ `
           chatRoomID
           createdAt
           updatedAt
+        }
+        nextToken
+      }
+      cases {
+        items {
+          id
+          receiptNumber
+          receiptDate
+          titleCase
+          typeForm
+          createdAt
+          updatedAt
+          userCaseID
+          userCasesId
+          caseAuthorId
         }
         nextToken
       }
@@ -265,6 +310,9 @@ export const onCreatePost = /* GraphQL */ `
         chatRooms {
           nextToken
         }
+        cases {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -293,6 +341,9 @@ export const onUpdatePost = /* GraphQL */ `
         latitude
         longitude
         chatRooms {
+          nextToken
+        }
+        cases {
           nextToken
         }
         createdAt
@@ -325,6 +376,9 @@ export const onDeletePost = /* GraphQL */ `
         chatRooms {
           nextToken
         }
+        cases {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -354,6 +408,9 @@ export const onCreateCase = /* GraphQL */ `
         chatRooms {
           nextToken
         }
+        cases {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -363,6 +420,8 @@ export const onCreateCase = /* GraphQL */ `
       typeForm
       createdAt
       updatedAt
+      userCaseID
+      userCasesId
       caseAuthorId
     }
   }
@@ -384,6 +443,9 @@ export const onUpdateCase = /* GraphQL */ `
         chatRooms {
           nextToken
         }
+        cases {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -393,6 +455,8 @@ export const onUpdateCase = /* GraphQL */ `
       typeForm
       createdAt
       updatedAt
+      userCaseID
+      userCasesId
       caseAuthorId
     }
   }
@@ -414,6 +478,9 @@ export const onDeleteCase = /* GraphQL */ `
         chatRooms {
           nextToken
         }
+        cases {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -423,6 +490,8 @@ export const onDeleteCase = /* GraphQL */ `
       typeForm
       createdAt
       updatedAt
+      userCaseID
+      userCasesId
       caseAuthorId
     }
   }
@@ -443,6 +512,9 @@ export const onCreateMessage = /* GraphQL */ `
         latitude
         longitude
         chatRooms {
+          nextToken
+        }
+        cases {
           nextToken
         }
         createdAt
@@ -474,6 +546,9 @@ export const onUpdateMessage = /* GraphQL */ `
         chatRooms {
           nextToken
         }
+        cases {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -501,6 +576,9 @@ export const onDeleteMessage = /* GraphQL */ `
         latitude
         longitude
         chatRooms {
+          nextToken
+        }
+        cases {
           nextToken
         }
         createdAt
@@ -531,6 +609,9 @@ export const onCreateUserChatRooms = /* GraphQL */ `
         latitude
         longitude
         chatRooms {
+          nextToken
+        }
+        cases {
           nextToken
         }
         createdAt
@@ -582,6 +663,9 @@ export const onUpdateUserChatRooms = /* GraphQL */ `
         chatRooms {
           nextToken
         }
+        cases {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -629,6 +713,9 @@ export const onDeleteUserChatRooms = /* GraphQL */ `
         latitude
         longitude
         chatRooms {
+          nextToken
+        }
+        cases {
           nextToken
         }
         createdAt

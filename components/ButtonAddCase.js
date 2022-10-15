@@ -5,7 +5,7 @@ import React from "react";
 const ButtonAddCase = ({style,onPress}) => {
   return (
     <TouchableOpacity style={style} onPress={onPress}>
-      <AntDesign name="pluscircle" size={45} color="black" />
+      <AntDesign name="pluscircle" size={43} color="black" />
     </TouchableOpacity>
   );
 };

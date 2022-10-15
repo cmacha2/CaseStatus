@@ -5,6 +5,7 @@ import AuthScreen from "./Screens/Auth";
 import Root from "./navigation/Root";
 import Splash from "./Screens/Splash";
 import { store } from "./src/app/store";
+import "react-native-gesture-handler";
 import {Provider,useSelector,useDispatch} from "react-redux"
 import { setUser, resetUser } from "./src/features/user"
 import {setNotificationHandler} from "expo-notifications"

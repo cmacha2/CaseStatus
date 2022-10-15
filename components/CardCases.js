@@ -1,19 +1,16 @@
 import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
 import React, { useState } from "react";
-import { Icon } from "@rneui/themed";
-import SVGImg from "../assets/received.svg";
-import Loader from "./Icons";
 
-const data = {
-  receiptNumber: "IOE0917114571",
-  receiptDate: "Aug 3, 2022",
-  titleCase: "Case was received and A Receipt Notice was Sent",
-  lastChange: "64 days ago",
-  typeForm: "I-765",
-};
 
-const CardCases = ({data}) => {
 
+const CardCases = (props) => {
+  const data = {
+    receiptNumber: "IOE0917114248",
+    receiptDate: "Aug 3, 2022",
+    titleCase: "Case was received and A Receipt Notice was Sent",
+    lastChange: "64 days ago",
+    typeForm: "I-765",
+  };
   return (
 
       <View style={styles.containerCards}>

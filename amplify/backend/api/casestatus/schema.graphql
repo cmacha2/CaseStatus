@@ -14,6 +14,7 @@ type User @model {
   latitude: String
   longitude: String
   chatRooms: [ChatRoom] @manyToMany(relationName: "UserChatRooms")
+  cases: [Case] @belongsTo
 }
 
 type ChatRoom @model {
