@@ -16,8 +16,8 @@ import { useDispatch, useSelector } from "react-redux";
 export default function Home() {
   const theme = useColorScheme();
   const navigation = useNavigation();
-const dispatch = useDispatch();
-const {posts} = useSelector((state) => state.posts);
+  const dispatch = useDispatch();
+  const { posts } = useSelector((state) => state.posts);
   const [nextToken, setNextToken] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
 
@@ -31,38 +31,38 @@ const {posts} = useSelector((state) => state.posts);
   }, []);
 
   async function fetchPost() {
- 
     const { data } = await API.graphql(
       graphqlOperation(postsByDate, {
         type: "Post",
         sortDirection: "DESC",
-        limit:100,
+        limit: 100,
       })
     );
     dispatch(setPostsReducer(data.postsByDate.items));
-    setNextToken(data.postsByDate.nextToken)
+    setNextToken(data.postsByDate.nextToken);
+    setLoading(false);
   }
 
-  async function fetchMorePost(){
-    if(nextToken){
-      setLoading(true)
-    const { data } = await API.graphql(
-      graphqlOperation(postsByDate, {
-        type: "Post",
-        sortDirection: "DESC",
-        limit:100,
-        nextToken: nextToken
-      })
-    );
-    setPosts([...posts, ...data.postsByDate.items]);
-    setNextToken(data.postsByDate.nextToken)
-    if(data.postsByDate.nextToken == null){
-      alert('No more posts to load')
+  async function fetchMorePost() {
+    if (nextToken) {
+      setLoading(true);
+      const { data } = await API.graphql(
+        graphqlOperation(postsByDate, {
+          type: "Post",
+          sortDirection: "DESC",
+          limit: 100,
+          nextToken: nextToken,
+        })
+      );
+      setPosts([...posts, ...data.postsByDate.items]);
+      setNextToken(data.postsByDate.nextToken);
+      if (data.postsByDate.nextToken == null) {
+        alert("No more posts to load");
+      }
+      setLoading(false);
+    } else {
+      setLoading(false);
     }
-    setLoading(false)
-  }else{
-    setLoading(false)
-  }
   }
 
   return (
@@ -79,10 +79,16 @@ const {posts} = useSelector((state) => state.posts);
             handleNavigation={() => navigation.navigate("NewPost")}
           />
         )}
-        ListFooterComponent={()=> <Button title={loading ? "loading" : "load more" } disabled={loading || nextToken===null} onPress={fetchMorePost}/>}
+        refreshing={loading}
+        onRefresh={fetchPost}
+        ListFooterComponent={() => (
+          <Button
+            title={loading ? "loading" : "load more"}
+            disabled={loading || nextToken === null}
+            onPress={fetchMorePost}
+          />
+        )}
       />
     </View>
   );
 }
-
-

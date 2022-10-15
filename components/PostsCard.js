@@ -1,16 +1,93 @@
 import * as React from "react";
-import { Image, StyleSheet, useColorScheme, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  useColorScheme,
+  View,
+  Linking,
+  Alert,
+  Pressable,
+} from "react-native";
 import MyText from "./MyText";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 import Colors from "../constants/colors";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  deletePost,
+  incrementLikesMutation,
+  decrementLikesMutation,
+} from "../src/utils/postsOperations";
+import {
+  deletePostReducer,
+  incrementLikesReducer,
+  decrementLikesReducer,
+} from "../src/features/posts";
 import moment from "moment";
+import { notificationAsync, NotificationFeedbackType } from "expo-haptics";
+import { useNavigation } from "@react-navigation/native";
 
 export default function PostCard(post) {
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
   const theme = useColorScheme();
   const { author, content, createdAt, id, likedBy, numberOfLikes } = post;
+
+  const handleLike = async () => {
+    const data = {
+      postID: id,
+      userID: user.id,
+    };
+    if (likedBy.includes(user.id)) {
+      notificationAsync(NotificationFeedbackType.Error);
+      dispatch(decrementLikesReducer(data));
+      await decrementLikesMutation(id, likedBy, numberOfLikes, user.id);
+    } else {
+      notificationAsync(NotificationFeedbackType.Success);
+      dispatch(incrementLikesReducer(data));
+      await incrementLikesMutation(id, likedBy, numberOfLikes, user.id);
+    }
+  };
+
+  const sendReportEmail = async () => {
+    const url = `mailto:${"cristiancmg127@gmail.com"}?subject=Report&body=${
+      "This is an automatic email to the Inmigrants Reporting team. Please write any concerns above this paragraph and do not delete anything below. " +
+      "User ID: " +
+      user.id +
+      "\n" +
+      "Post ID: " +
+      id
+    }`;
+
+    Linking.openURL(url);
+    alert("Thank you for your report. We will review it as soon as possible.");
+  };
+
+  const handleReport = async () => {
+    Alert.alert(
+      "Report Post",
+      "Are you sure you want to report this post?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Report",
+          onPress: async () => {
+            await sendReportEmail();
+            dispatch(deletePostReducer(id));
+            await deletePost(id);
+          },
+          style: "destructive",
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
   return (
     <View
       style={[
@@ -25,7 +102,7 @@ export default function PostCard(post) {
               source={{
                 uri: author?.profilePicture
                   ? author.profilePicture
-                  : "https://images.unsplash.com/flagged/photo-1573740144655-bbb6e88fb18a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80",
+                  : "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png",
               }}
               style={styles.image}
             />
@@ -43,6 +120,7 @@ export default function PostCard(post) {
             name="ellipsis-horizontal"
             size={24}
             color={Colors[theme].text + "70"}
+            onPress={handleReport}
           />
         </View>
         <MyText
@@ -51,19 +129,21 @@ export default function PostCard(post) {
           {content}
         </MyText>
         <View style={{ flexDirection: "row", alignItems: "baseline" }}>
-          {likedBy !== null && likedBy.includes(user.id) ? (
-            <AntDesign
-              name="like1"
-              size={21}
-              color={Colors.light.tabIconSelected}
-            />
-          ) : (
-            <AntDesign
-              name="like2"
-              size={21}
-              color={Colors[theme].text + "50"}
-            />
-          )}
+          <Pressable onPress={handleLike}>
+            {likedBy !== null && likedBy.includes(user.id) ? (
+              <AntDesign
+                name="like1"
+                size={21}
+                color={Colors.light.tabIconSelected}
+              />
+            ) : (
+              <AntDesign
+                name="like2"
+                size={21}
+                color={Colors[theme].text + "50"}
+              />
+            )}
+          </Pressable>
           <MyText
             type="caption"
             style={[
@@ -74,6 +154,20 @@ export default function PostCard(post) {
                 : { color: Colors[theme].text + "50" },
               { marginLeft: 5 },
             ]}
+          >
+            {numberOfLikes}
+          </MyText>
+          <FontAwesome5
+            style={{ marginLeft: 12,
+            paddingTop: 2 }}
+            name="comment-alt"
+            size={21}
+            color={Colors[theme].text + "50"}
+            onPress={() => navigation.navigate("Comments", { post })}
+          />
+          <MyText
+            type="caption"
+            style={{ marginLeft: 5, paddingBottom: 4, color: Colors[theme].text + "50" }}
           >
             {numberOfLikes}
           </MyText>

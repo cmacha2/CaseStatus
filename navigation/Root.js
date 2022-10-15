@@ -13,6 +13,8 @@ import Onbording from "../Screens/Onbording";
 import {Ionicons} from "@expo/vector-icons"
 import Chats from "../Screens/Chats";
 import NewPost from "../Screens/NewPost";
+import Cases from "../Screens/Cases";
+import Comments from "../Screens/Comments";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -37,6 +39,15 @@ function BottomNavigator() {
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-home" color={color} />,
           tabBarLabel:'Home',
+          headerShown:false
+        }}
+      />
+      <Tab.Screen
+        name="Cases"
+        component={Cases}
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-search" color={color} />,
+          tabBarLabel:'Cases',
           headerShown:false
         }}
       />
@@ -69,12 +80,16 @@ function TabBarIcon(props) {
 
 function HomeStack(){
   return (
-    <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown:false}}>
-      <Stack.Screen name="Home" component={Home} /> 
+    <Stack.Navigator initialRouteName="Home" >
+      <Stack.Screen name="Home" component={Home} options={{
+        headerShown:false
+      }}/> 
       <Stack.Screen name="Onbording" component={Onbording} options={{
-        presentation:'fullScreenModal'
+        presentation:'fullScreenModal',
+        headerShown:false
       }}/>
       <Stack.Screen name="NewPost" component={NewPost} options={{presentation:'modal'}}/>
+      <Stack.Screen name="Comments" component={Comments} options={{presentation:'modal'}}/>
     </Stack.Navigator>
   )
 }
