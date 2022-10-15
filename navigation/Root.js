@@ -74,7 +74,7 @@ function HomeStack(){
       <Stack.Screen name="Onbording" component={Onbording} options={{
         presentation:'fullScreenModal'
       }}/>
-      <Stack.Screen name="newPost" component={NewPost} options={{presentation:'modal'}}/>
+      <Stack.Screen name="NewPost" component={NewPost} options={{presentation:'modal'}}/>
     </Stack.Navigator>
   )
 }
