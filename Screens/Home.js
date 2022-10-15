@@ -4,7 +4,7 @@ import * as React from "react";
 import { Button, StatusBar, useColorScheme } from "react-native";
 import { View } from "../components/theme/Themed";
 import { API, graphqlOperation } from "aws-amplify";
-import { postsByDate } from "../graphql/queries";
+import { postsByDate } from "../src/graphql/queries";
 import { FlashList } from "@shopify/flash-list";
 import ListHeader from "../components/ListHeader";
 import PostCard from "../components/PostsCard";

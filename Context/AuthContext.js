@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Auth, API, graphqlOperation } from "aws-amplify";
-import {createUser} from "../graphql/mutations"
+import {createUser} from "../src/graphql/mutations"
 import {useDispatch} from 'react-redux'
 import { setUser } from "../src/features/user";
 

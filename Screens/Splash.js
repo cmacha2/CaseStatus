@@ -4,7 +4,7 @@ import MyText from "../components/MyText";
 import { Auth, API, graphqlOperation } from "aws-amplify";
 import { useDispatch } from "react-redux"
 import {setUser} from "../src/features/user"
-import { getUser } from "../graphql/queries"
+import { getUser } from "../src/graphql/queries"
 
 export default function Splash({ setIsLoading }) {
   const dispatch = useDispatch();
@@ -15,6 +15,7 @@ export default function Splash({ setIsLoading }) {
         const { data } = await API.graphql(
           graphqlOperation(getUser, { id: attributes.sub })
         );
+        console.log(data)
         dispatch(
           setUser({
             id: attributes.sub,
@@ -25,7 +26,8 @@ export default function Splash({ setIsLoading }) {
             status: data.getUser.status,
             notificationToken: data.getUser.notificationToken,
             latitude:data.getUser.latitude,
-            longitude:data.getUser.longitude
+            longitude:data.getUser.longitude,
+            // cases: data.getUser.cases.items,
           })
         );
         setIsLoading(false);

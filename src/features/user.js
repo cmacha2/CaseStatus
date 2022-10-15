@@ -9,7 +9,8 @@ const initialState = {
   status: null,
   notificationToken: null,
   latitude:null,
-  longitude:null
+  longitude:null,
+  cases: null,
 };
 
 const userSlice = createSlice({
@@ -29,7 +30,8 @@ const userSlice = createSlice({
         status: null,
         notificationToken: null,
         latitude:null,
-        longitude:null
+        longitude:null,
+        cases: [],
       });
     },
     resetProfilePicture: (state, action) => {
@@ -69,7 +71,7 @@ const userSlice = createSlice({
         latitude:latitude,
         longitude:longitude
       }
-    }
+    },
   },
 });
 
