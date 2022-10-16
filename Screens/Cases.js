@@ -29,6 +29,7 @@ function Cases() {
   const bottomSheetModalRef = React.useRef(null);
   const snapPoints = React.useMemo(() => ["35%"], []);
   const { cases } = useSelector((state) => state.user);
+  console.log(cases, "cases");
 
   const handlerModal = () => {
     bottomSheetModalRef.current?.present();
