@@ -1,16 +1,10 @@
 import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
 import React, { useState } from "react";
+import moment from "moment";
 
 
+const CardCases = ({data}) => {
 
-const CardCases = (props) => {
-  const data = {
-    receiptNumber: "IOE0917114248",
-    receiptDate: "Aug 3, 2022",
-    titleCase: "Case was received and A Receipt Notice was Sent",
-    lastChange: "64 days ago",
-    typeForm: "I-765",
-  };
   return (
 
       <View style={styles.containerCards}>
@@ -28,7 +22,7 @@ const CardCases = (props) => {
           <Text style={styles.titleCase}>{data.titleCase}</Text>
           <View style={styles.cardBottom}>
             <Text style={styles.lastChange}>
-              Last Change: {data.lastChange}
+              Last Change: {moment(new Date(data.receiptDate).toISOString()).fromNow()}
             </Text>
             <Text style={styles.lastChange}>{data.receiptDate}</Text>
           </View>
@@ -47,7 +41,8 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     width: "90%",
-    height: 114,
+    height: 'auto',
+    paddingBottom: 10,
     borderRadius: 7,
     borderWidth: 1,
     borderColor: "#3C3838",

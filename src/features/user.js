@@ -75,7 +75,7 @@ const userSlice = createSlice({
     resetCases: (state, action) => {
       return {
         ...state,
-        cases: action.payload,
+        cases: [...state.cases,action.payload],
       };
     }
   },

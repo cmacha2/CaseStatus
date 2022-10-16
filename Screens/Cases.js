@@ -23,6 +23,7 @@ import NoCases from "../components/NoCases";
 import CardCases from "../components/CardCases";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
+import ListHeader from "../components/ListHeader";
 
 
 function Cases() {
@@ -37,20 +38,17 @@ function Cases() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
-        <StatusBar style="auto" />
-        <Text style={styles.textMyCases}>My Cases</Text>
-        {cases.length ?  <ScrollView style={styles.containerScroll}>
+        <ListHeader title='My Cases' iconName="add-circle-sharp"
+            handleNavigation={handlerModal}/>
+        {cases?.length ?  <ScrollView style={styles.containerScroll}>
         {cases?.map(userCase => <CardCases data={userCase} key={userCase.id}/>)}
 
       </ScrollView> :
         <NoCases />}
-        <View style={styles.containerAddCaseButton}>
-          <ButtonAddCase style={styles.addCaseButton} onPress={handlerModal}/>
           <ModalAddCase
             bottomSheetModalRef={bottomSheetModalRef}
             snapPoints={snapPoints}
           />
-        </View>
       </BottomSheetModalProvider>
     </GestureHandlerRootView>
   );
@@ -62,6 +60,7 @@ export default Cases;
 const styles = StyleSheet.create({
   containerScroll: {
     flex: 1,
+  
   },
   container: {
     flex: 1,
@@ -79,11 +78,12 @@ const styles = StyleSheet.create({
   addCaseButton: {
     borderRadius: 25,
     marginRight: 10,
-   
+    
   },
   containerAddCaseButton: {
-    // backgroundColor: "red",
+    
     height: "8%",
+
     alignItems: "flex-end",
   },
 });

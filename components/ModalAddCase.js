@@ -20,9 +20,9 @@ const ModalAddCase = ({  bottomSheetModalRef, snapPoints }) => {
 
   const addCase = async () => {
     try {
-      const { data } = await createCase(numberCase,id);
-      console.log(data)
+      const data = await createCase(numberCase,id);
       dispatch(resetCases(data));
+      bottomSheetModalRef.current?.close();
     } catch (e) {
       console.log(e, "error publishing case");
     }
