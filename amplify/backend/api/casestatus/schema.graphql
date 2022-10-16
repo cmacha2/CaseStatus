@@ -50,6 +50,7 @@ type Case @model {
   receiptNumber: String
   receiptDate: String
   titleCase: String
+  description: String
   typeForm: String
   createdAt: String
   updatedAt: String

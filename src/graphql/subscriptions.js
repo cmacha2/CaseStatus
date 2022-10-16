@@ -29,6 +29,7 @@ export const onCreateUser = /* GraphQL */ `
           receiptNumber
           receiptDate
           titleCase
+          description
           typeForm
           createdAt
           updatedAt
@@ -69,6 +70,7 @@ export const onUpdateUser = /* GraphQL */ `
           receiptNumber
           receiptDate
           titleCase
+          description
           typeForm
           createdAt
           updatedAt
@@ -109,6 +111,7 @@ export const onDeleteUser = /* GraphQL */ `
           receiptNumber
           receiptDate
           titleCase
+          description
           typeForm
           createdAt
           updatedAt
@@ -411,6 +414,7 @@ export const onCreateCase = /* GraphQL */ `
       receiptNumber
       receiptDate
       titleCase
+      description
       typeForm
       createdAt
       updatedAt
@@ -444,6 +448,7 @@ export const onUpdateCase = /* GraphQL */ `
       receiptNumber
       receiptDate
       titleCase
+      description
       typeForm
       createdAt
       updatedAt
@@ -477,6 +482,7 @@ export const onDeleteCase = /* GraphQL */ `
       receiptNumber
       receiptDate
       titleCase
+      description
       typeForm
       createdAt
       updatedAt

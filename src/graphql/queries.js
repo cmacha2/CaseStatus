@@ -29,6 +29,7 @@ export const getUser = /* GraphQL */ `
           receiptNumber
           receiptDate
           titleCase
+          description
           typeForm
           createdAt
           updatedAt
@@ -252,6 +253,7 @@ export const getCase = /* GraphQL */ `
       receiptNumber
       receiptDate
       titleCase
+      description
       typeForm
       createdAt
       updatedAt
@@ -284,6 +286,7 @@ export const listCases = /* GraphQL */ `
         receiptNumber
         receiptDate
         titleCase
+        description
         typeForm
         createdAt
         updatedAt

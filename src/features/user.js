@@ -10,7 +10,7 @@ const initialState = {
   notificationToken: null,
   latitude:null,
   longitude:null,
-  cases: null,
+  cases: [],
 };
 
 const userSlice = createSlice({
@@ -72,6 +72,12 @@ const userSlice = createSlice({
         longitude:longitude
       }
     },
+    resetCases: (state, action) => {
+      return {
+        ...state,
+        cases: action.payload,
+      };
+    }
   },
 });
 
@@ -83,6 +89,7 @@ export const {
   resetLastName,
   resetStatus,
   resetLocation,
-  resetNotificationToken
+  resetNotificationToken,
+  resetCases,
 } = userSlice.actions;
 export default userSlice.reducer;

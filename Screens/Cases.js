@@ -22,23 +22,25 @@ import ModalAddCase from "../components/ModalAddCase";
 import NoCases from "../components/NoCases";
 import CardCases from "../components/CardCases";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useSelector } from "react-redux";
 
-function HomeScreen() {
+
+function Cases() {
   const bottomSheetModalRef = React.useRef(null);
   const snapPoints = React.useMemo(() => ["18%"], []);
-  const [data,setData]=React.useState([])
+  const  {cases} = useSelector((state) => state.user);
+
   const handlerModal = () => {
     bottomSheetModalRef.current?.present();
   };
-  console.log(data)
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
         <StatusBar style="auto" />
         <Text style={styles.textMyCases}>My Cases</Text>
-        {data.length ?  <ScrollView style={styles.containerScroll}>
-        {data?.map((dataCase,i)=><CardCases data={dataCase} key={i}/>)}
+        {cases.length ?  <ScrollView style={styles.containerScroll}>
+        {cases?.map(userCase => <CardCases data={userCase} key={userCase.id}/>)}
 
       </ScrollView> :
         <NoCases />}
@@ -47,7 +49,6 @@ function HomeScreen() {
           <ModalAddCase
             bottomSheetModalRef={bottomSheetModalRef}
             snapPoints={snapPoints}
-            setData={setData} 
           />
         </View>
       </BottomSheetModalProvider>
@@ -55,8 +56,8 @@ function HomeScreen() {
   );
 }
 
-AppRegistry.registerComponent("HomeScreen", () => HomeScreen);
-export default HomeScreen;
+AppRegistry.registerComponent("Cases", () => Cases);
+export default Cases;
 
 const styles = StyleSheet.create({
   containerScroll: {

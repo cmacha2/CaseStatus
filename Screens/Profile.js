@@ -13,7 +13,6 @@ import ProfilePermissions from "../components/ProfilePermissions";
 export default function Profile() {
   const user = useSelector((state)=>state.user)
   const theme = useColorScheme()
-
   async function handleSignOut() {
     try {
       await Auth.signOut();
