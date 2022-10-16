@@ -2,13 +2,29 @@ import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
 import React, { useState } from "react";
 import moment from "moment";
 import MyButton from "./MyButton";
+import { Swipeable } from "react-native-gesture-handler";
 import { deleteCase } from "../src/utils/casesOperations";
+import { useDispatch } from "react-redux";
+import { resetCaseDelete } from "../src/features/user";
 
 
 const CardCases = ({data}) => {
+  const dispatch = useDispatch();
+
+  const caseDelete = async () => {
+    try {
+      await deleteCase(data.id);
+      dispatch(resetCaseDelete());
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
-
+    <Swipeable 
+      renderLeftActions={LeftAction}
+      onSwipeableLeftOpen={caseDelete}
+    >
       <View style={styles.containerCards}>
         <View style={styles.cardContainer}>
           <View style={styles.cardTop}>
@@ -29,12 +45,25 @@ const CardCases = ({data}) => {
             <Text style={styles.lastChange}>{data.receiptDate}</Text>
           </View>
         </View>
-        <MyButton title='X' onPress={()=>deleteCase(data.id)} />
+        {/* <MyButton title='X' onPress={()=>deleteCase(data.id)} /> */}
       </View>
+      </Swipeable>
   );
 };
 
 export default CardCases;
+
+
+const LeftAction = () => {
+  return (
+    <View style={styles.leftAction}>
+      <Text style={styles.actionText}>Delete</Text>
+    </View>
+  );
+}
+
+
+
 
 const styles = StyleSheet.create({
 
@@ -91,6 +120,16 @@ const styles = StyleSheet.create({
     marginTop: 2,
     color: "gray",
     fontFamily: "sans-serif-condensed",
+  },
+  leftAction: {
+    backgroundColor: "#388e3c",
+    justifyContent: "center",
+    flex: 1,
+  },
+  actionText: {
+    color: "#fff",
+    fontWeight: "600",
+    padding: 20,
   },
 });
 

@@ -8,8 +8,7 @@ import { checkStatus } from "./checkStatusCase";
 export const createCase = async (caseNumber, authorID) => {
   try {
     const data = await checkStatus(caseNumber);
-    console.log("RESPUESTA", data);
-    if (data === undefined) {
+    if (data.error) {
       return { error: "Case not found" };
     }
 
@@ -27,7 +26,6 @@ export const createCase = async (caseNumber, authorID) => {
       },
     });
     console.log("case created success");
-    console.log(newCase);
     const newCaseCreated = {
       titleCase: newCase.data.createCase.titleCase,
       description: newCase.data.createCase.description,
@@ -40,7 +38,6 @@ export const createCase = async (caseNumber, authorID) => {
     };
     return newCaseCreated;
   } catch (error) {
-    console.log(error);
     return { error: "Case not created" };
   }
 };

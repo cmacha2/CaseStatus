@@ -77,6 +77,12 @@ const userSlice = createSlice({
         ...state,
         cases: [...state.cases,action.payload],
       };
+    },
+    resetCaseDelete: (state, action) => {
+      return {
+        ...state,
+        cases: state.cases.filter((item) => item.id !== action.payload),
+      };
     }
   },
 });
@@ -91,5 +97,6 @@ export const {
   resetLocation,
   resetNotificationToken,
   resetCases,
+  resetCaseDelete,
 } = userSlice.actions;
 export default userSlice.reducer;

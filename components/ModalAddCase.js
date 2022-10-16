@@ -23,10 +23,10 @@ const ModalAddCase = ({  bottomSheetModalRef, snapPoints }) => {
   const addCase = async () => {
     try {
       const data = await createCase(numberCase,id);
-      if (data.error!==undefined) {
-        setErrorNumber(`Case number ${numberCase} not found`);
-        return;
+      if(data.error){
+        return setErrorNumber(`Case number ${numberCase} not found`);
       }
+      
       dispatch(resetCases(data));
       bottomSheetModalRef.current?.close();
     } catch (e) {
