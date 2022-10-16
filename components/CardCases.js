@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
 import React, { useState } from "react";
 import moment from "moment";
+import MyButton from "./MyButton";
+import { deleteCase } from "../src/utils/casesOperations";
 
 
 const CardCases = ({data}) => {
@@ -27,6 +29,7 @@ const CardCases = ({data}) => {
             <Text style={styles.lastChange}>{data.receiptDate}</Text>
           </View>
         </View>
+        <MyButton title='X' onPress={()=>deleteCase(data.id)} />
       </View>
   );
 };

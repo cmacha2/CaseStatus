@@ -16,10 +16,10 @@ export const checkStatus = async (numberCase) => {
         return data;
       })
       .catch((error) => {
-        console.error("Error:", error);
+        console.log("Error:", error);
       });
     return data;
   } catch (error) {
-    console.error("Error:", error);
+    console.log("Error:", error);
   }
 };

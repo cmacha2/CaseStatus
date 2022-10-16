@@ -25,11 +25,10 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
 import ListHeader from "../components/ListHeader";
 
-
 function Cases() {
   const bottomSheetModalRef = React.useRef(null);
-  const snapPoints = React.useMemo(() => ["18%"], []);
-  const  {cases} = useSelector((state) => state.user);
+  const snapPoints = React.useMemo(() => ["35%"], []);
+  const { cases } = useSelector((state) => state.user);
 
   const handlerModal = () => {
     bottomSheetModalRef.current?.present();
@@ -38,17 +37,24 @@ function Cases() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
-        <ListHeader title='My Cases' iconName="add-circle-sharp"
-            handleNavigation={handlerModal}/>
-        {cases?.length ?  <ScrollView style={styles.containerScroll}>
-        {cases?.map(userCase => <CardCases data={userCase} key={userCase.id}/>)}
-
-      </ScrollView> :
-        <NoCases />}
-          <ModalAddCase
-            bottomSheetModalRef={bottomSheetModalRef}
-            snapPoints={snapPoints}
-          />
+        <ListHeader
+          title="My Cases"
+          iconName="add-circle-sharp"
+          handleNavigation={handlerModal}
+        />
+        {cases?.length ? (
+          <ScrollView style={styles.containerScroll}>
+            {cases?.map((userCase,i) => (
+              <CardCases data={userCase} key={userCase.id===undefined ? i : userCase.id } />
+            ))}
+          </ScrollView>
+        ) : (
+          <NoCases />
+        )}
+        <ModalAddCase
+          bottomSheetModalRef={bottomSheetModalRef}
+          snapPoints={snapPoints}
+        />
       </BottomSheetModalProvider>
     </GestureHandlerRootView>
   );
@@ -60,7 +66,6 @@ export default Cases;
 const styles = StyleSheet.create({
   containerScroll: {
     flex: 1,
-  
   },
   container: {
     flex: 1,
@@ -78,10 +83,8 @@ const styles = StyleSheet.create({
   addCaseButton: {
     borderRadius: 25,
     marginRight: 10,
-    
   },
   containerAddCaseButton: {
-    
     height: "8%",
 
     alignItems: "flex-end",

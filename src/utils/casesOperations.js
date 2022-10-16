@@ -1,26 +1,32 @@
 import { API } from "aws-amplify";
-import { createCase as createCaseMutation } from "../graphql/mutations";
+import {
+  createCase as createCaseMutation,
+  deleteCase as deleteCaseMutation,
+} from "../graphql/mutations";
 import { checkStatus } from "./checkStatusCase";
 
 export const createCase = async (caseNumber, authorID) => {
   try {
-    console.log(caseNumber, authorID);
-    const { titleCase, description, receiptNumber, typeForm, receiptDate } =
-      await checkStatus(caseNumber);
+    const data = await checkStatus(caseNumber);
+    if (data === undefined) {
+      return { error: "Case not found" };
+    }
+
     const newCase = await API.graphql({
       query: createCaseMutation,
       variables: {
         input: {
-          titleCase,
-          description,
-          receiptNumber,
-          typeForm,
-          receiptDate,
+          titleCase: data.titleCase,
+          description: data.description,
+          receiptNumber: data.receiptNumber,
+          typeForm: data.typeForm,
+          receiptDate: data.receiptDate,
           userCasesId: authorID,
-        }
+        },
       },
     });
     console.log("case created success");
+    console.log(newCase);
     const newCaseCreated = {
       titleCase: newCase.data.createCase.titleCase,
       description: newCase.data.createCase.description,
@@ -32,24 +38,24 @@ export const createCase = async (caseNumber, authorID) => {
       updateAt: newCase.data.createCase.updateAt,
     };
     return newCaseCreated;
-
-  } catch (e) {
-    console.log(e, "error creating case");
+  } catch (error) {
+    console.log(error);
+    return { error: "Case not created" };
   }
 };
 
-// export const deletePost = async (postID) => {
-//   try {
-//     await API.graphql({
-//       query: deleteCaseMutation,
-//       variables: {
-//         input: {
-//           id: postID,
-//         },
-//       },
-//     });
-//     console.log("case deleted successfully");
-//   } catch (e) {
-//     console.log("error deleting case");
-//   }
-// };
+export const deleteCase = async (caseID) => {
+  try {
+    await API.graphql({
+      query: deleteCaseMutation,
+      variables: {
+        input: {
+          id: caseID,
+        },
+      },
+    });
+    console.log("case deleted successfully");
+  } catch (e) {
+    console.log("error deleting case");
+  }
+};
