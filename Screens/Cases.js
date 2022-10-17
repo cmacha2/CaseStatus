@@ -22,32 +22,66 @@ import ModalAddCase from "../components/ModalAddCase";
 import NoCases from "../components/NoCases";
 import CardCases from "../components/CardCases";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ListHeader from "../components/ListHeader";
+import { FlatList } from "react-native";
+import { FlashList } from "@shopify/flash-list";
+import { resetCaseUpdate } from "../src/features/user";
+import { StatusAllCases } from "../src/utils/casesOperations";
+import moment from "moment";
 
 function Cases() {
   const bottomSheetModalRef = React.useRef(null);
   const snapPoints = React.useMemo(() => ["35%"], []);
   const { cases } = useSelector((state) => state.user);
+  const [loading, setLoading] = React.useState(false);
+  const dispatch = useDispatch();
+  // console.log(cases)
 
   const handlerModal = () => {
     bottomSheetModalRef.current?.present();
+  };
+
+  const onRefresh = async () => {
+    try {
+      setLoading(true);
+      let updateCases = await StatusAllCases(cases);
+      dispatch(resetCaseUpdate(updateCases));
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
         <ListHeader
+          isLoading={loading}
+          handleRefresh={onRefresh}
           title="My Cases"
           iconName="add-circle-sharp"
           handleNavigation={handlerModal}
         />
+        <Text style={styles.lastRefresh}>
+          {cases?.length
+            ? `Last refresh: ${moment(cases[0].updateAt).format(
+                "MMMM Do YYYY, h:mm:ss a"
+              )}`
+            : null}
+        </Text>
         {cases?.length ? (
-          <ScrollView style={styles.containerScroll}>
-            {cases?.map((userCase,i) => (
-              <CardCases data={userCase} key={userCase.id===undefined ? i : userCase.id } />
-            ))}
-          </ScrollView>
+          <FlashList
+            data={cases}
+            contentContainerStyle={
+              Platform.OS === "ios" && { paddingVertical: 30 }
+            }
+            renderItem={({ item }) => <CardCases data={item} />}
+            estimatedItemSize={10}
+            keyExtractor={(item) => item.id}
+            refreshing={loading}
+            onRefresh={onRefresh}
+          />
         ) : (
           <NoCases />
         )}
@@ -88,5 +122,11 @@ const styles = StyleSheet.create({
     height: "8%",
 
     alignItems: "flex-end",
+  },
+  lastRefresh: {
+    paddingHorizontal: 17,
+    marginTop: 2,
+    color: "gray",
+    fontFamily: "sans-serif-condensed",
   },
 });

@@ -1,83 +1,101 @@
-import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  Animated,
+} from "react-native";
 import React, { useState } from "react";
 import moment from "moment";
-import MyButton from "./MyButton";
 import { Swipeable } from "react-native-gesture-handler";
 import { deleteCase } from "../src/utils/casesOperations";
 import { useDispatch } from "react-redux";
 import { resetCaseDelete } from "../src/features/user";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { colorSelect, selectImageUrls } from "../src/utils/imageStatus";
 
-
-const CardCases = ({data}) => {
+const CardCases = ({ data }) => {
   const dispatch = useDispatch();
 
   const caseDelete = async () => {
     try {
       await deleteCase(data.id);
-      dispatch(resetCaseDelete());
+      dispatch(resetCaseDelete(data.id));
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
-    <Swipeable 
-      renderLeftActions={LeftAction}
-      onSwipeableLeftOpen={caseDelete}
+    <Swipeable
+      renderRightActions={(progress, dragX) => (
+        <LeftAction progress={progress} dragX={dragX} />
+      )}
+      onSwipeableRightWillOpen={caseDelete}
     >
       <View style={styles.containerCards}>
-        <View style={styles.cardContainer}>
+        <View
+          style={[
+            styles.cardContainer,
+            { borderLeftColor: colorSelect(data.titleCase) , borderLeftWidth: 6 },
+          ]}
+        >
           <View style={styles.cardTop}>
-            <Image
+            {/* <Image
               style={styles.image}
               source={{
-                uri: "https://www.iconpacks.net/icons/2/free-incoming-mail-icon-2577-thumb.png",
+                uri: 
               }}
-            />
+            /> */}
             <Text style={styles.receiptNumber}>{data.receiptNumber}</Text>
             <Text style={styles.typeForm}>{data.typeForm}</Text>
           </View>
           <Text style={styles.titleCase}>{data.titleCase}</Text>
           <View style={styles.cardBottom}>
             <Text style={styles.lastChange}>
-              Last Change: {moment(new Date(data.receiptDate).toISOString()).fromNow()}
+              Last change:{" "}
+              {moment(new Date(data.receiptDate).toISOString()).fromNow()}
             </Text>
             <Text style={styles.lastChange}>{data.receiptDate}</Text>
           </View>
         </View>
         {/* <MyButton title='X' onPress={()=>deleteCase(data.id)} /> */}
       </View>
-      </Swipeable>
+    </Swipeable>
   );
 };
 
 export default CardCases;
 
+const LeftAction = ({ progress, dragX }) => {
+  const scale = dragX.interpolate({
+    inputRange: [-100, 0],
+    outputRange: [1, 0],
+    extrapolate: "clamp",
+  });
 
-const LeftAction = () => {
+  console.log(scale);
   return (
-    <View style={styles.leftAction}>
-      <Text style={styles.actionText}>Delete</Text>
+    <View style={styles.rightAction}>
+      <Animated.Text style={[styles.actionText, { transform: [{ scale }] }]}>
+        <FontAwesome5 name="trash-alt" size={24} color="white" />
+      </Animated.Text>
     </View>
   );
-}
-
-
-
+};
 
 const styles = StyleSheet.create({
-
   containerCards: {
     alignItems: "center",
     paddingVertical: 7,
   },
   cardContainer: {
-    width: "90%",
-    height: 'auto',
+    width: "92%",
+    height: "auto",
     paddingBottom: 10,
     borderRadius: 7,
     borderWidth: 1,
-    borderColor: "#3C3838",
   },
   image: {
     width: 50,
@@ -88,7 +106,7 @@ const styles = StyleSheet.create({
   cardTop: {
     flexDirection: "row",
     // backgroundColor:'red',
-
+    alignItems: "center",
     justifyContent: "space-between",
   },
   typeForm: {
@@ -99,7 +117,7 @@ const styles = StyleSheet.create({
   },
   receiptNumber: {
     marginTop: 12,
-    // marginRight:30,
+    marginLeft: 10,
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
@@ -121,15 +139,23 @@ const styles = StyleSheet.create({
     color: "gray",
     fontFamily: "sans-serif-condensed",
   },
-  leftAction: {
-    backgroundColor: "#388e3c",
+  cardBottomLeft: {
+    flexDirection: "column",
+  },
+  rightAction: {
+    backgroundColor: "#dd2c00",
     justifyContent: "center",
-    flex: 1,
+    alignItems: "flex-end",
+    marginVertical: 7,
   },
   actionText: {
     color: "#fff",
     fontWeight: "600",
     padding: 20,
+  },
+
+  trashIcon: {
+    // marginLeft: 30,
   },
 });
 

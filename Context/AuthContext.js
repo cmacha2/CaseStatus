@@ -169,7 +169,8 @@ function AuthProvider({ children }) {
       status: null,
       notificationToken: null,
       latitude:null,
-      longitude:null
+      longitude:null,
+      cases: null,
     };
     try {
       const userFromDB = await API.graphql(
