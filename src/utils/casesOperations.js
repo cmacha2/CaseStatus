@@ -4,6 +4,7 @@ import {
   deleteCase as deleteCaseMutation,
   updateCase as updateCaseMutation,
 } from "../graphql/mutations";
+import { listCases } from "../graphql/queries";
 import { checkStatus } from "./checkStatusCase";
 
 export const createCase = async (caseNumber, authorID) => {
@@ -111,3 +112,29 @@ export const StatusAllCases = async (cases) => {
     console.log(error);
   }
 };
+
+export const getReceiptsNumbers = async () => {
+  try {
+    const {data} = await API.graphql({
+      query: listCases,
+    });
+    const receiptNumbers = data.listCases.items.map((item) => {
+      return item.receiptNumber;
+    });
+    return receiptNumbers;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+

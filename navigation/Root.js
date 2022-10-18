@@ -16,6 +16,7 @@ import NewPost from "../Screens/NewPost";
 import Cases from "../Screens/Cases";
 import Comments from "../Screens/Comments";
 import ChatRoom from "../Screens/ChatRoom";
+import CaseDetails from "../Screens/CaseDetails";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -44,8 +45,8 @@ function BottomNavigator() {
         }}
       />
       <Tab.Screen
-        name="Cases"
-        component={Cases}
+        name="CasesStack"
+        component={CasesStack}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-search" color={color} />,
           tabBarLabel:'Cases',
@@ -90,7 +91,7 @@ function HomeStack(){
         headerShown:false
       }}/>
       <Stack.Screen name="NewPost" component={NewPost} options={{presentation:'modal'}}/>
-      <Stack.Screen name="Comments" component={Comments} options={{presentation:'modal'}}/>
+      <Stack.Screen name="Comments" component={Comments} options={{presentation:'modal',headerTitleAlign:'center'}}/>
     </Stack.Navigator>
   )
 }
@@ -102,7 +103,24 @@ function ChatsStack(){
         headerShown:false
       }}/> 
       <Stack.Screen name="ChatRoom" component={ChatRoom} options={{
-        tabBarLabel:'Chats'
+        tabBarLabel:'Chats',
+        headerTitleAlign:'center'
+      }}/>
+    </Stack.Navigator>
+  )
+}
+
+
+function CasesStack(){
+  return (
+    <Stack.Navigator initialRouteName="Cases" >
+      <Stack.Screen name="Cases" component={Cases} options={{
+        headerShown:false
+      }}/> 
+      <Stack.Screen name="CaseDetails" component={CaseDetails} options={{
+        // tabBarLabel:'Cases',
+        headerTitle:'Case Details',
+        headerTitleAlign:'center'
       }}/>
     </Stack.Navigator>
   )

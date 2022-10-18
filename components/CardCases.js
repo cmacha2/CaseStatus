@@ -5,6 +5,7 @@ import {
   Image,
   ScrollView,
   Animated,
+  Pressable,
 } from "react-native";
 import React, { useState } from "react";
 import moment from "moment";
@@ -14,9 +15,11 @@ import { useDispatch } from "react-redux";
 import { resetCaseDelete } from "../src/features/user";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { colorSelect, selectImageUrls } from "../src/utils/imageStatus";
+import {useNavigation} from '@react-navigation/native'
 
 const CardCases = ({ data }) => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const caseDelete = async () => {
     try {
@@ -34,7 +37,7 @@ const CardCases = ({ data }) => {
       )}
       onSwipeableRightWillOpen={caseDelete}
     >
-      <View style={styles.containerCards}>
+      <Pressable style={styles.containerCards} onPress={()=>navigation.navigate('CaseDetails',{data}) }>
         <View
           style={[
             styles.cardContainer,
@@ -61,7 +64,7 @@ const CardCases = ({ data }) => {
           </View>
         </View>
         {/* <MyButton title='X' onPress={()=>deleteCase(data.id)} /> */}
-      </View>
+      </Pressable>
     </Swipeable>
   );
 };
@@ -113,7 +116,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginTop: 12,
     color: "gray",
-    fontFamily: "sans-serif-condensed",
+    // fontFamily: "sans-serif-condensed",
   },
   receiptNumber: {
     marginTop: 12,
@@ -121,12 +124,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
-    fontFamily: "sans-serif-condensed",
+    // fontFamily: "sans-serif-condensed",
   },
   titleCase: {
     marginTop: 5,
     marginLeft: 10,
-    fontFamily: "sans-serif-condensed",
+    // fontFamily: "sans-serif-condensed",
   },
   cardBottom: {
     flexDirection: "row",

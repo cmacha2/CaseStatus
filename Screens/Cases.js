@@ -9,7 +9,6 @@ import {
   AppRegistry,
   TouchableOpacity,
   View,
-  ScrollView,
   SafeAreaView,
 } from "react-native";
 import {
@@ -27,7 +26,7 @@ import ListHeader from "../components/ListHeader";
 import { FlatList } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { resetCaseUpdate } from "../src/features/user";
-import { StatusAllCases } from "../src/utils/casesOperations";
+import { getReceiptsNumbers, StatusAllCases } from "../src/utils/casesOperations";
 import moment from "moment";
 
 function Cases() {
