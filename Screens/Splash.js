@@ -4,7 +4,8 @@ import MyText from "../components/MyText";
 import { Auth, API, graphqlOperation } from "aws-amplify";
 import { useDispatch } from "react-redux"
 import {setUser} from "../src/features/user"
-import { getUser } from "../src/graphql/queries"
+import { getUser } from "../graphqlCustom/getUser"
+import { setChatRooms } from "../src/features/chatRooms";
 
 export default function Splash({ setIsLoading }) {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ export default function Splash({ setIsLoading }) {
         const { data } = await API.graphql(
           graphqlOperation(getUser, { id: attributes.sub })
         );
+        console.log(data);
         dispatch(
           setUser({
             id: attributes.sub,
@@ -29,6 +31,10 @@ export default function Splash({ setIsLoading }) {
             cases: data.getUser.cases.items,
           })
         );
+        if(data.getUser.chatRooms.items !== null){
+          dispatch(setChatRooms(data.getUser.chatRooms.items));
+          }
+        dispatch(setChatRooms(data.getUser.chatRooms.items));
         setIsLoading(false);
         // console.log(attributes);
       } catch (e) {

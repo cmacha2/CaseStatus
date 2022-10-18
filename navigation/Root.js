@@ -15,6 +15,7 @@ import Chats from "../Screens/Chats";
 import NewPost from "../Screens/NewPost";
 import Cases from "../Screens/Cases";
 import Comments from "../Screens/Comments";
+import ChatRoom from "../Screens/ChatRoom";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -52,8 +53,8 @@ function BottomNavigator() {
         }}
       />
       <Tab.Screen
-        name="Chats"
-        component={Chats}
+        name="ChatsStack"
+        component={ChatsStack}
         
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="md-chatbubbles" color={color} />,
@@ -94,3 +95,15 @@ function HomeStack(){
   )
 }
 
+function ChatsStack(){
+  return (
+    <Stack.Navigator initialRouteName="Chats" >
+      <Stack.Screen name="Chats" component={Chats} options={{
+        headerShown:false
+      }}/> 
+      <Stack.Screen name="ChatRoom" component={ChatRoom} options={{
+        tabBarLabel:'Chats'
+      }}/>
+    </Stack.Navigator>
+  )
+}

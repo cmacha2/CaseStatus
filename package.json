@@ -43,7 +43,9 @@
     "react-native-safe-area-context": "4.3.1",
     "react-native-screens": "~3.15.0",
     "react-redux": "^8.0.4",
-    "req-uscis-status": "^1.0.3"
+    "req-uscis-status": "^1.0.3",
+    "expo-linear-gradient": "~11.4.0",
+    "react-native-maps": "0.31.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

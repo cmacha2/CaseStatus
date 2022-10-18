@@ -15,13 +15,19 @@ export default {
     background:'#F2f2f4',
     tint: tintColorLight,
     tabIconDefault:'#ccc',
-    tabIconSelected:tintColorLight
+    tabIconSelected:tintColorLight,
+    red:"#EF4444",
+    messageFrom:"#0171F4",
+    messageTo:"#54A0FA",
   },
   dark:{
     text:'#F2F2F4',
     background:'#0D0D0D',
     tint: tintColorDark,
     tabIconDefault:'#ccc',
-    tabIconSelected:tintColorDark
+    tabIconSelected:tintColorDark,
+    red:"#EF4444",
+    messageFrom:"#8638D1",
+    messageTo:"#896FFE",
   }
 }
