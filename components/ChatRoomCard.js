@@ -105,19 +105,19 @@ export default function ChatRoomCard(chat) {
             style={{
               width: "100%",
               flexDirection: "row",
-              justifyContent: "space-between",
+              justifyContent: "space-around",
               alignItems: "baseline",
             }}
           >
-            <MyText style={{ fontWeight: "500" }}>
+            <MyText  style={{ fontWeight: "500", fontSize:16}}>
               {contactInfo.firstName} {contactInfo.lastName}
             </MyText>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <MyText
-                type="caption"
                 style={{
                   color: Colors[theme].text + "80",
                   fontWeight: "500",
+                  fontSize: 12,
                   marginRight: 13,
                 }}
               >
@@ -132,11 +132,13 @@ export default function ChatRoomCard(chat) {
             </View>
           </View>
           <MyText
+          type='caption'
             style={{
               color: Colors[theme].text + "80",
+              fontSize: 14,
             }}
             numberOfLines={2}
-            // ellipsizeMode="tail"
+            ellipsizeMode="tail"
           >
             {chatRoom.lastMessage?.content.slice(0, 27)}
           </MyText>

@@ -61,10 +61,10 @@ export default function ContactProfile() {
           />
         </View>
       </View>
-      { (user.id === route.params?.id || !route.params?.id) ? (
+      { (user.id === route?.params?.id || !route?.params?.id) ? (
         <EditProfileButton theme={theme} />
       )
-    : <SendMessageButton theme={theme}/>
+    : <SendMessageButton theme={theme} />
     }
       <MyText
         style={{
@@ -172,14 +172,14 @@ const EditProfileButton = ({ theme, onPress }) => {
   )
 }
 
-const SendMessageButton = ({ theme, onPress }) => {
+const SendMessageButton = ({ theme, onPress, id}) => {
   const navigation = useNavigation()
   return (
     <View style={styles.containerEditProfile}>
           <Pressable
             style={styles.button}
             onPress={() => {
-              navigation.navigate("ChatRoom", { id: route.params.id });
+              navigation.navigate("Chats");
             }}
           >
             <MyText style={styles.text}>Send Message</MyText>

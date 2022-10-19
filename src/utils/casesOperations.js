@@ -10,10 +10,9 @@ import { checkStatus } from "./checkStatusCase";
 export const createCase = async (caseNumber, authorID) => {
   try {
     const data = await checkStatus(caseNumber);
-    if (data.error) {
+    if (data?.error) {
       return { error: "Case not found" };
     }
-
     const newCase = await API.graphql({
       query: createCaseMutation,
       variables: {
@@ -38,7 +37,6 @@ export const createCase = async (caseNumber, authorID) => {
       createdAt: newCase.data.createCase.createdAt,
       updateAt: newCase.data.createCase.updateAt || null,
     };
-    console.log(newCaseCreated.receiptDate);
     return newCaseCreated;
   } catch (error) {
     return { error: "Case not created" };
@@ -92,7 +90,7 @@ export const updateCase = async (caseID, titleCase, description) => {
 export const StatusAllCases = async (cases) => {
   let casesStatus = [];
   try {
-    if (cases.length > 0) {
+    if (cases?.length > 0) {
       cases.map(async (caseNumber) => {
         const response = await checkStatus(caseNumber.receiptNumber);
         if (response.error) {

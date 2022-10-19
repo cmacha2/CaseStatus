@@ -1,8 +1,7 @@
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet, Platform, View } from "react-native";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { View } from "../components/theme/Themed";
 import ListHeader from "../components/ListHeader";
 import { FlashList } from "@shopify/flash-list";
 import ChatRoomCard from "../components/ChatRoomCard";
@@ -37,6 +36,6 @@ export default Chats;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 10,
+    // paddingHorizontal: 10,
   },
 });

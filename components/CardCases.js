@@ -16,8 +16,11 @@ import { resetCaseDelete } from "../src/features/user";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { colorSelect, selectImageUrls } from "../src/utils/imageStatus";
 import {useNavigation} from '@react-navigation/native'
+import MyText from "./MyText";
+import { useColorScheme } from "react-native";
 
 const CardCases = ({ data }) => {
+  const theme = useColorScheme();
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -41,20 +44,19 @@ const CardCases = ({ data }) => {
         <View
           style={[
             styles.cardContainer,
-            { borderLeftColor: colorSelect(data.titleCase) , borderLeftWidth: 6 },
+            { borderLeftColor: colorSelect(data.titleCase),
+              borderLeftWidth: 6,
+              borderTopColor:'gray',
+              borderRightColor:'gray',
+              borderBottomColor:'gray',
+            },
           ]}
         >
           <View style={styles.cardTop}>
-            {/* <Image
-              style={styles.image}
-              source={{
-                uri: 
-              }}
-            /> */}
-            <Text style={styles.receiptNumber}>{data.receiptNumber}</Text>
-            <Text style={styles.typeForm}>{data.typeForm}</Text>
+            <MyText style={styles.receiptNumber}>{data.receiptNumber}</MyText>
+            <MyText style={styles.typeForm}>{data.typeForm}</MyText>
           </View>
-          <Text style={styles.titleCase}>{data.titleCase}</Text>
+          <MyText type="caption" style={styles.titleCase}>{data.titleCase}</MyText>
           <View style={styles.cardBottom}>
             <Text style={styles.lastChange}>
               Last change:{" "}

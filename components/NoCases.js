@@ -1,10 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text} from 'react-native'
 import React from 'react'
+import MyText from './MyText'
+import { View } from '../components/theme/Themed'
 
 const NoCases = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.textCase}>No cases available for checking</Text>
+      <MyText style={styles.textCase}>No cases available for checking</MyText>
     </View>
   )
 }
@@ -23,7 +25,6 @@ const styles = StyleSheet.create({
         fontSize: 15,
         textAlign:"center",
         // backgroundColor: "#f0f0f0",
-        color: "#000000",
         fontFamily:"sans-serif-condensed"
     }
 })

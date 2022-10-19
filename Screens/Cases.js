@@ -55,6 +55,10 @@ function Cases() {
     }
   };
 
+  if (!cases?.length) {
+    return <NoCases handlerModal={handlerModal} />;
+  }
+
   return (
     <View style={styles.container}>
       <GestureHandlerRootView style={{ flex: 1 }}>
@@ -67,27 +71,19 @@ function Cases() {
             handleNavigation={handlerModal}
           />
           <Text style={styles.lastRefresh}>
-            {cases?.length
-              ? `Last refresh: ${moment(cases[0].updateAt).format(
-                  "MMMM Do YYYY, h:mm:ss a"
-                )}`
-              : null}
+            Last refresh: {moment(cases[0].updateAt).format("MMMM Do YYYY, h:mm:ss a")}
           </Text>
-          {cases?.length ? (
-            <FlashList
-              data={cases}
-              contentContainerStyle={
-                Platform.OS === "ios" && { paddingVertical: 30 }
-              }
-              renderItem={({ item }) => <CardCases data={item} />}
-              estimatedItemSize={10}
-              keyExtractor={(item) => item.id}
-              refreshing={loading}
-              onRefresh={onRefresh}
-            />
-          ) : (
-            <NoCases />
-          )}
+          <FlashList
+            data={cases}
+            contentContainerStyle={
+              Platform.OS === "ios" && { paddingVertical: 30 }
+            }
+            renderItem={({ item }) => <CardCases data={item} />}
+            estimatedItemSize={10}
+            keyExtractor={(item) => item.id}
+            refreshing={loading}
+            onRefresh={onRefresh}
+          />
           <ModalAddCase
             bottomSheetModalRef={bottomSheetModalRef}
             snapPoints={snapPoints}
@@ -110,7 +106,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     textAlign: "left",
     paddingLeft: 15,
-    backgroundColor: "#f0f0f0",
+    // backgroundColor: "#f0f0f0",
     paddingVertical: 12,
     color: "#000000",
     fontFamily: "sans-serif-condensed",
@@ -120,9 +116,9 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   containerAddCaseButton: {
-    height: "8%",
+    // height: "8%",
 
-    alignItems: "flex-end",
+    // alignItems: "flex-end",
   },
   lastRefresh: {
     paddingHorizontal: 17,
