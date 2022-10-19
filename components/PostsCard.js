@@ -97,7 +97,7 @@ export default function PostCard(post) {
     >
       <View style={{ paddingHorizontal: 17 }}>
         <View style={styles.postHeader}>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Pressable onPress={()=>navigation.navigate('Profile',{id:author.id})} style={{ flexDirection: "row", alignItems: "center" }}>
             <Image
               source={{
                 uri: author?.profilePicture
@@ -107,7 +107,7 @@ export default function PostCard(post) {
               style={styles.image}
             />
             <View style={{ paddingLeft: 10 }}>
-              <MyText style={{ fontWeight: "500" }}>{author?.firstName}</MyText>
+              <MyText style={{ fontWeight: "500" }}>{author?.firstName } {author?.lastName}</MyText>
               <MyText
                 type="caption"
                 style={{ color: Colors[theme].text + "70", fontWeight: "500" }}
@@ -115,7 +115,7 @@ export default function PostCard(post) {
                 {moment(createdAt).fromNow()}
               </MyText>
             </View>
-          </View>
+          </Pressable>
           <Ionicons
             name="ellipsis-horizontal"
             size={24}

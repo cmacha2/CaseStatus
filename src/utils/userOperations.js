@@ -1,5 +1,13 @@
-import { API } from "aws-amplify";
-import { updateUser , deleteUser as deleteUserMutation} from "../graphql/mutations";
+import { API, graphqlOperation } from "aws-amplify";
+import { getUser } from "../../graphqlCustom/getUser";
+import {
+  updateUser,
+  deleteUser as deleteUserMutation,
+  createChatRoom,
+  createUserChatRooms,
+} from "../graphql/mutations";
+import { listUsers } from "../graphql/queries";
+import { listInfoUsers } from "../../graphqlCustom/listInfoUsers";
 
 export const updateUserPicture = async (userID, newPhoto) => {
   try {
@@ -86,17 +94,16 @@ export const updateUserNotificationToken = async (userID, newToken) => {
   }
 };
 
-
 export const updateUserLocation = async (userID, location) => {
-  const {latitude,longitude} = location
+  const { latitude, longitude } = location;
   try {
     await API.graphql({
       query: updateUser,
       variables: {
         input: {
           id: userID,
-          latitude:latitude,
-          longitude:longitude
+          latitude: latitude,
+          longitude: longitude,
         },
       },
     });
@@ -106,7 +113,7 @@ export const updateUserLocation = async (userID, location) => {
   }
 };
 
-export const deleteUser = async (userID)=>{
+export const deleteUser = async (userID) => {
   try {
     await API.graphql({
       query: deleteUserMutation,
@@ -120,4 +127,98 @@ export const deleteUser = async (userID)=>{
   } catch (e) {
     console.log("error deleting user");
   }
-}
+};
+
+export const getUserByID = async (ID) => {
+  try {
+    const { data } = await API.graphql(
+      graphqlOperation(getUser, {
+        id: ID,
+      })
+    );
+    if (data.getUser) {
+      return data.getUser;
+    } else {
+      return null;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getUserByEmail = async (email) => {
+  try {
+    const { data } = await API.graphql({
+      query: listUsers,
+      variables: {
+        filter: {
+          email: {
+            eq: email,
+          },
+        },
+      },
+    });
+    if (data.listUsers.items) {
+      return data.listUsers.items[0];
+    } else {
+      return null;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+
+
+export const listAllUsers = async () => {
+  try {
+    const { data } = await API.graphql({
+      query: listInfoUsers,
+      
+    });
+    if (data.listUsers.items) {
+      return data.listUsers.items;
+    } else {
+      return null;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const createNewChatRoom = async () => {
+  try {
+    const { data } = await API.graphql({
+      query: createChatRoom,
+      variables: {
+        input: {
+          chatRoomLastMessageId: "",
+          isSeenBy: [],
+        },
+      },
+    });
+    if (data.createChatRoom) {
+      return data.createChatRoom.id;
+    } else {
+      return null;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const addUserToChatRoom = async (userID, chatRoomID) => {
+  try {
+    await API.graphql({
+      query: createUserChatRooms,
+      variables: {
+        input: {
+          userID: userID,
+          chatRoomID: chatRoomID,
+        },
+      },
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};

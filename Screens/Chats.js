@@ -9,6 +9,7 @@ import ChatRoomCard from "../components/ChatRoomCard";
 
 const Chats = () => {
   const { chatRooms } = useSelector((state) => state.chatRooms);
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <FlashList
@@ -20,7 +21,9 @@ const Chats = () => {
           <ListHeader
             title="Chats"
             iconName="add-circle-sharp"
-            handleNavigation={() => {}}
+            handleNavigation={() => {
+              navigation.navigate("NewChat");
+            }}
           />
         }
         estimatedItemSize={100}

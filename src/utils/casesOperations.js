@@ -36,7 +36,7 @@ export const createCase = async (caseNumber, authorID) => {
       receiptDate: newCase.data.createCase.receiptDate,
       id: newCase.data.createCase.id,
       createdAt: newCase.data.createCase.createdAt,
-      updateAt: newCase.data.createCase.updateAt,
+      updateAt: newCase.data.createCase.updateAt || null,
     };
     console.log(newCaseCreated.receiptDate);
     return newCaseCreated;
@@ -92,7 +92,6 @@ export const updateCase = async (caseID, titleCase, description) => {
 export const StatusAllCases = async (cases) => {
   let casesStatus = [];
   try {
-    console.log("update cases", cases);
     if (cases.length > 0) {
       cases.map(async (caseNumber) => {
         const response = await checkStatus(caseNumber.receiptNumber);

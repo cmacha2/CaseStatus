@@ -1,41 +1,89 @@
 import * as React from "react";
-import { Image, StyleSheet, useColorScheme, View, Text, Pressable } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  useColorScheme,
+  View,
+  Text,
+  Pressable,
+  Alert,
+} from "react-native";
 import MyText from "./MyText";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import Colors from "../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { API } from "aws-amplify";
+import { deleteUserChatRooms } from "../src/graphql/mutations";
+import { removeChatRoom } from "../src/features/chatRooms";
 
 export default function ChatRoomCard(chat) {
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const { chatRoomID, chatRoom } = chat;
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const { isSeenBy, participants, lastMessage } = chatRoom;
   const theme = useColorScheme();
 
   const contactInfo =
-    participants.items[0].user.id === user.id
+    participants.items.length > 2
       ? {
-        id: participants.items[1].user.id,
+          firstName: "User left",
+        }
+      : participants.items[0].user.id === user.id
+      ? {
+          id: participants.items[1].user.id,
           firstName: participants.items[1].user.firstName,
           lastName: participants.items[1].user.lastName,
           profilePicture: participants.items[1].user.profilePicture,
         }
       : {
-        id: participants.items[0].user.id,
+          id: participants.items[0].user.id,
           firstName: participants.items[0].user.firstName,
           lastName: participants.items[0].user.lastName,
           profilePicture: participants.items[0].user.profilePicture,
         };
   const isSeenByCurrentUser = isSeenBy !== null && isSeenBy.includes(user.id);
+
+  const handleDeleteChatRoom = async () => {
+    Alert.alert(
+      "Leave Chat Room",
+      "Are you sure you want to leave this chat room?",
+      [
+        ,
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Confirm",
+          onPress: async () => {
+            try {
+              await API.graphql({
+                query: deleteUserChatRooms,
+                variables: { input: chat.id },
+              });
+              dispatch(removeChatRoom(chat.id));
+            } catch (e) {
+              console.log(e);
+            }
+          },
+          style: "destructive",
+        }
+      ]
+    );
+  };
+
   return (
     <Pressable
       style={[
         styles.container,
         { borderBottomColor: Colors[theme].text + "60" },
       ]}
-      onPress={() => navigation.navigate("ChatRoom", {contactInfo, chatRoomID })}
+      onPress={() =>
+        navigation.navigate("ChatRoom", { contactInfo, chatRoomID })
+      }
     >
       <View style={styles.containerWithPadding}>
         <View
@@ -79,12 +127,13 @@ export default function ChatRoomCard(chat) {
                 name="ellipsis-horizontal"
                 size={24}
                 color={Colors[theme].text + "80"}
+                onPress={handleDeleteChatRoom}
               />
             </View>
           </View>
           <MyText
             style={{
-              color:Colors[theme].text + "80",
+              color: Colors[theme].text + "80",
             }}
             numberOfLines={2}
             // ellipsizeMode="tail"

@@ -4,6 +4,7 @@ import MyText from "./MyText";
 
 export default function MyInput({
   label,
+  hiddenLabel,
   value,
   onChangeText,
   secureTextEntry,
@@ -14,7 +15,7 @@ export default function MyInput({
     <View
       style={styles.container}
     >
-      <MyText style={{fontWeight:'bold',paddingBottom:5}} type={"caption"}>{label}</MyText>
+    {  !hiddenLabel && <MyText style={{fontWeight:'bold',paddingBottom:5}} type={"caption"}>{label}</MyText>}
       <TextInput
         placeholder={label}
         style={[styles.input, styles[theme]]}

@@ -1,8 +1,8 @@
-import { Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import React from "react";
 import { useRoute } from "@react-navigation/native";
 import MyText from "../components/MyText";
-import { View } from "../components/theme/Themed";
+import { ScrollView } from "../components/theme/Themed";
 import { colorSelect } from "../src/utils/imageStatus";
 import Hyperlink from "react-native-hyperlink";
 import moment from "moment";
@@ -12,7 +12,7 @@ const CaseDetails = () => {
   const { data } = route.params;
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Image
         style={styles.image}
         source={{
@@ -66,7 +66,10 @@ const CaseDetails = () => {
           </MyText>
         </View>
       </View> */}
-    </View>
+       {/* <View style={styles.containerLogo}>
+      <Image style={styles.uscisImg} source={{ uri: "https://res.cloudinary.com/cmacha2/image/upload/v1666113220/SealsSignatures_USCIS_2x_pbeqqk.png" }} />
+      </View>  */}
+    </ScrollView>
   );
 };
 
@@ -103,6 +106,18 @@ const styles = StyleSheet.create({
     width: 217,
     height: 58,
     marginTop: 15,
+    alignSelf: "center",
+  },
+  containerLogo:{
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  uscisImg: {
+    width: "62%",
+    height:"40%",
+    justifyContent: "center",
     alignSelf: "center",
   },
   description: {

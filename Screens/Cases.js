@@ -8,7 +8,6 @@ import {
   TextInput,
   AppRegistry,
   TouchableOpacity,
-  View,
   SafeAreaView,
 } from "react-native";
 import {
@@ -26,8 +25,12 @@ import ListHeader from "../components/ListHeader";
 import { FlatList } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { resetCaseUpdate } from "../src/features/user";
-import { getReceiptsNumbers, StatusAllCases } from "../src/utils/casesOperations";
+import {
+  getReceiptsNumbers,
+  StatusAllCases,
+} from "../src/utils/casesOperations";
 import moment from "moment";
+import { View } from "../components/theme/Themed";
 
 function Cases() {
   const bottomSheetModalRef = React.useRef(null);
@@ -53,43 +56,45 @@ function Cases() {
   };
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <BottomSheetModalProvider>
-        <ListHeader
-          isLoading={loading}
-          handleRefresh={onRefresh}
-          title="My Cases"
-          iconName="add-circle-sharp"
-          handleNavigation={handlerModal}
-        />
-        <Text style={styles.lastRefresh}>
-          {cases?.length
-            ? `Last refresh: ${moment(cases[0].updateAt).format(
-                "MMMM Do YYYY, h:mm:ss a"
-              )}`
-            : null}
-        </Text>
-        {cases?.length ? (
-          <FlashList
-            data={cases}
-            contentContainerStyle={
-              Platform.OS === "ios" && { paddingVertical: 30 }
-            }
-            renderItem={({ item }) => <CardCases data={item} />}
-            estimatedItemSize={10}
-            keyExtractor={(item) => item.id}
-            refreshing={loading}
-            onRefresh={onRefresh}
+    <View style={styles.container}>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <BottomSheetModalProvider>
+          <ListHeader
+            isLoading={loading}
+            handleRefresh={onRefresh}
+            title="My Cases"
+            iconName="add-circle-sharp"
+            handleNavigation={handlerModal}
           />
-        ) : (
-          <NoCases />
-        )}
-        <ModalAddCase
-          bottomSheetModalRef={bottomSheetModalRef}
-          snapPoints={snapPoints}
-        />
-      </BottomSheetModalProvider>
-    </GestureHandlerRootView>
+          <Text style={styles.lastRefresh}>
+            {cases?.length
+              ? `Last refresh: ${moment(cases[0].updateAt).format(
+                  "MMMM Do YYYY, h:mm:ss a"
+                )}`
+              : null}
+          </Text>
+          {cases?.length ? (
+            <FlashList
+              data={cases}
+              contentContainerStyle={
+                Platform.OS === "ios" && { paddingVertical: 30 }
+              }
+              renderItem={({ item }) => <CardCases data={item} />}
+              estimatedItemSize={10}
+              keyExtractor={(item) => item.id}
+              refreshing={loading}
+              onRefresh={onRefresh}
+            />
+          ) : (
+            <NoCases />
+          )}
+          <ModalAddCase
+            bottomSheetModalRef={bottomSheetModalRef}
+            snapPoints={snapPoints}
+          />
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
+    </View>
   );
 }
 
@@ -97,12 +102,9 @@ AppRegistry.registerComponent("Cases", () => Cases);
 export default Cases;
 
 const styles = StyleSheet.create({
-  containerScroll: {
-    flex: 1,
-  },
   container: {
     flex: 1,
-    backgroundColor: "#000511",
+    paddingHorizontal: 0,
   },
   textMyCases: {
     fontSize: 28,

@@ -10,6 +10,11 @@ export const chatRoomsSlice = createSlice({
   reducers: {
     setChatRooms: (state, action) => {
       state.chatRooms = action.payload;
+    },
+    removeChatRoom: (state, action) => {
+      state.chatRooms = state.chatRooms.filter(
+        (chatRoom) => chatRoom.id !== action.payload
+      );
     }
   }
 });
@@ -17,6 +22,7 @@ export const chatRoomsSlice = createSlice({
 
 export const {
     setChatRooms,
+    removeChatRoom
 } = chatRoomsSlice.actions;
 
 export default chatRoomsSlice.reducer;

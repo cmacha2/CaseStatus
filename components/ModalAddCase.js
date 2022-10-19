@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, useColorScheme } from "react-native";
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
@@ -11,10 +11,12 @@ import { createCase } from "../src/utils/casesOperations";
 import { resetCases } from "../src/features/user";
 import { useDispatch, useSelector } from "react-redux";
 import MyText from "./MyText";
+import { View } from "./theme/Themed";
 
 const ModalAddCase = ({  bottomSheetModalRef, snapPoints }) => {
   const [numberCase, setNumerCase] = useState("");
-  const dispatch = useDispatch();
+  const theme = useColorScheme()
+    const dispatch = useDispatch();
   const { id } = useSelector((state) => state.user);
   const [errorFirstDigits, setErrorFirstDigits] = useState("");
   const [errorSize, setErrorSize] = useState("");
@@ -26,9 +28,9 @@ const ModalAddCase = ({  bottomSheetModalRef, snapPoints }) => {
       if(data.error){
         return setErrorNumber(`Case number ${numberCase} not found`);
       }
-      
       dispatch(resetCases(data));
       bottomSheetModalRef.current?.close();
+      setNumerCase("");
     } catch (e) {
       console.log(e, "error publishing case");
     }
@@ -50,11 +52,12 @@ const ModalAddCase = ({  bottomSheetModalRef, snapPoints }) => {
 
 
   return (
+    <View style={styles.container}>
     <BottomSheetModal
       ref={bottomSheetModalRef}
       index={0}
       snapPoints={snapPoints}
-      backgroundStyle={{ borderRadius: 30 }}
+      backgroundStyle={{ borderRadius: 30  }}
       keyboardBlurBehavior="restore"
     >
       <View style={styles.modalTop}>
@@ -73,6 +76,7 @@ const ModalAddCase = ({  bottomSheetModalRef, snapPoints }) => {
           value={numberCase}
           onChangeText={onChangeText}
           style={styles.input}
+          autoCapitalize='characters' 
         />
         <ButtonAddCase style={styles.addCaseButton} onPress={addCase} disabled={(Boolean(errorFirstDigits) || Boolean(errorSize))}/>
       </View>
@@ -84,12 +88,16 @@ const ModalAddCase = ({  bottomSheetModalRef, snapPoints }) => {
         {errorNumber && <Text style={styles.errors}>{errorNumber}</Text>}
       </View>
     </BottomSheetModal>
+  </View>
   );
 };
 
 export default ModalAddCase;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   containerAddCase: {
     flex: 1,
     flexDirection: "row",
@@ -98,7 +106,7 @@ const styles = StyleSheet.create({
   },
   modalTop: {
     flex: 2,
-marginHorizontal:10,
+// marginHorizontal:10,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -110,6 +118,7 @@ marginHorizontal:10,
     lineHeight: 20,
     backgroundColor: "rgba(151, 151, 151, 0.25)",
     paddingLeft: 5,
+  
   },
   addCaseButton: {
     // backgroundColor:'red'

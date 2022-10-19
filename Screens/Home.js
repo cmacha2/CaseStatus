@@ -10,6 +10,7 @@ import ListHeader from "../components/ListHeader";
 import PostCard from "../components/PostsCard";
 import { setPostsReducer } from "../src/features/posts";
 import { useDispatch, useSelector } from "react-redux";
+import { listUsers } from "../src/utils/userOperations";
 
 export default function Home() {
   const theme = useColorScheme();

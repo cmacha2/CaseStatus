@@ -87,11 +87,11 @@ const userSlice = createSlice({
     resetCaseUpdate: (state, action) => {
       return {
         ...state,
-        cases: state.cases.map((item) =>
+        cases: state.cases?.map((item) =>
           item.id === action.payload.id ? action.payload : item
         ),
       };
-    }
+    },
   },
 });
 
@@ -106,6 +106,6 @@ export const {
   resetNotificationToken,
   resetCases,
   resetCaseDelete,
-  resetCaseUpdate
+  resetCaseUpdate,
 } = userSlice.actions;
 export default userSlice.reducer;

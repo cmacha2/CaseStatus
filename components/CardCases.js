@@ -77,8 +77,7 @@ const LeftAction = ({ progress, dragX }) => {
     outputRange: [1, 0],
     extrapolate: "clamp",
   });
-
-  console.log(scale);
+  
   return (
     <View style={styles.rightAction}>
       <Animated.Text style={[styles.actionText, { transform: [{ scale }] }]}>

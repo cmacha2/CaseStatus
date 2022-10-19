@@ -9,15 +9,15 @@ import { LinearGradient } from "expo-linear-gradient";
 export default function ChatMessage({ message }) {
   const user = useSelector((state) => state.user);
   const theme = useColorScheme();
-  const myMessage = message.author.id === user.id ? true : false;
+  const myMessage = message.author?.id === user.id ? true : false;
 
   return (
     <View style={myMessage ? {} : styles.otherBubbleWrapper}>
       {!myMessage && (
         <Image
           source={{
-            uri: message.author.profilePicture
-              ? message.author.profilePicture
+            uri: message.author?.profilePicture
+              ? message.author?.profilePicture
               : "https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png",
           }}
           style={styles.photo}
@@ -33,13 +33,13 @@ export default function ChatMessage({ message }) {
           }
         >
           <MyText style={myMessage && { color: "#fff" }}>
-            {message.content}
+            {message?.content}
           </MyText>
         </LinearGradient>
         <MyText
           style={[styles.createdAt, , myMessage && { textAlign: "right" }]}
         >
-          {moment(message.createdAt).fromNow()}
+          {moment(message?.createdAt).fromNow()}
         </MyText>
       </View>
     </View>
