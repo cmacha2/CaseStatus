@@ -42,6 +42,7 @@ function App() {
           firstName: data.payload.data.attributes.given_name,
           lastName: data.payload.data.attributes.family_name,
           profilePicture:null,
+          backgroundPicture: null,
           email: data.payload.data.attributes.email,
           status:null,
           notificationToken:null

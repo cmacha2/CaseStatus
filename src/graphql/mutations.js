@@ -11,6 +11,7 @@ export const createUser = /* GraphQL */ `
       firstName
       lastName
       profilePicture
+      backgroundPicture
       email
       status
       notificationToken
@@ -68,6 +69,7 @@ export const updateUser = /* GraphQL */ `
       firstName
       lastName
       profilePicture
+      backgroundPicture
       email
       status
       notificationToken
@@ -125,6 +127,7 @@ export const deleteUser = /* GraphQL */ `
       firstName
       lastName
       profilePicture
+      backgroundPicture
       email
       status
       notificationToken
@@ -200,6 +203,7 @@ export const createChatRoom = /* GraphQL */ `
           firstName
           lastName
           profilePicture
+          backgroundPicture
           email
           status
           notificationToken
@@ -258,6 +262,7 @@ export const updateChatRoom = /* GraphQL */ `
           firstName
           lastName
           profilePicture
+          backgroundPicture
           email
           status
           notificationToken
@@ -316,6 +321,7 @@ export const deleteChatRoom = /* GraphQL */ `
           firstName
           lastName
           profilePicture
+          backgroundPicture
           email
           status
           notificationToken
@@ -359,6 +365,7 @@ export const createPost = /* GraphQL */ `
         firstName
         lastName
         profilePicture
+        backgroundPicture
         email
         status
         notificationToken
@@ -398,6 +405,7 @@ export const updatePost = /* GraphQL */ `
         firstName
         lastName
         profilePicture
+        backgroundPicture
         email
         status
         notificationToken
@@ -437,6 +445,7 @@ export const deletePost = /* GraphQL */ `
         firstName
         lastName
         profilePicture
+        backgroundPicture
         email
         status
         notificationToken
@@ -475,6 +484,7 @@ export const createCase = /* GraphQL */ `
         firstName
         lastName
         profilePicture
+        backgroundPicture
         email
         status
         notificationToken
@@ -515,6 +525,7 @@ export const updateCase = /* GraphQL */ `
         firstName
         lastName
         profilePicture
+        backgroundPicture
         email
         status
         notificationToken
@@ -555,6 +566,7 @@ export const deleteCase = /* GraphQL */ `
         firstName
         lastName
         profilePicture
+        backgroundPicture
         email
         status
         notificationToken
@@ -596,6 +608,7 @@ export const createMessage = /* GraphQL */ `
         firstName
         lastName
         profilePicture
+        backgroundPicture
         email
         status
         notificationToken
@@ -634,6 +647,7 @@ export const updateMessage = /* GraphQL */ `
         firstName
         lastName
         profilePicture
+        backgroundPicture
         email
         status
         notificationToken
@@ -672,6 +686,7 @@ export const deleteMessage = /* GraphQL */ `
         firstName
         lastName
         profilePicture
+        backgroundPicture
         email
         status
         notificationToken
@@ -711,6 +726,7 @@ export const createUserChatRooms = /* GraphQL */ `
         firstName
         lastName
         profilePicture
+        backgroundPicture
         email
         status
         notificationToken
@@ -769,6 +785,7 @@ export const updateUserChatRooms = /* GraphQL */ `
         firstName
         lastName
         profilePicture
+        backgroundPicture
         email
         status
         notificationToken
@@ -827,6 +844,7 @@ export const deleteUserChatRooms = /* GraphQL */ `
         firstName
         lastName
         profilePicture
+        backgroundPicture
         email
         status
         notificationToken

@@ -23,6 +23,7 @@ export default function Splash({ setIsLoading }) {
             firstName: data.getUser.firstName,
             lastName: data.getUser.lastName,
             profilePicture: data.getUser.profilePicture,
+            backgroundPicture: data.getUser.backgroundPicture,
             email: attributes.email.toLowerCase(),
             status: data.getUser.status,
             notificationToken: data.getUser.notificationToken,

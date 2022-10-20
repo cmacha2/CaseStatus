@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { Button, StatusBar, useColorScheme } from "react-native";
 import { View } from "../components/theme/Themed";
@@ -20,14 +20,21 @@ export default function Home() {
   const [nextToken, setNextToken] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
 
-  React.useEffect(() => {
+  useFocusEffect(
+  React.useCallback(() => {
+
+    let isActive = true;
     async function checkFirstLaunch() {
       const firstLaunch = await AsyncStorage.getItem("@firstLaunch");
       if (!firstLaunch) navigation.navigate("Onbording");
     }
     checkFirstLaunch();
     fetchPost();
-  }, []);
+    return () => {
+      isActive = false;
+    };
+  }, [])
+  );
 
   async function fetchPost() {
     const { data } = await API.graphql(

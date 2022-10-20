@@ -2,23 +2,19 @@ import * as React from "react";
 import MyText from "./MyText";
 import { useSelector, useDispatch } from "react-redux";
 import { Pressable, StyleSheet, Image, View } from "react-native";
+import { API,graphqlOperation  } from "aws-amplify";
 import * as ImagePicker from "expo-image-picker"
 import {CLOUD_NAME,UPLOAD_PRESET} from "@env"
-import { resetProfilePicture } from "../src/features/user";
+import { resetProfilePicture, setUser } from "../src/features/user";
 import { updateUserPicture } from "../src/utils/userOperations";
-
-function ProfileFallback({ firstName }) {
-  return (
-    <View style={styles.fallback}>
-      <MyText style={styles.inicialLetter}>{firstName[0]}</MyText>
-    </View>
-  );
-}
+import { getUser } from "../graphqlCustom/getUser";
 
 const ProfilePicture = () => {
   const user = useSelector((state) => state.user);
   const { firstName, lastName, profilePicture, id } = user;
+
   const dispatch = useDispatch();
+
 
   const savePhotoCloudinary = async(data)=>{
     let apiUrl = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload/`
@@ -62,7 +58,7 @@ const ProfilePicture = () => {
         {profilePicture ? (
           <Image source={{ uri: profilePicture }} style={styles.image} />
         ) : (
-          <ProfileFallback firstName={firstName} />
+          <Image source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png' }} style={styles.image} />
         )}
       </Pressable>
       <MyText style={{ fontWeight: "bold" }}>

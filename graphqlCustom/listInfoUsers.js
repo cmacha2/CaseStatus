@@ -10,6 +10,7 @@ export const listInfoUsers = /* GraphQL */ `
         firstName
         lastName
         profilePicture
+        backgroundPicture
         email
         notificationToken
       }

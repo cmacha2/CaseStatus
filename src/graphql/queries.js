@@ -8,6 +8,7 @@ export const getUser = /* GraphQL */ `
       firstName
       lastName
       profilePicture
+      backgroundPicture
       email
       status
       notificationToken
@@ -67,6 +68,7 @@ export const listUsers = /* GraphQL */ `
         firstName
         lastName
         profilePicture
+        backgroundPicture
         email
         status
         notificationToken
@@ -113,6 +115,7 @@ export const getChatRoom = /* GraphQL */ `
           firstName
           lastName
           profilePicture
+          backgroundPicture
           email
           status
           notificationToken
@@ -186,6 +189,7 @@ export const getPost = /* GraphQL */ `
         firstName
         lastName
         profilePicture
+        backgroundPicture
         email
         status
         notificationToken
@@ -227,6 +231,7 @@ export const listPosts = /* GraphQL */ `
           firstName
           lastName
           profilePicture
+          backgroundPicture
           email
           status
           notificationToken
@@ -255,6 +260,7 @@ export const getCase = /* GraphQL */ `
         firstName
         lastName
         profilePicture
+        backgroundPicture
         email
         status
         notificationToken
@@ -297,6 +303,7 @@ export const listCases = /* GraphQL */ `
           firstName
           lastName
           profilePicture
+          backgroundPicture
           email
           status
           notificationToken
@@ -328,6 +335,7 @@ export const getMessage = /* GraphQL */ `
         firstName
         lastName
         profilePicture
+        backgroundPicture
         email
         status
         notificationToken
@@ -368,6 +376,7 @@ export const listMessages = /* GraphQL */ `
           firstName
           lastName
           profilePicture
+          backgroundPicture
           email
           status
           notificationToken
@@ -397,6 +406,7 @@ export const getUserChatRooms = /* GraphQL */ `
         firstName
         lastName
         profilePicture
+        backgroundPicture
         email
         status
         notificationToken
@@ -457,6 +467,7 @@ export const listUserChatRooms = /* GraphQL */ `
           firstName
           lastName
           profilePicture
+          backgroundPicture
           email
           status
           notificationToken
@@ -504,6 +515,7 @@ export const postsByDate = /* GraphQL */ `
           firstName
           lastName
           profilePicture
+          backgroundPicture
           email
           status
           notificationToken
@@ -548,6 +560,7 @@ export const messagesByChatRoom = /* GraphQL */ `
           firstName
           lastName
           profilePicture
+          backgroundPicture
           email
           status
           notificationToken

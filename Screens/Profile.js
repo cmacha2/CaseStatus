@@ -11,27 +11,29 @@ import {
   useColorScheme,
   View,
 } from "react-native";
-import { ScrollView } from "../components/theme/Themed";
 import Colors from "../constants/colors";
 import moment from "moment";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SendMessageButton } from "../components/SendMessageButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { FlashList } from "@shopify/flash-list";
-import PostCard from "../components/PostsCard";
 import CardPostProfile from "../components/CardPostsProfile";
+import { updateUserPicture } from "../src/utils/userOperations";
+import { resetBackgroundPicture, resetProfilePicture } from "../src/features/user";
+import {CLOUD_NAME,UPLOAD_PRESET} from "@env"
+import * as ImagePicker from "expo-image-picker"
 
 export default function ContactProfile() {
-  const [contact, setContact] = React.useState();
+  const [contact, setContact] = React.useState([]);
   const user = useSelector((state) => state.user);
   const theme = useColorScheme();
+  const dispatch = useDispatch();
   const [loading, setLoading] = React.useState(false);
-  const navigation = useNavigation();
   const route = useRoute();
 
   React.useEffect(() => {
     getContactInfo();
-  }, []);
+  }, [user]);
 
   async function getContactInfo() {
     setLoading(true);
@@ -46,6 +48,42 @@ export default function ContactProfile() {
     setLoading(false);
   }
 
+  const savePhotoCloudinary = async(data)=>{
+    let apiUrl = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload/`
+
+    try {
+        const response = await fetch(apiUrl,{
+            method:'POST',
+            body:data,
+        })
+        const json = await response.json()
+        await updateUserPicture(contact.id,json.url)
+        dispatch(resetProfilePicture(json.url))
+        setContact({...contact, profilePicture:json.url})
+    } catch (error) {
+        console.log(error)
+    }
+  }
+
+  const pickeImage = async () =>{
+    let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes:ImagePicker.MediaTypeOptions.Images,
+        allowsEditing:true,
+        aspect:[4,3],
+        quality:.2,
+        base64:true
+    })
+    let base64Img = `data:image/jpg;base64,${result.base64}`
+    const data = new FormData()
+    data.append('file', base64Img)
+    data.append('upload_preset',UPLOAD_PRESET)
+
+    if(!result.cancelled){
+        savePhotoCloudinary(data)
+    }
+  }
+
+
 
   if (contact === undefined || contact === null) return;
 
@@ -57,11 +95,11 @@ export default function ContactProfile() {
       <View style={styles.header}>
         <Image
           source={{
-            uri: "https://static.vecteezy.com/system/resources/previews/005/232/190/non_2x/rectangle-neon-frame-sign-3d-render-illustration-free-photo.jpg",
+            uri: "https://res.cloudinary.com/cmacha2/image/upload/v1666280998/Minimalist_Black_White_The_End_Animation_Video_hbp43r.png",
           }}
           style={styles.imageBackground}
         />
-        <View style={styles.containerProfilePic}>
+        <Pressable onPress={(!route.params?.id || route.params?.id === user.id) ? pickeImage : null} style={styles.containerProfilePic}>
           <Image
             source={{
               uri: contact.profilePicture
@@ -70,10 +108,10 @@ export default function ContactProfile() {
             }}
             style={styles.image}
           />
-        </View>
+        </Pressable>
       </View>
       { (user.id === route?.params?.id || !route?.params?.id) ? (
-        <EditProfileButton theme={theme} />
+        <EditProfileButton />
       )
     : <SendMessageButton email={contact.email} theme={theme} />
     }
@@ -149,7 +187,7 @@ const ProfilePosts = ({ contact, getContactInfo ,loading }) => {
 }
 
 
-const EditProfileButton = ({ theme, onPress }) => {
+const EditProfileButton = () => {
   const navigation = useNavigation()
   return (
     <View style={styles.containerEditProfile}>

@@ -12,7 +12,7 @@ export const createPost = async (authorID, postContent) => {
       variables: {
         input: {
           content: postContent,
-          postAuthorId: authorID,
+          userPostsId: authorID,
           numberOfLikes: 0,
           likedBy: [],
         },

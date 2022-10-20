@@ -5,6 +5,7 @@ const initialState = {
   firstName: null,
   lastName: null,
   profilePicture: null,
+  backgroundPicture: null,
   email: null,
   status: null,
   notificationToken: null,
@@ -26,6 +27,7 @@ const userSlice = createSlice({
         firstName: null,
         lastName: null,
         profilePicture: null,
+        backgroundPicture: null,
         email: null,
         status: null,
         notificationToken: null,
@@ -38,6 +40,12 @@ const userSlice = createSlice({
       return {
         ...state,
         profilePicture: action.payload,
+      };
+    },
+    resetBackgroundPicture: (state, action) => {
+      return {
+        ...state,
+        backgroundPicture: action.payload,
       };
     },
     resetFirstName: (state, action) => {
@@ -107,5 +115,6 @@ export const {
   resetCases,
   resetCaseDelete,
   resetCaseUpdate,
+  resetBackgroundPicture,
 } = userSlice.actions;
 export default userSlice.reducer;
