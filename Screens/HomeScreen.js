@@ -31,7 +31,6 @@ function HomeScreen() {
   const handlerModal = () => {
     bottomSheetModalRef.current?.present();
   };
-  console.log(data)
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

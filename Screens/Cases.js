@@ -5,6 +5,7 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  View as DefaultView,
   TextInput,
   AppRegistry,
   TouchableOpacity,
@@ -34,11 +35,10 @@ import { View } from "../components/theme/Themed";
 
 function Cases() {
   const bottomSheetModalRef = React.useRef(null);
-  const snapPoints = React.useMemo(() => ["35%"], []);
+  const snapPoints = React.useMemo(() => ["38%"], []);
   const { cases } = useSelector((state) => state.user);
   const [loading, setLoading] = React.useState(false);
   const dispatch = useDispatch();
-  // console.log(cases)
 
   const handlerModal = () => {
     bottomSheetModalRef.current?.present();
@@ -55,10 +55,6 @@ function Cases() {
     }
   };
 
-  if (!cases?.length) {
-    return <NoCases handlerModal={handlerModal} />;
-  }
-
   return (
     <View style={styles.container}>
       <GestureHandlerRootView style={{ flex: 1 }}>
@@ -70,20 +66,29 @@ function Cases() {
             iconName="add-circle-sharp"
             handleNavigation={handlerModal}
           />
-          <Text style={styles.lastRefresh}>
-            Last refresh: {moment(cases[0].updateAt).format("MMMM Do YYYY, h:mm:ss a")}
-          </Text>
-          <FlashList
-            data={cases}
-            contentContainerStyle={
-              Platform.OS === "ios" && { paddingVertical: 30 }
-            }
-            renderItem={({ item }) => <CardCases data={item} />}
-            estimatedItemSize={10}
-            keyExtractor={(item) => item.id}
-            refreshing={loading}
-            onRefresh={onRefresh}
-          />
+
+          {cases?.length ? (
+            <DefaultView style={{height:'100%'}}>
+              <Text style={styles.lastRefresh}>
+                Last refresh:{" "}
+                {moment(cases[0].updateAt).format("MMMM Do YYYY, h:mm:ss a")}
+              </Text>
+              <FlashList
+                data={cases}
+                contentContainerStyle={
+                  Platform.OS === "ios" && { paddingVertical: 30 }
+                }
+                renderItem={({ item }) => <CardCases data={item} />}
+                estimatedItemSize={10}
+                keyExtractor={(item) => item.id}
+                refreshing={loading}
+                onRefresh={onRefresh}
+              />
+            </DefaultView>
+          ) : (
+            <NoCases handlerModal={handlerModal} />
+          )}
+
           <ModalAddCase
             bottomSheetModalRef={bottomSheetModalRef}
             snapPoints={snapPoints}
@@ -106,7 +111,6 @@ const styles = StyleSheet.create({
     fontSize: 28,
     textAlign: "left",
     paddingLeft: 15,
-    // backgroundColor: "#f0f0f0",
     paddingVertical: 12,
     color: "#000000",
     fontFamily: "sans-serif-condensed",
@@ -117,7 +121,6 @@ const styles = StyleSheet.create({
   },
   containerAddCaseButton: {
     // height: "8%",
-
     // alignItems: "flex-end",
   },
   lastRefresh: {

@@ -34,7 +34,6 @@ export default function PostCard(post) {
   const navigation = useNavigation();
   const theme = useColorScheme();
   const { author, content, createdAt, id, likedBy, numberOfLikes } = post;
-  console.log(post)
 
   const handleLike = async () => {
     const data = {

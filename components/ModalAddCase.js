@@ -1,4 +1,9 @@
-import { StyleSheet, Text, useColorScheme } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View as DefaultView,
+} from "react-native";
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
@@ -12,6 +17,7 @@ import { resetCases } from "../src/features/user";
 import { useDispatch, useSelector } from "react-redux";
 import MyText from "./MyText";
 import { View } from "./theme/Themed";
+import Colors from "../constants/colors";
 
 const ModalAddCase = ({ bottomSheetModalRef, snapPoints }) => {
   const [numberCase, setNumerCase] = useState("");
@@ -23,6 +29,11 @@ const ModalAddCase = ({ bottomSheetModalRef, snapPoints }) => {
   const [errorNumber, setErrorNumber] = useState("");
 
   const addCase = async () => {
+
+    if(numberCase.length!==13){
+     return 
+    }
+
     try {
       const data = await createCase(numberCase, id);
       if (data?.error) {
@@ -51,67 +62,70 @@ const ModalAddCase = ({ bottomSheetModalRef, snapPoints }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <BottomSheetModal
-        ref={bottomSheetModalRef}
-        index={0}
-        snapPoints={snapPoints}
-        backgroundStyle={{ borderRadius: 30 }}
-        keyboardBlurBehavior="restore"
-      >
-        <View style={styles.modalTop}>
-          <MyText type="body">Enter USCIS receipt number</MyText>
-          <MyText type="caption" style={{ marginTop: 10 }}>
-            The receipt number is your unique 13 character identifier
-          </MyText>
-          <MyText type="caption" style={{ marginTop: 10 }}>
-            Example: EAC, WAC, LIN, SRC, MSC, IOE, NBC, MCT or YSC and 10
-            numbers
-          </MyText>
-        </View>
+    <BottomSheetModal
+      ref={bottomSheetModalRef}
+      index={0}
+      snapPoints={snapPoints}
+      backgroundStyle={{
+        backgroundColor: Colors[theme].modalCase,
+        borderRadius: 30,
+        
+      }}
+      keyboardBlurBehavior="restore"
+      handleIndicatorStyle={{ backgroundColor: Colors[theme].text + "80" }}
+      handleStyle={{
+        backgroundColor: Colors[theme].text + "20",
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+      }}
+    >
+      <DefaultView style={styles.modalTop}>
+        <MyText type="body">Enter USCIS receipt number</MyText>
+        <MyText type="caption" style={{ marginTop: 10 }}>
+          The receipt number is your unique 13 character identifier
+        </MyText>
+        <MyText type="caption" style={{ marginTop: 10 }}>
+          Example: EAC, WAC, LIN, SRC, MSC, IOE, NBC, MCT or YSC and 10 numbers
+        </MyText>
+      </DefaultView>
 
-        <View style={styles.containerAddCase}>
-          <BottomSheetTextInput
-            placeholder="Enter the receipt number"
-            value={numberCase}
-            onChangeText={onChangeText}
-            style={styles.input}
-            autoCapitalize="characters"
-          />
-          <ButtonAddCase
-            style={styles.addCaseButton}
-            onPress={addCase}
-            disabled={Boolean(errorFirstDigits) || Boolean(errorSize)}
-          />
-        </View>
-        <View style={styles.modalBottom}>
-          {errorSize && <Text style={styles.errors}>{errorSize}</Text>}
-          {errorFirstDigits && (
-            <Text style={styles.errors}>{errorFirstDigits}</Text>
-          )}
-          {errorNumber && <Text style={styles.errors}>{errorNumber}</Text>}
-        </View>
-      </BottomSheetModal>
-    </View>
+      <DefaultView style={styles.containerAddCase}>
+        <BottomSheetTextInput
+          placeholder="Enter the receipt number"
+          placeholderTextColor={Colors[theme].text + "80"}
+          value={numberCase}
+          onChangeText={onChangeText}
+          style={styles.input}
+          autoCapitalize="characters"
+        />
+        <ButtonAddCase
+          onPress={addCase}
+          disabled={Boolean(errorFirstDigits) || Boolean(errorSize)}
+        />
+      </DefaultView>
+      <DefaultView style={styles.modalBottom}>
+        {errorSize && <Text style={styles.errors}>{errorSize}</Text>}
+        {errorFirstDigits && (
+          <Text style={styles.errors}>{errorFirstDigits}</Text>
+        )}
+        {errorNumber && <Text style={styles.errors}>{errorNumber}</Text>}
+      </DefaultView>
+    </BottomSheetModal>
   );
 };
 
 export default ModalAddCase;
 
 const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   backgroundColor: "white",
-  // },
-
   containerAddCase: {
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    marginVertical: 20,
+    marginTop: 20,
   },
   modalTop: {
-    // marginHorizontal:10,
+    marginHorizontal: 5,
+    paddingTop: 12,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -123,9 +137,6 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     backgroundColor: "rgba(151, 151, 151, 0.25)",
     paddingLeft: 5,
-  },
-  addCaseButton: {
-    // backgroundColor:'red'
   },
   modalBottom: {
     // justifyContent: "center",

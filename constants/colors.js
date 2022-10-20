@@ -19,6 +19,7 @@ export default {
     red:"#EF4444",
     messageFrom:"#0171F4",
     messageTo:"#54A0FA",
+    modalCase:'#F2f2f4',
   },
   dark:{
     text:'#F2F2F4',
@@ -29,5 +30,6 @@ export default {
     red:"#EF4444",
     messageFrom:"#8638D1",
     messageTo:"#896FFE",
+    modalCase:'#0D0D0D',
   }
 }

@@ -9,24 +9,14 @@ import ProfilePicture from "../components/ProfilePicture";
 import ProfileInformation from "../components/ProfileInformation";
 import ProfilePermissions from "../components/ProfilePermissions";
 
-
 export default function Settings() {
-  const user = useSelector((state)=>state.user)
-  const theme = useColorScheme()
-  async function handleSignOut() {
-    try {
-      await Auth.signOut();
-      setUser(null);
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  const theme = useColorScheme();
 
   return (
     <ScrollView style={{ flex: 1 }}>
-      <ProfilePicture/>
+      <ProfilePicture />
       <ProfileInformation />
-      <ProfilePermissions/>
+      <ProfilePermissions />
       <StatusBar
         barStyle={theme === "dark" ? "light-content" : "dark-content"}
       />
