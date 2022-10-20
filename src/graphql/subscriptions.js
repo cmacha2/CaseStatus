@@ -2,8 +2,8 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateUser = /* GraphQL */ `
-  subscription OnCreateUser {
-    onCreateUser {
+  subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
+    onCreateUser(filter: $filter) {
       id
       firstName
       lastName
@@ -56,8 +56,8 @@ export const onCreateUser = /* GraphQL */ `
   }
 `;
 export const onUpdateUser = /* GraphQL */ `
-  subscription OnUpdateUser {
-    onUpdateUser {
+  subscription OnUpdateUser($filter: ModelSubscriptionUserFilterInput) {
+    onUpdateUser(filter: $filter) {
       id
       firstName
       lastName
@@ -110,8 +110,8 @@ export const onUpdateUser = /* GraphQL */ `
   }
 `;
 export const onDeleteUser = /* GraphQL */ `
-  subscription OnDeleteUser {
-    onDeleteUser {
+  subscription OnDeleteUser($filter: ModelSubscriptionUserFilterInput) {
+    onDeleteUser(filter: $filter) {
       id
       firstName
       lastName
@@ -164,8 +164,8 @@ export const onDeleteUser = /* GraphQL */ `
   }
 `;
 export const onCreateChatRoom = /* GraphQL */ `
-  subscription OnCreateChatRoom {
-    onCreateChatRoom {
+  subscription OnCreateChatRoom($filter: ModelSubscriptionChatRoomFilterInput) {
+    onCreateChatRoom(filter: $filter) {
       id
       isSeenBy
       messages {
@@ -219,8 +219,8 @@ export const onCreateChatRoom = /* GraphQL */ `
   }
 `;
 export const onUpdateChatRoom = /* GraphQL */ `
-  subscription OnUpdateChatRoom {
-    onUpdateChatRoom {
+  subscription OnUpdateChatRoom($filter: ModelSubscriptionChatRoomFilterInput) {
+    onUpdateChatRoom(filter: $filter) {
       id
       isSeenBy
       messages {
@@ -274,8 +274,8 @@ export const onUpdateChatRoom = /* GraphQL */ `
   }
 `;
 export const onDeleteChatRoom = /* GraphQL */ `
-  subscription OnDeleteChatRoom {
-    onDeleteChatRoom {
+  subscription OnDeleteChatRoom($filter: ModelSubscriptionChatRoomFilterInput) {
+    onDeleteChatRoom(filter: $filter) {
       id
       isSeenBy
       messages {
@@ -329,8 +329,8 @@ export const onDeleteChatRoom = /* GraphQL */ `
   }
 `;
 export const onCreatePost = /* GraphQL */ `
-  subscription OnCreatePost {
-    onCreatePost {
+  subscription OnCreatePost($filter: ModelSubscriptionPostFilterInput) {
+    onCreatePost(filter: $filter) {
       id
       type
       author {
@@ -365,8 +365,8 @@ export const onCreatePost = /* GraphQL */ `
   }
 `;
 export const onUpdatePost = /* GraphQL */ `
-  subscription OnUpdatePost {
-    onUpdatePost {
+  subscription OnUpdatePost($filter: ModelSubscriptionPostFilterInput) {
+    onUpdatePost(filter: $filter) {
       id
       type
       author {
@@ -401,8 +401,8 @@ export const onUpdatePost = /* GraphQL */ `
   }
 `;
 export const onDeletePost = /* GraphQL */ `
-  subscription OnDeletePost {
-    onDeletePost {
+  subscription OnDeletePost($filter: ModelSubscriptionPostFilterInput) {
+    onDeletePost(filter: $filter) {
       id
       type
       author {
@@ -437,8 +437,8 @@ export const onDeletePost = /* GraphQL */ `
   }
 `;
 export const onCreateCase = /* GraphQL */ `
-  subscription OnCreateCase {
-    onCreateCase {
+  subscription OnCreateCase($filter: ModelSubscriptionCaseFilterInput) {
+    onCreateCase(filter: $filter) {
       id
       author {
         id
@@ -474,8 +474,8 @@ export const onCreateCase = /* GraphQL */ `
   }
 `;
 export const onUpdateCase = /* GraphQL */ `
-  subscription OnUpdateCase {
-    onUpdateCase {
+  subscription OnUpdateCase($filter: ModelSubscriptionCaseFilterInput) {
+    onUpdateCase(filter: $filter) {
       id
       author {
         id
@@ -511,8 +511,8 @@ export const onUpdateCase = /* GraphQL */ `
   }
 `;
 export const onDeleteCase = /* GraphQL */ `
-  subscription OnDeleteCase {
-    onDeleteCase {
+  subscription OnDeleteCase($filter: ModelSubscriptionCaseFilterInput) {
+    onDeleteCase(filter: $filter) {
       id
       author {
         id
@@ -548,8 +548,8 @@ export const onDeleteCase = /* GraphQL */ `
   }
 `;
 export const onCreateMessage = /* GraphQL */ `
-  subscription OnCreateMessage {
-    onCreateMessage {
+  subscription OnCreateMessage($filter: ModelSubscriptionMessageFilterInput) {
+    onCreateMessage(filter: $filter) {
       id
       chatRoomID
       author {
@@ -583,8 +583,8 @@ export const onCreateMessage = /* GraphQL */ `
   }
 `;
 export const onUpdateMessage = /* GraphQL */ `
-  subscription OnUpdateMessage {
-    onUpdateMessage {
+  subscription OnUpdateMessage($filter: ModelSubscriptionMessageFilterInput) {
+    onUpdateMessage(filter: $filter) {
       id
       chatRoomID
       author {
@@ -618,8 +618,8 @@ export const onUpdateMessage = /* GraphQL */ `
   }
 `;
 export const onDeleteMessage = /* GraphQL */ `
-  subscription OnDeleteMessage {
-    onDeleteMessage {
+  subscription OnDeleteMessage($filter: ModelSubscriptionMessageFilterInput) {
+    onDeleteMessage(filter: $filter) {
       id
       chatRoomID
       author {
@@ -653,8 +653,10 @@ export const onDeleteMessage = /* GraphQL */ `
   }
 `;
 export const onCreateUserChatRooms = /* GraphQL */ `
-  subscription OnCreateUserChatRooms {
-    onCreateUserChatRooms {
+  subscription OnCreateUserChatRooms(
+    $filter: ModelSubscriptionUserChatRoomsFilterInput
+  ) {
+    onCreateUserChatRooms(filter: $filter) {
       id
       userID
       chatRoomID
@@ -708,8 +710,10 @@ export const onCreateUserChatRooms = /* GraphQL */ `
   }
 `;
 export const onUpdateUserChatRooms = /* GraphQL */ `
-  subscription OnUpdateUserChatRooms {
-    onUpdateUserChatRooms {
+  subscription OnUpdateUserChatRooms(
+    $filter: ModelSubscriptionUserChatRoomsFilterInput
+  ) {
+    onUpdateUserChatRooms(filter: $filter) {
       id
       userID
       chatRoomID
@@ -763,8 +767,10 @@ export const onUpdateUserChatRooms = /* GraphQL */ `
   }
 `;
 export const onDeleteUserChatRooms = /* GraphQL */ `
-  subscription OnDeleteUserChatRooms {
-    onDeleteUserChatRooms {
+  subscription OnDeleteUserChatRooms(
+    $filter: ModelSubscriptionUserChatRoomsFilterInput
+  ) {
+    onDeleteUserChatRooms(filter: $filter) {
       id
       userID
       chatRoomID

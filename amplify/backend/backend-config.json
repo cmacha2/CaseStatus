@@ -28,7 +28,7 @@
     }
   },
   "api": {
-    "migrant": {
+    "casestatus": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
