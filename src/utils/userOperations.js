@@ -218,6 +218,7 @@ export const addUserToChatRoom = async (userID, chatRoomID) => {
         },
       },
     });
+    return true;
   } catch (e) {
     console.log(e);
   }

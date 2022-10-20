@@ -35,7 +35,7 @@ export const createCase = async (caseNumber, authorID) => {
       receiptDate: newCase.data.createCase.receiptDate,
       id: newCase.data.createCase.id,
       createdAt: newCase.data.createCase.createdAt,
-      updateAt: newCase.data.createCase.updateAt || null,
+      updateAt: newCase.data.createCase.updateAt || new Date().toISOString(),
     };
     return newCaseCreated;
   } catch (error) {
@@ -59,27 +59,37 @@ export const deleteCase = async (caseID) => {
   }
 };
 
-export const updateCase = async (caseID, titleCase, description) => {
+export const updateCase = async (
+  caseID,
+  titleCase,
+  description,
+  receiptNumber,
+  typeForm,
+  receiptDate
+) => {
   try {
-    const updateCase = await API.graphql({
+    const updatCase = await API.graphql({
       query: updateCaseMutation,
       variables: {
         input: {
           id: caseID,
           titleCase: titleCase,
           description: description,
+          receiptNumber: receiptNumber,
+          typeForm: typeForm,
+          receiptDate: receiptDate,
         },
       },
     });
     console.log("case updated successfully");
     const newCaseUpdate = {
-      titleCase: updateCase.data.updateCase.titleCase,
-      description: updateCase.data.updateCase.description,
-      receiptNumber: updateCase.data.updateCase.receiptNumber,
-      typeForm: updateCase.data.updateCase.typeForm,
-      receiptDate: updateCase.data.updateCase.receiptDate,
-      id: updateCase.data.updateCase.id,
-      updateAt: updateCase.data.updateCase.updateAt,
+      titleCase: updatCase.data.updateCase.titleCase,
+      description: updatCase.data.updateCase.description,
+      receiptNumber: updatCase.data.updateCase.receiptNumber,
+      typeForm: updatCase.data.updateCase.typeForm,
+      receiptDate: updatCase.data.updateCase.receiptDate,
+      id: updatCase.data.updateCase.id,
+      updateAt: updatCase.data.updateCase.updateAt || new Date().toISOString(),
     };
     return newCaseUpdate;
   } catch (e) {
@@ -88,31 +98,49 @@ export const updateCase = async (caseID, titleCase, description) => {
 };
 
 export const StatusAllCases = async (cases) => {
-  let casesStatus = [];
   try {
-    if (cases?.length > 0) {
-      cases.map(async (caseNumber) => {
-        const response = await checkStatus(caseNumber.receiptNumber);
-        if (response.error) {
-          return { error: "Case not found" };
-        }
-        const caseUpdated = await updateCase(
-          caseNumber.id,
-          response.titleCase,
-          response.description
-        );
-        casesStatus.push(caseUpdated);
-      });
-      return casesStatus;
+    let casesStatus = [];
+
+    const receiptNumbers = cases.map((item) => item.receiptNumber);
+    for (let i = 0; i < receiptNumbers.length; i++) {
+      const data = await checkStatus(receiptNumbers[i]);
+      if (data?.error) {
+        return { error: "Case not found" };
+      }
+      const newCaseUpdate = await updateCase(
+        cases[i].id,
+        data.titleCase,
+        data.description,
+        data.receiptNumber,
+        data.typeForm,
+        data.receiptDate
+      );
+      casesStatus.push(newCaseUpdate);
     }
-  } catch (error) {
-    console.log(error);
+    return casesStatus;
+  } catch (e) {
+    console.log("error updating case");
   }
 };
 
+// const casesChecked = cases.filter(async (caseNumber) => {
+//   const response = await checkStatus(caseNumber.receiptNumber);
+//   if (response?.error) {
+//     return false
+//   }
+//   return true
+// });
+// console.log(casesChecked);
+// const newCases = casesChecked.filter(async (cas) =>{
+//  const {newCaseUpdate} = await updateCase(cas.id, cas.titleCase, cas.description, cas.receiptNumber, cas.typeForm, cas.receiptDate)
+//  if(newCaseUpdate){
+//    return true
+//  }
+// });
+
 export const getReceiptsNumbers = async () => {
   try {
-    const {data} = await API.graphql({
+    const { data } = await API.graphql({
       query: listCases,
     });
     const receiptNumbers = data.listCases.items.map((item) => {
@@ -122,16 +150,4 @@ export const getReceiptsNumbers = async () => {
   } catch (error) {
     console.log(error);
   }
-}
-
-
-
-
-
-
-
-
-
-
-
-
+};

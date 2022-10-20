@@ -130,10 +130,11 @@ function HomeStack() {
         options={{ presentation: "modal" }}
       />
        <Stack.Screen
-        name="ChatRoom"
-        component={ChatRoom}
+        name="Chats"
+        component={Chats}
         options={{
           tabBarLabel: "Chats",
+          headerShown: false,
         }}
       />
     </Stack.Navigator>

@@ -15,6 +15,8 @@ import { ScrollView } from "../components/theme/Themed";
 import Colors from "../constants/colors";
 import moment from "moment";
 import { useSelector } from "react-redux";
+import { SendMessageButton } from "../components/SendMessageButton";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function ContactProfile() {
   const [contact, setContact] = React.useState();
@@ -42,7 +44,10 @@ export default function ContactProfile() {
   if (contact === undefined || contact === null) return;
 
   return (
-    <ScrollView contentContainerStyle={[styles.container]}>
+    <KeyboardAwareScrollView style={{
+      backgroundColor: Colors[theme].background,
+      flex: 1,
+    }}>
       <View style={styles.header}>
         <Image
           source={{
@@ -64,13 +69,13 @@ export default function ContactProfile() {
       { (user.id === route?.params?.id || !route?.params?.id) ? (
         <EditProfileButton theme={theme} />
       )
-    : <SendMessageButton theme={theme} />
+    : <SendMessageButton email={contact.email} theme={theme} />
     }
       <MyText
         style={{
           fontWeight: "600",
-          textAlign: "center",
-          marginTop: Dimensions.get("window").height < 700 ? 50 : 40,
+          paddingLeft: 12,
+          marginTop: Dimensions.get("window").height < 700 ? 20 : 13,
         }}
       >
         {contact.firstName} {contact.lastName}
@@ -79,8 +84,20 @@ export default function ContactProfile() {
         type="caption"
         style={{
           fontWeight: "600",
-          textAlign: "center",
-          color: Colors[theme].text + "70",
+          paddingLeft: 12,
+          color: Colors[theme].text + "50",
+        }}
+      >
+        {contact.createdAt
+          ? `Member since ${moment(contact.createdAt).fromNow()}`
+          : `Member since a long time ago`}
+      </MyText>
+      <MyText
+        type="caption"
+        style={{
+          fontWeight: "400",
+          paddingLeft: 12,
+          color: Colors[theme].text,
         }}
       >
         {contact.status
@@ -93,33 +110,26 @@ export default function ContactProfile() {
         style={{
           fontWeight: "600",
           color: Colors[theme].text + "40",
-          marginTop: 26,
+          marginTop: 16,
+          borderBottomColor: Colors[theme].text + "40",
+          borderBottomWidth: 1.5,
+          paddingBottom: 10,
+          marginHorizontal: 12,
         }}
       >
-        INFORMATION
+        POSTS
       </MyText>
-      <InfoField label={"Email"} value={contact.email} theme={theme} />
-      <InfoField
+      
+      {/* <InfoField
         label={"Member since"}
         value={moment(contact.createdAt).fromNow()}
         theme={theme}
-      />
-      <View
+      />*/}
+      {/* <View
         style={{ height: Dimensions.get("window").height < 700 ? 30 : 80 }}
-      />
-      <InfoField
-        label={"Report Contact"}
-        theme={theme}
-        onPress={() => alert("Report Contact")}
-        danger
-      />
-      <InfoField
-        label={"Delete Conversation"}
-        theme={theme}
-        onPress={() => alert("Delete Conversation")}
-        danger
-      />
-    </ScrollView>
+      />   */}
+      
+    </KeyboardAwareScrollView>
   );
 }
 
@@ -172,31 +182,9 @@ const EditProfileButton = ({ theme, onPress }) => {
   )
 }
 
-const SendMessageButton = ({ theme, onPress, id}) => {
-  const navigation = useNavigation()
-  return (
-    <View style={styles.containerEditProfile}>
-          <Pressable
-            style={styles.button}
-            onPress={() => {
-              navigation.navigate("Chats");
-            }}
-          >
-            <MyText style={styles.text}>Send Message</MyText>
-          </Pressable>
-        </View>
-  )
-}
+
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  map: {
-    width: Dimensions.get("window").width,
-    height: "35%",
-    alignSelf: "center",
-  },
   image: {
     width: 75,
     height: 75,
