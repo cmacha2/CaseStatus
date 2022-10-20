@@ -2,7 +2,7 @@ import * as React from "react";
 import MyText from "../components/MyText";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { API, graphqlOperation } from "aws-amplify";
-import { getUser } from "../graphqlCustom/getUser";
+import { getUser } from "../src/graphql/queries";
 import {
   Pressable,
   Dimensions,
@@ -17,11 +17,15 @@ import moment from "moment";
 import { useSelector } from "react-redux";
 import { SendMessageButton } from "../components/SendMessageButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { FlashList } from "@shopify/flash-list";
+import PostCard from "../components/PostsCard";
+import CardPostProfile from "../components/CardPostsProfile";
 
 export default function ContactProfile() {
   const [contact, setContact] = React.useState();
   const user = useSelector((state) => state.user);
   const theme = useColorScheme();
+  const [loading, setLoading] = React.useState(false);
   const navigation = useNavigation();
   const route = useRoute();
 
@@ -30,6 +34,7 @@ export default function ContactProfile() {
   }, []);
 
   async function getContactInfo() {
+    setLoading(true);
     if (route.params?.id) {
       const { data } = await API.graphql(
         graphqlOperation(getUser, { id: route.params.id })
@@ -38,6 +43,7 @@ export default function ContactProfile() {
     } else {
       setContact(user);
     }
+    setLoading(false);
   }
 
 
@@ -120,51 +126,28 @@ export default function ContactProfile() {
         POSTS
       </MyText>
       
-      {/* <InfoField
-        label={"Member since"}
-        value={moment(contact.createdAt).fromNow()}
-        theme={theme}
-      />*/}
-      {/* <View
-        style={{ height: Dimensions.get("window").height < 700 ? 30 : 80 }}
-      />   */}
-      
+      <ProfilePosts contact={contact} getContactInfo={getContactInfo} loading={loading} />
     </KeyboardAwareScrollView>
   );
 }
 
-function InfoField({ label, value, onPress, theme, danger }) {
+const ProfilePosts = ({ contact, getContactInfo ,loading }) => {
+  const { posts } = useSelector((state) => state.posts);
+
   return (
-    <Pressable
-      onPress={onPress}
-      style={[
-        styles.infoContainer,
-        { borderBottomColor: Colors[theme].text + "80" },
-      ]}
-    >
-      <MyText
-        type="caption"
-        style={{
-          fontWeight: "500",
-          color: danger ? Colors[theme].red : Colors[theme].text + "80",
-          paddingRight: 10,
-        }}
-      >
-        {label}
-      </MyText>
-      <MyText
-        type="caption"
-        style={{
-          fontWeight: "500",
-          paddingRight: 10,
-        }}
-      >
-        {" "}
-        {value}{" "}
-      </MyText>
-    </Pressable>
-  );
+    <View style={{ height:'100%' }}>
+      <FlashList
+        data={posts.filter((post) => post.userPostsId === contact.id)}
+        contentContainerStyle={Platform.OS === "ios" && { paddingVertical: 30 }}
+        renderItem={({ item }) => <CardPostProfile post={item} user={contact}/>}
+        estimatedItemSize={200}
+        refreshing={loading}
+        onRefresh={getContactInfo}
+      />
+    </View>
+  )
 }
+
 
 const EditProfileButton = ({ theme, onPress }) => {
   const navigation = useNavigation()
