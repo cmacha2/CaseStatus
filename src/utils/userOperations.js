@@ -1,5 +1,5 @@
 import { API, graphqlOperation } from "aws-amplify";
-import { getUser } from "../../graphqlCustom/getUser";
+import { getUser } from "../graphql/queries";
 import {
   updateUser,
   deleteUser as deleteUserMutation,

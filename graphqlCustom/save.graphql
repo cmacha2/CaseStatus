@@ -8,6 +8,7 @@ type User @model {
   firstName: String
   lastName: String
   profilePicture: String
+  backgroundPicture: String
   email: String
   status: String
   notificationToken: String
@@ -15,7 +16,7 @@ type User @model {
   longitude: String
   chatRooms: [ChatRoom] @manyToMany(relationName: "UserChatRooms")
   cases: [Case] @hasMany
-  posts: [Post] @hasMany 
+  posts: [Post] @hasMany
 }
 
 type ChatRoom @model {
@@ -28,6 +29,14 @@ type ChatRoom @model {
   updatedAt: String
 }
 
+type Comment @model {
+  id: ID!
+  content: String
+  post: Post @belongsTo
+  user: User @hasOne
+  createdAt: String
+  updatedAt: String
+}
 type Post @model {
   id: ID!
   type: String
@@ -38,6 +47,7 @@ type Post @model {
       sortKeyFields: ["createdAt"]
     )
   author: User @belongsTo
+  comments: [Comment] @hasMany
   content: String
   numberOfLikes: Int
   likedBy: [ID]

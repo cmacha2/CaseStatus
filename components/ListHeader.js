@@ -1,14 +1,13 @@
 import * as React from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet,View } from "react-native";
 import MyText from "./MyText";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../constants/colors";
-import { useSelector } from "react-redux";
 
-export default function ListHeader({handleRefresh=null, title, iconName, handleNavigation }) {
+export default function ListHeader({handleRefresh=null, title, iconName, handleNavigation,flag}) {
 
   return (
-      <View style={styles.container}>
+      <View style={[styles.container,flag&&{paddingHorizontal:12}]}>
         <MyText type="title">{title}</MyText>
         <View style={styles.topRight}>
           {
@@ -39,8 +38,9 @@ export default function ListHeader({handleRefresh=null, title, iconName, handleN
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
-      paddingHorizontal: 17,
-      marginVertical: 23,
+      marginTop: 22,
+      marginBottom: 10,
+      // marginHorizontal:17,
     },
     topRight: {
       flexDirection: "row",

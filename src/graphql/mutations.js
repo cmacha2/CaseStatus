@@ -352,6 +352,201 @@ export const deleteChatRoom = /* GraphQL */ `
     }
   }
 `;
+export const createComment = /* GraphQL */ `
+  mutation CreateComment(
+    $input: CreateCommentInput!
+    $condition: ModelCommentConditionInput
+  ) {
+    createComment(input: $input, condition: $condition) {
+      id
+      content
+      post {
+        id
+        type
+        author {
+          id
+          firstName
+          lastName
+          profilePicture
+          backgroundPicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        comments {
+          nextToken
+        }
+        content
+        numberOfLikes
+        likedBy
+        createdAt
+        updatedAt
+        userPostsId
+      }
+      user {
+        id
+        firstName
+        lastName
+        profilePicture
+        backgroundPicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          nextToken
+        }
+        cases {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      postCommentsId
+      commentUserId
+    }
+  }
+`;
+export const updateComment = /* GraphQL */ `
+  mutation UpdateComment(
+    $input: UpdateCommentInput!
+    $condition: ModelCommentConditionInput
+  ) {
+    updateComment(input: $input, condition: $condition) {
+      id
+      content
+      post {
+        id
+        type
+        author {
+          id
+          firstName
+          lastName
+          profilePicture
+          backgroundPicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        comments {
+          nextToken
+        }
+        content
+        numberOfLikes
+        likedBy
+        createdAt
+        updatedAt
+        userPostsId
+      }
+      user {
+        id
+        firstName
+        lastName
+        profilePicture
+        backgroundPicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          nextToken
+        }
+        cases {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      postCommentsId
+      commentUserId
+    }
+  }
+`;
+export const deleteComment = /* GraphQL */ `
+  mutation DeleteComment(
+    $input: DeleteCommentInput!
+    $condition: ModelCommentConditionInput
+  ) {
+    deleteComment(input: $input, condition: $condition) {
+      id
+      content
+      post {
+        id
+        type
+        author {
+          id
+          firstName
+          lastName
+          profilePicture
+          backgroundPicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        comments {
+          nextToken
+        }
+        content
+        numberOfLikes
+        likedBy
+        createdAt
+        updatedAt
+        userPostsId
+      }
+      user {
+        id
+        firstName
+        lastName
+        profilePicture
+        backgroundPicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          nextToken
+        }
+        cases {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      postCommentsId
+      commentUserId
+    }
+  }
+`;
 export const createPost = /* GraphQL */ `
   mutation CreatePost(
     $input: CreatePostInput!
@@ -382,6 +577,17 @@ export const createPost = /* GraphQL */ `
         }
         createdAt
         updatedAt
+      }
+      comments {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+          postCommentsId
+          commentUserId
+        }
+        nextToken
       }
       content
       numberOfLikes
@@ -423,6 +629,17 @@ export const updatePost = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      comments {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+          postCommentsId
+          commentUserId
+        }
+        nextToken
+      }
       content
       numberOfLikes
       likedBy
@@ -462,6 +679,17 @@ export const deletePost = /* GraphQL */ `
         }
         createdAt
         updatedAt
+      }
+      comments {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+          postCommentsId
+          commentUserId
+        }
+        nextToken
       }
       content
       numberOfLikes

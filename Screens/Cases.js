@@ -35,7 +35,7 @@ import { View } from "../components/theme/Themed";
 
 function Cases() {
   const bottomSheetModalRef = React.useRef(null);
-  const snapPoints = React.useMemo(() => ["38%"], []);
+  const snapPoints = React.useMemo(() => ["40%"], []);
   const { cases } = useSelector((state) => state.user);
   const [loading, setLoading] = React.useState(false);
   const dispatch = useDispatch();
@@ -60,6 +60,7 @@ function Cases() {
       <GestureHandlerRootView style={{ flex: 1 }}>
         <BottomSheetModalProvider>
           <ListHeader
+            flag
             isLoading={loading}
             handleRefresh={onRefresh}
             title="My Cases"

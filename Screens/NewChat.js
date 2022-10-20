@@ -53,6 +53,7 @@ export default function NewChat() {
     getUsers();
   }, []);
 
+
   // search for user by email
 
   // if user exists, create a chatroom
@@ -84,7 +85,9 @@ export default function NewChat() {
       const newChatRoomID = await createNewChatRoom();
       await addUserToChatRoom(contact.id, newChatRoomID);
       await addUserToChatRoom(user.id, newChatRoomID);
+  
       const refreshedUser = await getUserByID(user.id);
+
       if (refreshedUser.chatRooms !== undefined) {
         dispatch(setChatRooms(refreshedUser.chatRooms.items));
       }
@@ -104,7 +107,7 @@ export default function NewChat() {
         },
       ]);
     } catch (e) {
-      alert("something went wrong");
+      alert("something went wrong 😅");
       setIsLoading(false);
     }
   }

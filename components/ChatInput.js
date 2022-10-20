@@ -1,5 +1,3 @@
-
-
 import * as React from "react";
 import {
   TextInput,
@@ -12,7 +10,11 @@ import {
 import Colors from "../constants/colors";
 import { useSelector } from "react-redux";
 import { API, graphqlOperation } from "aws-amplify";
-import { createMessage, updateChatRoom, updateMessage } from "../src/graphql/mutations";
+import {
+  createMessage,
+  updateChatRoom,
+  updateMessage,
+} from "../src/graphql/mutations";
 
 export default function ChatInput({ chatRoomID, contactToken }) {
   const user = useSelector((state) => state.user);
@@ -41,7 +43,9 @@ export default function ChatInput({ chatRoomID, contactToken }) {
       );
       console.log("message sent and chatRoom updated");
       setText("");
-      await sendPushNotification();
+      if (contactToken !== null) {
+        await sendPushNotification();
+      }
     } catch (e) {
       console.log(e);
     }
@@ -82,7 +86,7 @@ export default function ChatInput({ chatRoomID, contactToken }) {
             backgroundColor: theme === "dark" ? "#000" : "#fff",
           },
         ]}
-        placeholder="Go to codewithbeto.dev :)"
+        placeholder="Type a message"
         placeholderTextColor="gray"
         scrollEnabled={true}
         textAlign="left"

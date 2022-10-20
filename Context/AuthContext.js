@@ -3,7 +3,7 @@ import { Auth, API, graphqlOperation } from "aws-amplify";
 import {createUser} from "../src/graphql/mutations"
 import {useDispatch} from 'react-redux'
 import { setUser } from "../src/features/user";
-import { getUser } from "../graphqlCustom/getUser";
+import { getUser } from "../src/graphql/queries";
 import { setChatRooms } from "../src/features/chatRooms";
 
 const AuthContext = React.createContext({

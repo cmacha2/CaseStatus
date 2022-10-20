@@ -71,6 +71,12 @@ const ModalAddCase = ({ bottomSheetModalRef, snapPoints }) => {
         borderRadius: 30,
         
       }}
+      onDismiss={() => {
+        setNumerCase("");
+        setErrorFirstDigits("");
+        setErrorSize("");
+        setErrorNumber("");
+      }}
       keyboardBlurBehavior="restore"
       handleIndicatorStyle={{ backgroundColor: Colors[theme].text + "80" }}
       handleStyle={{
@@ -78,6 +84,7 @@ const ModalAddCase = ({ bottomSheetModalRef, snapPoints }) => {
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
       }}
+      
     >
       <DefaultView style={styles.modalTop}>
         <MyText type="body">Enter USCIS receipt number</MyText>
@@ -95,7 +102,7 @@ const ModalAddCase = ({ bottomSheetModalRef, snapPoints }) => {
           placeholderTextColor={Colors[theme].text + "80"}
           value={numberCase}
           onChangeText={onChangeText}
-          style={styles.input}
+          style={[styles.input, {color: Colors[theme].text}]}
           autoCapitalize="characters"
         />
         <ButtonAddCase
@@ -141,6 +148,7 @@ const styles = StyleSheet.create({
   modalBottom: {
     // justifyContent: "center",
     // alignItems: "center",
+    paddingVertical: 15,
   },
   errors: {
     color: "red",

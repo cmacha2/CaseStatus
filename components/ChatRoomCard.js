@@ -121,7 +121,7 @@ export default function ChatRoomCard(chat) {
                   marginRight: 13,
                 }}
               >
-                {moment(lastMessage?.createdAt).fromNow()}
+                { moment(lastMessage?.createdAt).fromNow()}
               </MyText>
               <Ionicons
                 name="ellipsis-horizontal"
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   containerWithPadding: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 10,
+    // paddingHorizontal: 10,
   },
   image: {
     width: 50,

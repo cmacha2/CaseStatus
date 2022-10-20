@@ -19,7 +19,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { FlashList } from "@shopify/flash-list";
 import CardPostProfile from "../components/CardPostsProfile";
 import { updateUserPicture } from "../src/utils/userOperations";
-import { resetBackgroundPicture, resetProfilePicture } from "../src/features/user";
+import { resetProfilePicture } from "../src/features/user";
 import {CLOUD_NAME,UPLOAD_PRESET} from "@env"
 import * as ImagePicker from "expo-image-picker"
 

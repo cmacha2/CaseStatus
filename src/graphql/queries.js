@@ -21,6 +21,25 @@ export const getUser = /* GraphQL */ `
           chatRoomID
           createdAt
           updatedAt
+          chatRoom {
+            id
+            isSeenBy
+            participants {
+              items {
+                user {
+                  id
+                  firstName
+                  lastName
+                  profilePicture
+                  notificationToken
+                }
+              }
+            }
+            lastMessage {
+              content
+              createdAt
+            }
+          }
         }
         nextToken
       }
@@ -179,6 +198,111 @@ export const listChatRooms = /* GraphQL */ `
     }
   }
 `;
+export const getComment = /* GraphQL */ `
+  query GetComment($id: ID!) {
+    getComment(id: $id) {
+      id
+      content
+      post {
+        id
+        type
+        author {
+          id
+          firstName
+          lastName
+          profilePicture
+          backgroundPicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        comments {
+          nextToken
+        }
+        content
+        numberOfLikes
+        likedBy
+        createdAt
+        updatedAt
+        userPostsId
+      }
+      user {
+        id
+        firstName
+        lastName
+        profilePicture
+        backgroundPicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          nextToken
+        }
+        cases {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      postCommentsId
+      commentUserId
+    }
+  }
+`;
+export const listComments = /* GraphQL */ `
+  query ListComments(
+    $filter: ModelCommentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        content
+        post {
+          id
+          type
+          content
+          numberOfLikes
+          likedBy
+          createdAt
+          updatedAt
+          userPostsId
+        }
+        user {
+          id
+          firstName
+          lastName
+          profilePicture
+          backgroundPicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+        postCommentsId
+        commentUserId
+      }
+      nextToken
+    }
+  }
+`;
 export const getPost = /* GraphQL */ `
   query GetPost($id: ID!) {
     getPost(id: $id) {
@@ -206,6 +330,17 @@ export const getPost = /* GraphQL */ `
         }
         createdAt
         updatedAt
+      }
+      comments {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+          postCommentsId
+          commentUserId
+        }
+        nextToken
       }
       content
       numberOfLikes
@@ -239,6 +374,9 @@ export const listPosts = /* GraphQL */ `
           longitude
           createdAt
           updatedAt
+        }
+        comments {
+          nextToken
         }
         content
         numberOfLikes
@@ -523,6 +661,21 @@ export const postsByDate = /* GraphQL */ `
           longitude
           createdAt
           updatedAt
+        }
+        comments {
+          items {
+            id
+            content
+            createdAt
+            updatedAt
+            postCommentsId
+            commentUserId
+            user {
+            firstName
+            lastName
+            profilePicture
+          }
+          }
         }
         content
         numberOfLikes

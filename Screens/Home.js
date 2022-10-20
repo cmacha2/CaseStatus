@@ -21,19 +21,20 @@ export default function Home() {
   const [loading, setLoading] = React.useState(true);
 
   useFocusEffect(
-  React.useCallback(() => {
-
-    let isActive = true;
-    async function checkFirstLaunch() {
-      const firstLaunch = await AsyncStorage.getItem("@firstLaunch");
-      if (!firstLaunch) navigation.navigate("Onbording");
-    }
-    checkFirstLaunch();
-    fetchPost();
-    return () => {
-      isActive = false;
-    };
-  }, [])
+    React.useCallback(() => {
+      let isActive = true;
+      if (isActive) {
+        async function checkFirstLaunch() {
+          const firstLaunch = await AsyncStorage.getItem("@firstLaunch");
+          if (!firstLaunch) navigation.navigate("Onbording");
+        }
+        checkFirstLaunch();
+        fetchPost();
+      }
+      return () => {
+        isActive = false;
+      };
+    }, [])
   );
 
   async function fetchPost() {
@@ -72,7 +73,7 @@ export default function Home() {
   }
 
   return (
-    <View style={{ flex: 1, paddingHorizontal: 5 }}>
+    <View style={{ flex: 1,paddingHorizontal:0}}>
       <FlashList
         data={posts}
         contentContainerStyle={Platform.OS === "ios" && { paddingVertical: 30 }}
@@ -80,6 +81,7 @@ export default function Home() {
         estimatedItemSize={200}
         ListHeaderComponent={() => (
           <ListHeader
+            flag
             title={"Posts"}
             iconName="add-circle-sharp"
             handleNavigation={() => navigation.navigate("NewPost")}

@@ -7,11 +7,10 @@ import * as ImagePicker from "expo-image-picker"
 import {CLOUD_NAME,UPLOAD_PRESET} from "@env"
 import { resetProfilePicture, setUser } from "../src/features/user";
 import { updateUserPicture } from "../src/utils/userOperations";
-import { getUser } from "../graphqlCustom/getUser";
 
 const ProfilePicture = () => {
   const user = useSelector((state) => state.user);
-  const { firstName, lastName, profilePicture, id } = user;
+  const { firstName, lastName, profilePicture , id } = user;
 
   const dispatch = useDispatch();
 
