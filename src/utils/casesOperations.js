@@ -8,10 +8,8 @@ import { listCases } from "../graphql/queries";
 import { checkStatus } from "./checkStatusCase";
 
 export const createCase = async (caseNumber, authorID) => {
-  console.log(caseNumber, authorID);
   try {
     const data = await checkStatus(caseNumber);
-    console.log(data)
     if (data?.error) {
       return { error: "Case not found" };
     }

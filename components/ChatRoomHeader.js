@@ -18,7 +18,7 @@ export default function ChatRoomHeader({
         }}
         style={styles.image}
       />
-      <MyText style={{ fontWeight: "bold" }}>{firstName}</MyText>
+      <MyText style={{color:'gray', fontWeight: "bold" }}>{firstName}</MyText>
     </Pressable>
   );
 }

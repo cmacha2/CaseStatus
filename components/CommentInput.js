@@ -6,12 +6,13 @@ import Colors from "../constants/colors";
 import { Pressable } from "react-native";
 import { Image } from "react-native";
 import { createComment } from "../src/graphql/mutations";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateCommentsReducer } from "../src/features/posts";
 
-const CommentInput = ({ postCommentsId, userCommentsId }) => {
+const CommentInput = ({ postCommentsId }) => {
   const theme = useColorScheme();
   const dispatch = useDispatch();
+  const {id} = useSelector((state) => state.user);
   const [text, setText] = React.useState("");
 
   const pushComment = async () => {
@@ -22,7 +23,7 @@ const CommentInput = ({ postCommentsId, userCommentsId }) => {
           input: {
             content: text.trim(),
             postCommentsId: postCommentsId,
-            userCommentsId: userCommentsId,
+            userCommentsId: id,
           },
         },
       });

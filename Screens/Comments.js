@@ -16,7 +16,7 @@ const Comments = () => {
   const theme = useColorScheme()
   const route = useRoute()
   const { comments } = useSelector((state) => state.posts)
-  const { postID, authorPostID } = route.params
+  const { postID } = route.params
 
 
   return (
@@ -30,7 +30,7 @@ const Comments = () => {
         keyExtractor={(item) => item.id}
         estimatedItemSize={100}
       />
-      <CommentInput postCommentsId={postID} userCommentsId={authorPostID}/>
+      <CommentInput postCommentsId={postID} />
     </DefaultView>
   )
 }

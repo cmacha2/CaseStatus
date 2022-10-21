@@ -23,10 +23,13 @@ import {
   deletePostReducer,
   incrementLikesReducer,
   decrementLikesReducer,
+  setCommentsReducer,
 } from "../src/features/posts";
 import moment from "moment";
+import {API, graphqlOperation} from "aws-amplify";
 import { notificationAsync, NotificationFeedbackType } from "expo-haptics";
 import { useNavigation } from "@react-navigation/native";
+import { getPost } from "../src/graphql/queries";
 
 export default function CardPostProfile({post, user}) {
   const dispatch = useDispatch();
@@ -49,6 +52,16 @@ export default function CardPostProfile({post, user}) {
       await incrementLikesMutation(id, likedBy, numberOfLikes, user.id);
     }
   };
+
+  const getComments = async () => {
+    const { data } = await API.graphql(
+     graphqlOperation(getPost, {
+       id: post.id,
+     })
+   );
+       dispatch(setCommentsReducer(data.getPost.comments.items));
+       navigation.navigate("Comments",{postID: post.id , authorPostID: post.author.id});
+  }
 
 
   return (
@@ -120,7 +133,7 @@ export default function CardPostProfile({post, user}) {
             name="comment-alt"
             size={21}
             color={Colors[theme].text + "50"}
-            onPress={() => navigation.navigate("Comments", { post })}
+            onPress={getComments}
           />
           <MyText
             type="caption"

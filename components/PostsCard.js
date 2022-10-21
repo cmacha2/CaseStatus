@@ -97,9 +97,8 @@ export default function PostCard(post) {
       id: post.id,
     })
   );
-  console.log(data.getPost.comments);
       dispatch(setCommentsReducer(data.getPost.comments.items));
-      navigation.navigate("Comments",{postID: post.id , authorPostID: post.author.id});
+      navigation.navigate("Comments",{postID: post.id });
  }
 
   return (
