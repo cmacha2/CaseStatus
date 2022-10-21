@@ -40,6 +40,7 @@ const ModalAddCase = ({ bottomSheetModalRef, snapPoints }) => {
         return setErrorNumber(`Case number ${numberCase} not found`);
       }
       dispatch(resetCases(data));
+      console.log('pasoooooooooooooo')
       bottomSheetModalRef.current?.close();
       setNumerCase("");
     } catch (e) {

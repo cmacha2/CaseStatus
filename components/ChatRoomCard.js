@@ -27,22 +27,22 @@ export default function ChatRoomCard(chat) {
   const theme = useColorScheme();
 
   const contactInfo =
-    participants.items.length > 2
+    participants.items?.length > 2
       ? {
           firstName: "User left",
         }
-      : participants.items[0].user.id === user.id
+      : participants.items[0]?.user.id === user.id
       ? {
-          id: participants.items[1].user.id,
-          firstName: participants.items[1].user.firstName,
-          lastName: participants.items[1].user.lastName,
-          profilePicture: participants.items[1].user.profilePicture,
+          id: participants.items[1]?.user.id,
+          firstName: participants.items[1]?.user.firstName,
+          lastName: participants.items[1]?.user.lastName,
+          profilePicture: participants.items[1]?.user.profilePicture,
         }
       : {
-          id: participants.items[0].user.id,
-          firstName: participants.items[0].user.firstName,
-          lastName: participants.items[0].user.lastName,
-          profilePicture: participants.items[0].user.profilePicture,
+          id: participants.items[0]?.user.id,
+          firstName: participants.items[0]?.user.firstName,
+          lastName: participants.items[0]?.user.lastName,
+          profilePicture: participants.items[0]?.user.profilePicture,
         };
   const isSeenByCurrentUser = isSeenBy !== null && isSeenBy.includes(user.id);
 
@@ -60,17 +60,24 @@ export default function ChatRoomCard(chat) {
           text: "Confirm",
           onPress: async () => {
             try {
-              await API.graphql({
-                query: deleteUserChatRooms,
-                variables: { input: chat.id },
-              });
+              console.log(
+                await API.graphql({
+                  query: deleteUserChatRooms,
+                  variables: {
+                    input: {
+                      id: chat.id,
+                    },
+                  },
+                })
+              );
+
               dispatch(removeChatRoom(chat.id));
             } catch (e) {
               console.log(e);
             }
           },
           style: "destructive",
-        }
+        },
       ]
     );
   };
@@ -109,7 +116,7 @@ export default function ChatRoomCard(chat) {
               alignItems: "baseline",
             }}
           >
-            <MyText  style={{ fontWeight: "500", fontSize:16}}>
+            <MyText style={{ fontWeight: "500", fontSize: 16 }}>
               {contactInfo.firstName} {contactInfo.lastName}
             </MyText>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -121,7 +128,7 @@ export default function ChatRoomCard(chat) {
                   marginRight: 13,
                 }}
               >
-                { moment(lastMessage?.createdAt).fromNow()}
+                {moment(lastMessage?.createdAt).fromNow()}
               </MyText>
               <Ionicons
                 name="ellipsis-horizontal"
@@ -132,7 +139,7 @@ export default function ChatRoomCard(chat) {
             </View>
           </View>
           <MyText
-          type='caption'
+            type="caption"
             style={{
               color: Colors[theme].text + "80",
               fontSize: 14,

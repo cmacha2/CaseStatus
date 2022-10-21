@@ -9,12 +9,13 @@ import {
   getUserByEmail,
   getUserByID,
 } from "../src/utils/userOperations";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { sendPushNotification } from "../src/utils/notifications";
 import { setChatRooms } from "../src/features/chatRooms";
 
-export const SendMessageButton = ({ theme, onPress, email }) => {
+export const SendMessageButton = ({ email }) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
   async function handleNewChat(email) {
@@ -34,8 +35,7 @@ export const SendMessageButton = ({ theme, onPress, email }) => {
       if (refreshedUser.chatRooms !== undefined) {
         dispatch(setChatRooms(refreshedUser.chatRooms.items));
       }
-      console.log("refreshedUser", refreshedUser);
-      if (contact?.notificationToken) {
+      if (!contact?.notificationToken) {
         await sendPushNotification(
           contact?.notificationToken,
           "🚨 New conversation started!",
@@ -43,14 +43,13 @@ export const SendMessageButton = ({ theme, onPress, email }) => {
             user.firstName + " " + user.lastName
           } started a conversation with you`
         );
-        Alert.alert("Success!", "Conversation started successfully", [
-          {
-            text: "Let's chat!",
-            onPress: () => navigation.goBack(),
-            style: "default",
-          },
-        ]);
       }
+      Alert.alert("Success!", "Conversation started successfully", [
+        {
+          text: "Let's chat!",
+          style: "default",
+        },
+      ]);
     } catch (e) {
       alert("something went wrong");
     }

@@ -7,6 +7,7 @@ import { FlashList } from "@shopify/flash-list";
 import ChatRoomCard from "../components/ChatRoomCard";
 import { View } from "../components/theme/Themed";
 import { Text } from "react-native";
+import MyText from "../components/MyText";
 
 const Chats = () => {
   const { chatRooms } = useSelector((state) => state.chatRooms);
@@ -32,7 +33,7 @@ const Chats = () => {
         /> 
         ) : (
           <View style={styles.noChats}>
-            <Text style={styles.noChatsText}>No chats yet</Text>
+            <MyText style={styles.noChatsText}>No chats yet</MyText>
           </View>
         )
       }
@@ -52,8 +53,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   noChatsText: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
+    fontSize: 15,
+        textAlign:"center",
+        // backgroundColor: "#f0f0f0",
+        fontFamily:"sans-serif-condensed"
+  }
   
 });

@@ -18,6 +18,7 @@ export default function MyInput({
     {  !hiddenLabel && <MyText style={{fontWeight:'bold',paddingBottom:5}} type={"caption"}>{label}</MyText>}
       <TextInput
         placeholder={label}
+        placeholderTextColor={Colors[theme].text+'80'}
         style={[styles.input, styles[theme]]}
         value={value}
         onChangeText={onChangeText}

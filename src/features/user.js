@@ -81,6 +81,7 @@ const userSlice = createSlice({
       }
     },
     resetCases: (state, action) => {
+      console.log("reset cases", action.payload);
       return {
         ...state,
         cases: [...state.cases,action.payload],

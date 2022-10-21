@@ -8,7 +8,7 @@ import {
   Alert,
   Pressable,
 } from "react-native";
-import { API , graphqlOperation } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 import MyText from "./MyText";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
@@ -81,8 +81,6 @@ export default function PostCard(post) {
           text: "Report",
           onPress: async () => {
             await sendReportEmail();
-            dispatch(deletePostReducer(id));
-            await deletePost(id);
           },
           style: "destructive",
         },
@@ -91,15 +89,37 @@ export default function PostCard(post) {
     );
   };
 
- const getComments = async () => {
-   const { data } = await API.graphql(
-    graphqlOperation(getPost, {
-      id: post.id,
-    })
-  );
-      dispatch(setCommentsReducer(data.getPost.comments.items));
-      navigation.navigate("Comments",{postID: post.id });
- }
+  const removePost = async () => {
+    Alert.alert(
+      "Delete Post",
+      "Are you sure you want to delete this post?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          onPress: async () => {
+            await deletePost(id);
+            dispatch(deletePostReducer(id));
+          },
+          style: "destructive",
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  const getComments = async () => {
+    const { data } = await API.graphql(
+      graphqlOperation(getPost, {
+        id: post.id,
+      })
+    );
+    dispatch(setCommentsReducer(data.getPost.comments.items));
+    navigation.navigate("Comments", { postID: post.id });
+  };
 
   return (
     <View
@@ -110,7 +130,10 @@ export default function PostCard(post) {
     >
       <View style={{ paddingHorizontal: 17 }}>
         <View style={styles.postHeader}>
-          <Pressable onPress={()=>navigation.navigate('Profile',{id:author.id})} style={{ flexDirection: "row", alignItems: "center" }}>
+          <Pressable
+            onPress={() => navigation.navigate("Profile", { id: author.id })}
+            style={{ flexDirection: "row", alignItems: "center" }}
+          >
             <Image
               source={{
                 uri: author?.profilePicture
@@ -120,7 +143,9 @@ export default function PostCard(post) {
               style={styles.image}
             />
             <View style={{ paddingLeft: 10 }}>
-              <MyText style={{ fontWeight: "500" }}>{author?.firstName } {author?.lastName}</MyText>
+              <MyText style={{ fontWeight: "500" }}>
+                {author?.firstName} {author?.lastName}
+              </MyText>
               <MyText
                 type="caption"
                 style={{ color: Colors[theme].text + "70", fontWeight: "500" }}
@@ -133,7 +158,7 @@ export default function PostCard(post) {
             name="ellipsis-horizontal"
             size={24}
             color={Colors[theme].text + "70"}
-            onPress={handleReport}
+            onPress={author.id === user.id ? removePost : handleReport}
           />
         </View>
         <MyText
@@ -143,7 +168,7 @@ export default function PostCard(post) {
         </MyText>
         <View style={{ flexDirection: "row", alignItems: "baseline" }}>
           <Pressable onPress={handleLike}>
-            {(likedBy !== null)  && likedBy?.includes(user.id) ? (
+            {likedBy !== null && likedBy?.includes(user.id) ? (
               <AntDesign
                 name="like1"
                 size={21}
@@ -171,8 +196,7 @@ export default function PostCard(post) {
             {numberOfLikes}
           </MyText>
           <FontAwesome5
-            style={{ marginLeft: 12,
-            paddingTop: 2 }}
+            style={{ marginLeft: 12, paddingTop: 2 }}
             name="comment-alt"
             size={21}
             color={Colors[theme].text + "50"}
@@ -180,7 +204,11 @@ export default function PostCard(post) {
           />
           <MyText
             type="caption"
-            style={{ marginLeft: 5, paddingBottom: 4, color: Colors[theme].text + "50" }}
+            style={{
+              marginLeft: 5,
+              paddingBottom: 4,
+              color: Colors[theme].text + "50",
+            }}
           >
             {post?.comments?.items.length}
           </MyText>

@@ -86,6 +86,7 @@ function InfoField({
       <TextInput
         placeholder={label}
         value={localValue}
+        placeholderTextColor={Colors[theme].text + "80"}
         onChangeText={canEdit && setLocalValue}
         keyboardType={canEdit ? "web-search" : "default"}
         onSubmitEditing={(event) => {

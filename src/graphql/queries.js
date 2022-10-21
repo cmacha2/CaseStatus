@@ -349,6 +349,7 @@ export const getPost = /* GraphQL */ `
           userCommentsId
           postCommentsId
           user {
+              id
               firstName
               lastName
               profilePicture

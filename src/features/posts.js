@@ -69,6 +69,10 @@ export const postSlice = createSlice({
     updateCommentsReducer: (state, action) => {
       state.comments = [...state.comments, action.payload];
     },
+    deleteCommentReducer: (state, action) => {
+      const commentID = action.payload;
+      state.comments = state.comments.filter((comment) => comment.id !== commentID);
+    }
   },
 });
 
@@ -81,6 +85,7 @@ export const {
   decrementLikesReducer,
   updateCommentsReducer,
   setCommentsReducer,
+  deleteCommentReducer
 } = postSlice.actions;
 
 export default postSlice.reducer;

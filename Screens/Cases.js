@@ -69,7 +69,7 @@ function Cases() {
           />
 
           {cases?.length ? (
-            <DefaultView style={{height:'100%'}}>
+            <DefaultView style={styles.containerAllCases}>
               <Text style={styles.lastRefresh}>
                 Last refresh:{" "}
                 {moment(cases[0].updateAt).format("MMMM Do YYYY, h:mm:ss a")}
@@ -129,5 +129,10 @@ const styles = StyleSheet.create({
     marginTop: 2,
     color: "gray",
     fontFamily: "sans-serif-condensed",
+  },
+  containerAllCases: {
+    flex: 1,
+    // marginTop: 10,
+    paddingBottom: 10,
   },
 });
