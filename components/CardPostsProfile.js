@@ -126,7 +126,7 @@ export default function CardPostProfile({post, user}) {
             type="caption"
             style={{ marginLeft: 5, paddingBottom: 4, color: Colors[theme].text + "50" }}
           >
-            {numberOfLikes}
+            {post?.comments?.items.length}
           </MyText>
         </View>
       </View>

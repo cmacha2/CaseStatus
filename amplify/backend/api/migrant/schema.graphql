@@ -17,6 +17,7 @@ type User @model {
   chatRooms: [ChatRoom] @manyToMany(relationName: "UserChatRooms")
   cases: [Case] @hasMany
   posts: [Post] @hasMany
+  comments: [Comment] @hasMany
 }
 
 type ChatRoom @model {
@@ -33,7 +34,7 @@ type Comment @model {
   id: ID!
   content: String
   post: Post @belongsTo
-  user: User @hasOne
+  user: User @belongsTo
   createdAt: String
   updatedAt: String
 }

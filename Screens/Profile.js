@@ -95,7 +95,7 @@ export default function ContactProfile() {
       <View style={styles.header}>
         <Image
           source={{
-            uri: "https://res.cloudinary.com/cmacha2/image/upload/v1666280998/Minimalist_Black_White_The_End_Animation_Video_hbp43r.png",
+            uri: "https://res.cloudinary.com/cmacha2/image/upload/v1666317364/Minimalist_Black_White_The_End_Animation_Video_1_qmpmmh.png",
           }}
           style={styles.imageBackground}
         />

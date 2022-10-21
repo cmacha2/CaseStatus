@@ -8,6 +8,7 @@ import {
   Alert,
   Pressable,
 } from "react-native";
+import { API , graphqlOperation } from "aws-amplify";
 import MyText from "./MyText";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
@@ -19,14 +20,16 @@ import {
   incrementLikesMutation,
   decrementLikesMutation,
 } from "../src/utils/postsOperations";
-import {
+import posts, {
   deletePostReducer,
   incrementLikesReducer,
   decrementLikesReducer,
+  setCommentsReducer,
 } from "../src/features/posts";
 import moment from "moment";
 import { notificationAsync, NotificationFeedbackType } from "expo-haptics";
 import { useNavigation } from "@react-navigation/native";
+import { getPost } from "../src/graphql/queries";
 
 export default function PostCard(post) {
   const user = useSelector((state) => state.user);
@@ -87,6 +90,17 @@ export default function PostCard(post) {
       { cancelable: false }
     );
   };
+
+ const getComments = async () => {
+   const { data } = await API.graphql(
+    graphqlOperation(getPost, {
+      id: post.id,
+    })
+  );
+  console.log(data.getPost.comments);
+      dispatch(setCommentsReducer(data.getPost.comments.items));
+      navigation.navigate("Comments",{postID: post.id , authorPostID: post.author.id});
+ }
 
   return (
     <View
@@ -163,13 +177,13 @@ export default function PostCard(post) {
             name="comment-alt"
             size={21}
             color={Colors[theme].text + "50"}
-            onPress={() => navigation.navigate("Comments", { post })}
+            onPress={getComments}
           />
           <MyText
             type="caption"
             style={{ marginLeft: 5, paddingBottom: 4, color: Colors[theme].text + "50" }}
           >
-            {numberOfLikes}
+            {post?.comments?.items.length}
           </MyText>
         </View>
       </View>

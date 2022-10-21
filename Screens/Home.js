@@ -11,6 +11,8 @@ import PostCard from "../components/PostsCard";
 import { setPostsReducer } from "../src/features/posts";
 import { useDispatch, useSelector } from "react-redux";
 import { listUsers } from "../src/utils/userOperations";
+import MyButton from "../components/MyButton";
+import { onCreateComment } from "../src/graphql/subscriptions";
 
 export default function Home() {
   const theme = useColorScheme();
@@ -36,6 +38,7 @@ export default function Home() {
       };
     }, [])
   );
+
 
   async function fetchPost() {
     const { data } = await API.graphql(
@@ -77,7 +80,7 @@ export default function Home() {
       <FlashList
         data={posts}
         contentContainerStyle={Platform.OS === "ios" && { paddingVertical: 30 }}
-        renderItem={({ item }) => <PostCard {...item} />}
+        renderItem={({ item }) => <PostCard  {...item} />}
         estimatedItemSize={200}
         ListHeaderComponent={() => (
           <ListHeader
@@ -89,13 +92,15 @@ export default function Home() {
         )}
         refreshing={loading}
         onRefresh={fetchPost}
-        ListFooterComponent={() => (
-          <Button
-            title={loading ? "loading" : "load more"}
+        ListFooterComponent={() => {
+          if(posts.length === 99){
+          return <MyButton
+            title={loading ? "loading" : "Load more"}
             disabled={loading || nextToken === null}
             onPress={fetchMorePost}
           />
-        )}
+          }
+        }}
       />
     </View>
   );

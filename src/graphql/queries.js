@@ -102,6 +102,9 @@ export const listUsers = /* GraphQL */ `
         posts {
           nextToken
         }
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -250,13 +253,16 @@ export const getComment = /* GraphQL */ `
         posts {
           nextToken
         }
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
       }
       createdAt
       updatedAt
+      userCommentsId
       postCommentsId
-      commentUserId
     }
   }
 `;
@@ -296,8 +302,8 @@ export const listComments = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        userCommentsId
         postCommentsId
-        commentUserId
       }
       nextToken
     }
@@ -328,6 +334,9 @@ export const getPost = /* GraphQL */ `
         posts {
           nextToken
         }
+         comments {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -337,8 +346,13 @@ export const getPost = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          userCommentsId
           postCommentsId
-          commentUserId
+          user {
+              firstName
+              lastName
+              profilePicture
+            }
         }
         nextToken
       }
@@ -376,6 +390,19 @@ export const listPosts = /* GraphQL */ `
           updatedAt
         }
         comments {
+          items {
+            id
+            content
+            createdAt
+            updatedAt
+            postCommentsId
+            userCommentsId
+            user {
+              firstName
+              lastName
+              profilePicture
+            }
+          }
           nextToken
         }
         content
@@ -411,6 +438,9 @@ export const getCase = /* GraphQL */ `
           nextToken
         }
         posts {
+          nextToken
+        }
+        comments {
           nextToken
         }
         createdAt
@@ -488,6 +518,9 @@ export const getMessage = /* GraphQL */ `
         posts {
           nextToken
         }
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -557,6 +590,9 @@ export const getUserChatRooms = /* GraphQL */ `
           nextToken
         }
         posts {
+          nextToken
+        }
+        comments {
           nextToken
         }
         createdAt
@@ -669,13 +705,15 @@ export const postsByDate = /* GraphQL */ `
             createdAt
             updatedAt
             postCommentsId
-            commentUserId
+            userCommentsId
             user {
-            firstName
-            lastName
-            profilePicture
+              id
+              firstName
+              lastName
+              profilePicture
+            }
           }
-          }
+          nextToken
         }
         content
         numberOfLikes

@@ -54,6 +54,17 @@ export const createUser = /* GraphQL */ `
         }
         nextToken
       }
+      comments {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+          userCommentsId
+          postCommentsId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -112,6 +123,17 @@ export const updateUser = /* GraphQL */ `
         }
         nextToken
       }
+      comments {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+          userCommentsId
+          postCommentsId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -167,6 +189,17 @@ export const deleteUser = /* GraphQL */ `
           createdAt
           updatedAt
           userPostsId
+        }
+        nextToken
+      }
+      comments {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+          userCommentsId
+          postCommentsId
         }
         nextToken
       }
@@ -368,17 +401,8 @@ export const createComment = /* GraphQL */ `
           firstName
           lastName
           profilePicture
-          backgroundPicture
-          email
-          status
-          notificationToken
-          latitude
-          longitude
           createdAt
           updatedAt
-        }
-        comments {
-          nextToken
         }
         content
         numberOfLikes
@@ -392,28 +416,13 @@ export const createComment = /* GraphQL */ `
         firstName
         lastName
         profilePicture
-        backgroundPicture
-        email
-        status
-        notificationToken
-        latitude
-        longitude
-        chatRooms {
-          nextToken
-        }
-        cases {
-          nextToken
-        }
-        posts {
-          nextToken
-        }
         createdAt
         updatedAt
       }
       createdAt
       updatedAt
+      userCommentsId
       postCommentsId
-      commentUserId
     }
   }
 `;
@@ -472,13 +481,16 @@ export const updateComment = /* GraphQL */ `
         posts {
           nextToken
         }
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
       }
       createdAt
       updatedAt
+      userCommentsId
       postCommentsId
-      commentUserId
     }
   }
 `;
@@ -537,13 +549,16 @@ export const deleteComment = /* GraphQL */ `
         posts {
           nextToken
         }
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
       }
       createdAt
       updatedAt
+      userCommentsId
       postCommentsId
-      commentUserId
     }
   }
 `;
@@ -575,6 +590,9 @@ export const createPost = /* GraphQL */ `
         posts {
           nextToken
         }
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -584,8 +602,8 @@ export const createPost = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          userCommentsId
           postCommentsId
-          commentUserId
         }
         nextToken
       }
@@ -626,6 +644,9 @@ export const updatePost = /* GraphQL */ `
         posts {
           nextToken
         }
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -635,8 +656,8 @@ export const updatePost = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          userCommentsId
           postCommentsId
-          commentUserId
         }
         nextToken
       }
@@ -677,6 +698,9 @@ export const deletePost = /* GraphQL */ `
         posts {
           nextToken
         }
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -686,8 +710,8 @@ export const deletePost = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          userCommentsId
           postCommentsId
-          commentUserId
         }
         nextToken
       }
@@ -725,6 +749,9 @@ export const createCase = /* GraphQL */ `
           nextToken
         }
         posts {
+          nextToken
+        }
+        comments {
           nextToken
         }
         createdAt
@@ -768,6 +795,9 @@ export const updateCase = /* GraphQL */ `
         posts {
           nextToken
         }
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -807,6 +837,9 @@ export const deleteCase = /* GraphQL */ `
           nextToken
         }
         posts {
+          nextToken
+        }
+        comments {
           nextToken
         }
         createdAt
@@ -851,6 +884,9 @@ export const createMessage = /* GraphQL */ `
         posts {
           nextToken
         }
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -888,6 +924,9 @@ export const updateMessage = /* GraphQL */ `
           nextToken
         }
         posts {
+          nextToken
+        }
+        comments {
           nextToken
         }
         createdAt
@@ -929,6 +968,9 @@ export const deleteMessage = /* GraphQL */ `
         posts {
           nextToken
         }
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -967,6 +1009,9 @@ export const createUserChatRooms = /* GraphQL */ `
           nextToken
         }
         posts {
+          nextToken
+        }
+        comments {
           nextToken
         }
         createdAt
@@ -1028,6 +1073,9 @@ export const updateUserChatRooms = /* GraphQL */ `
         posts {
           nextToken
         }
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1085,6 +1133,9 @@ export const deleteUserChatRooms = /* GraphQL */ `
           nextToken
         }
         posts {
+          nextToken
+        }
+        comments {
           nextToken
         }
         createdAt

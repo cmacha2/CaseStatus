@@ -21,11 +21,15 @@
       "supportsTablet": true
     },
     "android": {
-      "softwareKeyboardLayoutMode":"pan",
+      "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.cmacha2.CaseStatus"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -34,9 +38,14 @@
       [
         "expo-image-picker",
         {
-          "photosPermission":"Only Chats uses accesses to your photos to do things like help you set profile picture"
+          "photosPermission": "Only Chats uses accesses to your photos to do things like help you set profile picture"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "4901a2d6-9b99-4ebf-ad35-5bb79e5b7066"
+      }
+    }
   }
 }

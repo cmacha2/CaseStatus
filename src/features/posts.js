@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   posts: [],
+  comments: [],
 };
 
 export const postSlice = createSlice({
@@ -53,6 +54,21 @@ export const postSlice = createSlice({
         return post;
       });
     },
+    updateCommentsReducer: (state, action) => {
+      const { postID, comment } = action.payload;
+      state.posts = state.posts.map((post) => {
+        if (post.id === postID) {
+          post.comments.items.push(comment);
+        }
+        return post;
+      });
+    },
+    setCommentsReducer: (state, action) => {
+      state.comments = action.payload;
+    },
+    updateCommentsReducer: (state, action) => {
+      state.comments = [...state.comments, action.payload];
+    },
   },
 });
 
@@ -63,6 +79,8 @@ export const {
   deletePostReducer,
   incrementLikesReducer,
   decrementLikesReducer,
+  updateCommentsReducer,
+  setCommentsReducer,
 } = postSlice.actions;
 
 export default postSlice.reducer;
