@@ -49,7 +49,7 @@ export default function ContactProfile() {
   }
 
   const savePhotoCloudinary = async(data)=>{
-    let apiUrl = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload/`
+    let apiUrl = `https://api.cloudinary.com/v1_1/cmacha2/image/upload/`
 
     try {
         const response = await fetch(apiUrl,{
@@ -76,7 +76,7 @@ export default function ContactProfile() {
     let base64Img = `data:image/jpg;base64,${result.base64}`
     const data = new FormData()
     data.append('file', base64Img)
-    data.append('upload_preset',UPLOAD_PRESET)
+    data.append('upload_preset','CaseNumber08')
 
     if(!result.cancelled){
         savePhotoCloudinary(data)
@@ -95,7 +95,7 @@ export default function ContactProfile() {
       <View style={styles.header}>
         <Image
           source={{
-            uri: "https://res.cloudinary.com/cmacha2/image/upload/v1666317364/Minimalist_Black_White_The_End_Animation_Video_1_qmpmmh.png",
+            uri: "https://res.cloudinary.com/cmacha2/image/upload/v1666531114/3D-wall-2_cois05.jpg",
           }}
           style={styles.imageBackground}
         />

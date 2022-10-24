@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "CaseStatus",
+    "name": "Migrant US",
     "slug": "CaseStatus",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -18,18 +18,21 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.cmacha2.migrantUS",
+      "buildNumber": "1"
     },
     "android": {
       "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#FFFFFF"
       },
       "permissions": [
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.cmacha2.CaseStatus"
+      "package": "com.cmacha2.migrantUS",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -38,7 +41,7 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "Only Chats uses accesses to your photos to do things like help you set profile picture"
+          "photosPermission": "Migrant US uses accesses to your photos to do things like help you set profile picture"
         }
       ]
     ],

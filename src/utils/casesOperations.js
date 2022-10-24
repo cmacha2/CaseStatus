@@ -13,6 +13,9 @@ export const createCase = async (caseNumber, authorID) => {
     if (data?.error) {
       return { error: "Case not found" };
     }
+    if(data?.warning){
+      return {warning: "USCIS page not available at this time"};
+    }
     const newCase = await API.graphql({
       query: createCaseMutation,
       variables: {

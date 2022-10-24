@@ -19,6 +19,9 @@ import ChatRoom from "../Screens/ChatRoom";
 import CaseDetails from "../Screens/CaseDetails";
 import Settings from "../Screens/Settings";
 import NewChat from "../Screens/NewChat";
+import Notifications from "../Screens/Notifications";
+import ShowPost from "../Screens/ShowPost";
+import { useSelector } from "react-redux";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -34,6 +37,9 @@ export default function Root({ colorScheme }) {
 }
 
 function BottomNavigator() {
+  const {notifications} = useSelector(state => state.notifications)
+  const unSeenNotifications = notifications.filter(notification => notification.isSeseen === false)
+
   return (
     <Tab.Navigator initialRouteName="HomeStack">
       <Tab.Screen
@@ -69,6 +75,19 @@ function BottomNavigator() {
           headerShown: false,
         }}
       />
+            <Tab.Screen
+        name="NotificationsStack"
+        component={NotificationsStack}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="ios-notifications" color={color} />
+          ),
+          tabBarLabel: "Notifications",
+          headerShown: false,
+          tabBarBadge: unSeenNotifications.length>0 ? unSeenNotifications.length : null,
+        }}
+      />
       <Tab.Screen
         name="ProfileStack"
         component={ProfileStack}
@@ -80,9 +99,11 @@ function BottomNavigator() {
           tabBarLabel: "Profile",
         }}
       />
+
     </Tab.Navigator>
   );
 }
+
 
 function TabBarIcon(props) {
   return <Ionicons size={28} {...props} />;
@@ -91,7 +112,7 @@ function TabBarIcon(props) {
 function HomeStack() {
   return (
     <Stack.Navigator
-      initialRouteName="Cases"
+      initialRouteName="Home"
       screenOptions={{ headerTitleAlign: "center" }}
     >
       <Stack.Screen
@@ -129,7 +150,7 @@ function HomeStack() {
         component={Settings}
         options={{ presentation: "modal" }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="Chats"
         component={Chats}
         options={{
@@ -137,6 +158,8 @@ function HomeStack() {
           headerShown: false,
         }}
       />
+      <Stack.Screen name="ShowPost" component={ShowPost} />
+      <Stack.Screen name="ChatRoom" component={ChatRoom} />
     </Stack.Navigator>
   );
 }
@@ -161,7 +184,7 @@ function ChatsStack() {
           tabBarLabel: "Chats",
         }}
       />
-         <Stack.Screen
+      <Stack.Screen
         name="NewChat"
         component={NewChat}
         options={{
@@ -206,6 +229,36 @@ function ProfileStack() {
     >
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="Settings" component={Settings} />
+    </Stack.Navigator>
+  );
+}
+
+function NotificationsStack() {
+  return (
+    <Stack.Navigator
+      initialRouteName="Notifications"
+      screenOptions={{ headerTitleAlign: "center" }}
+    >
+      <Stack.Screen name="Notifications" component={Notifications} options={{
+          headerShown: false,
+      }}/>
+      <Stack.Screen name="ShowPost" component={ShowPost} />
+      <Stack.Screen name="ChatRoom" component={ChatRoom} />
+      <Stack.Screen name="Cases" component={Cases} />
+      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Settings" component={Settings} />
+      <Stack.Screen
+        name="Comments"
+        component={Comments}
+        options={{ presentation: "modal" }}
+      />
+      <Stack.Screen
+        name="CaseDetails"
+        component={CaseDetails}
+        options={{
+          headerTitle: "Case Details",
+        }}
+      />
     </Stack.Navigator>
   );
 }

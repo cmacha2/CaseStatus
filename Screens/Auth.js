@@ -25,15 +25,15 @@ function Auth() {
   const theme = useColorScheme();
   const image =
     theme === "dark"
-      ? require("../assets/LogoDark.png")
-      : require("../assets/LogoLight.png");
+      ? require("../assets/migrantUSA.png")
+      : require("../assets/migrantUSA.png");
   console.log("authState", authState);
   return (
     <KeyboardAwareScrollView style={{ backgroundColor: theme === 'dark' ? Colors.dark.background : Colors.light.background, paddingHorizontal:17 }}
     contentContainerStyle={{paddingVertical:90}}>
       <Image
         source={image}
-        style={{ width: 178, height: 178, alignSelf: "center" }}
+        style={{ width: 238, height: 178, alignSelf: "center"}}
       />
       {authState === "default" && <DefaultAuth />}
       {authState === "signIn" && <SignIn />}

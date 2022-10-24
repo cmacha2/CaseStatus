@@ -85,6 +85,7 @@ export default function ChatRoom() {
           notificationToken: data.getUser.notificationToken,
           latitude: data.getUser.latitude,
           longitude: data.getUser.longitude,
+          cases: data.getUser.cases.items,
         })
       );
       if (data.getUser.chatRooms.items !== null) {

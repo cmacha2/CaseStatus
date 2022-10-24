@@ -10,7 +10,7 @@ export default function DefaultAuth() {
   return (
     <React.Fragment>
       <MyText type="title" style={{ marginBottom: 35 }}>
-        The new way of messaging
+        The new way of freedom
       </MyText>
       <MyButton title="Create account" onPress={() => setAuthState("signUp")} />
       <MyButton

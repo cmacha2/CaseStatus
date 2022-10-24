@@ -401,8 +401,17 @@ export const createComment = /* GraphQL */ `
           firstName
           lastName
           profilePicture
+          backgroundPicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
           createdAt
           updatedAt
+        }
+        comments {
+          nextToken
         }
         content
         numberOfLikes
@@ -416,6 +425,24 @@ export const createComment = /* GraphQL */ `
         firstName
         lastName
         profilePicture
+        backgroundPicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          nextToken
+        }
+        cases {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -979,6 +1006,141 @@ export const deleteMessage = /* GraphQL */ `
       updatedAt
       chatRoomMessagesId
       messageAuthorId
+    }
+  }
+`;
+export const createNotification = /* GraphQL */ `
+  mutation CreateNotification(
+    $input: CreateNotificationInput!
+    $condition: ModelNotificationConditionInput
+  ) {
+    createNotification(input: $input, condition: $condition) {
+      id
+      receiver
+      sender {
+        id
+        firstName
+        lastName
+        profilePicture
+        backgroundPicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          nextToken
+        }
+        cases {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      type
+      postID
+      caseID
+      chatRoomID
+      isSeen
+      createdAt
+      updatedAt
+      notificationSenderId
+    }
+  }
+`;
+export const updateNotification = /* GraphQL */ `
+  mutation UpdateNotification(
+    $input: UpdateNotificationInput!
+    $condition: ModelNotificationConditionInput
+  ) {
+    updateNotification(input: $input, condition: $condition) {
+      id
+      receiver
+      sender {
+        id
+        firstName
+        lastName
+        profilePicture
+        backgroundPicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          nextToken
+        }
+        cases {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      type
+      postID
+      caseID
+      chatRoomID
+      isSeen
+      createdAt
+      updatedAt
+      notificationSenderId
+    }
+  }
+`;
+export const deleteNotification = /* GraphQL */ `
+  mutation DeleteNotification(
+    $input: DeleteNotificationInput!
+    $condition: ModelNotificationConditionInput
+  ) {
+    deleteNotification(input: $input, condition: $condition) {
+      id
+      receiver
+      sender {
+        id
+        firstName
+        lastName
+        profilePicture
+        backgroundPicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          nextToken
+        }
+        cases {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      type
+      postID
+      caseID
+      chatRoomID
+      isSeen
+      createdAt
+      updatedAt
+      notificationSenderId
     }
   }
 `;

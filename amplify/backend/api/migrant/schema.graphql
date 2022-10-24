@@ -83,4 +83,26 @@ type Message @model {
   updatedAt: String
 }
 
+type Notification @model {
+  id: ID!
+  receiver: ID!
+    @index(
+      name: "notificationsByUserID"
+      queryField: "notificationsByUserID"
+      sortKeyFields: ["createdAt"]
+    )
+  sender: User @hasOne
+  type: NotificationType
+  postID: ID
+  caseID: ID
+  chatRoomID: ID
+  isSeen: Boolean
+  createdAt: String
+  updatedAt: String
+}
 
+enum NotificationType {
+  LIKE_POST
+  STARTED_CONVERSATION
+  CHANGE_STATUS_CASE
+}

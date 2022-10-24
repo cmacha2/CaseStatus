@@ -45,7 +45,9 @@ function App() {
           backgroundPicture: null,
           email: data.payload.data.attributes.email,
           status:null,
-          notificationToken:null
+          notificationToken:null,
+          cases:[],
+          
         }))
         console.log("user signed in");
         break;

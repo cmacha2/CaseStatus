@@ -75,6 +75,7 @@ export const getUser = /* GraphQL */ `
     }
   }
 `;
+
 export const listUsers = /* GraphQL */ `
   query ListUsers(
     $filter: ModelUserFilterInput
@@ -366,6 +367,7 @@ export const getPost = /* GraphQL */ `
     }
   }
 `;
+
 export const listPosts = /* GraphQL */ `
   query ListPosts(
     $filter: ModelPostFilterInput
@@ -562,6 +564,85 @@ export const listMessages = /* GraphQL */ `
         updatedAt
         chatRoomMessagesId
         messageAuthorId
+      }
+      nextToken
+    }
+  }
+`;
+export const getNotification = /* GraphQL */ `
+  query GetNotification($id: ID!) {
+    getNotification(id: $id) {
+      id
+      receiver
+      sender {
+        id
+        firstName
+        lastName
+        profilePicture
+        backgroundPicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          nextToken
+        }
+        cases {
+          nextToken
+        }
+        posts {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      type
+      postID
+      caseID
+      chatRoomID
+      isSeen
+      createdAt
+      updatedAt
+      notificationSenderId
+    }
+  }
+`;
+export const listNotifications = /* GraphQL */ `
+  query ListNotifications(
+    $filter: ModelNotificationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listNotifications(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        receiver
+        sender {
+          id
+          firstName
+          lastName
+          profilePicture
+          backgroundPicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        type
+        postID
+        caseID
+        chatRoomID
+        isSeen
+        createdAt
+        updatedAt
+        notificationSenderId
       }
       nextToken
     }
@@ -766,6 +847,53 @@ export const messagesByChatRoom = /* GraphQL */ `
         updatedAt
         chatRoomMessagesId
         messageAuthorId
+      }
+      nextToken
+    }
+  }
+`;
+export const notificationsByUserID = /* GraphQL */ `
+  query NotificationsByUserID(
+    $receiver: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelNotificationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    notificationsByUserID(
+      receiver: $receiver
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        receiver
+        sender {
+          id
+          firstName
+          lastName
+          profilePicture
+          backgroundPicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          createdAt
+          updatedAt
+        }
+        type
+        postID
+        caseID
+        chatRoomID
+        isSeen
+        createdAt
+        updatedAt
+        notificationSenderId
       }
       nextToken
     }

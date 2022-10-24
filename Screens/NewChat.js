@@ -18,11 +18,11 @@ import {
   getUserByID,
   listAllUsers,
 } from "../src/utils/userOperations";
-import { sendPushNotification } from "../src/utils/notifications";
+import { createNotificationOnDB, sendPushNotification } from "../src/utils/notifications";
 import { useNavigation } from "@react-navigation/native";
 import Colors from "../constants/colors";
 import { FlashList } from "@shopify/flash-list";
-import { Image } from "react-native";
+import { Image,ActivityIndicator } from "react-native";
 
 export default function NewChat() {
   const theme = useColorScheme();
@@ -91,21 +91,35 @@ export default function NewChat() {
       if (refreshedUser.chatRooms !== undefined) {
         dispatch(setChatRooms(refreshedUser.chatRooms.items));
       }
+      
+
+      const notificationData = await createNotificationOnDB(
+        user.id,
+        contact.id,
+        "STARTED_CONVERSATION",
+        newChatRoomID
+      )
       await sendPushNotification(
         contact.notificationToken,
         "🚨 New conversation started!",
         `${
           user.firstName + " " + user.lastName
-        } started a conversation with you`
+        } started a conversation with you`,
+        notificationData
       );
+      
       setIsLoading(false);
       Alert.alert("Success!", "Conversation started successfully", [
         {
           text: "Let's chat!",
-          onPress: () => navigation.goBack(),
+          onPress: () => navigation.navigate("ChatRoom", {
+            chatRoomID: newChatRoomID,
+            contactInfo: contact,
+          }),
           style: "default",
         },
       ]);
+      
     } catch (e) {
       alert("something went wrong 😅");
       setIsLoading(false);
@@ -170,12 +184,6 @@ export default function NewChat() {
           estimatedItemSize={50}
         />
       )}
-
-      {/* <MyButton
-        title={isLoading ? "Loading..." : "Start new chat"}
-        onPress={handleNewChat}
-        disabled={isLoading}
-      /> */}
     </View>
   );
 }

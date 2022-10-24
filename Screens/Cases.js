@@ -40,6 +40,8 @@ function Cases() {
   const [loading, setLoading] = React.useState(false);
   const dispatch = useDispatch();
 
+  console.log("cases", cases);
+
   const handlerModal = () => {
     bottomSheetModalRef.current?.present();
   };

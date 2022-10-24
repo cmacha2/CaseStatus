@@ -12,8 +12,7 @@ import { API, graphqlOperation } from "aws-amplify";
 import MyText from "./MyText";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
-import Colors from "../constants/colors";
+import { FontAwesome5 } from "@expo/vector-icons"
 import { useSelector, useDispatch } from "react-redux";
 import {
   deletePost,
@@ -28,8 +27,10 @@ import posts, {
 } from "../src/features/posts";
 import moment from "moment";
 import { notificationAsync, NotificationFeedbackType } from "expo-haptics";
+import { createNotificationOnDB, sendPushNotification } from "../src/utils/notifications";
 import { useNavigation } from "@react-navigation/native";
 import { getPost } from "../src/graphql/queries";
+import Colors from "../constants/colors";
 
 export default function PostCard(post) {
   const user = useSelector((state) => state.user);
@@ -51,6 +52,20 @@ export default function PostCard(post) {
       notificationAsync(NotificationFeedbackType.Success);
       dispatch(incrementLikesReducer(data));
       await incrementLikesMutation(id, likedBy, numberOfLikes, user.id);
+      if(author.id !== user.id) {
+       const notificationData = await createNotificationOnDB(
+          user.id,
+          author.id,
+          "LIKE_POST",
+          id
+       );
+        await sendPushNotification(
+          author.notificationToken,
+          `${user.firstName} liked your post `,
+           `Go to Migrant US to check it out!`,
+          notificationData
+        );
+      }
     }
   };
 

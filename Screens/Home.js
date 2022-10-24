@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { listUsers } from "../src/utils/userOperations";
 import MyButton from "../components/MyButton";
 import { onCreateComment } from "../src/graphql/subscriptions";
+import * as Notifications from "expo-notifications";
 
 export default function Home() {
   const theme = useColorScheme();
@@ -21,6 +22,31 @@ export default function Home() {
   const { posts } = useSelector((state) => state.posts);
   const [nextToken, setNextToken] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const subscription = Notifications.addNotificationReceivedListener(
+      (response) => {
+        const notificationData = response.notification.request.content.data;
+        switch(notificationData.type) {
+          case "LIKE_POST":
+            navigation.navigate("Post", { postID: notificationData.postID });
+            break;
+          case "COMMENT_POST":
+            navigation.navigate("Post", { postID: notificationData.postID });
+            break;
+          case "STARTED_CONVERSATION":
+            navigation.navigate("ChatRoom", { chatRoomID: notificationData.chatRoomID , contactInfo: notificationData.sender });
+            break;
+          case "CHANGE_STATUS_CASE":
+            navigation.navigate("CaseDetails", { caseID: notificationData.caseID });
+            break;
+        }
+      }
+    );
+    return () => subscription.remove();
+  }, []);
+      
+
 
   useFocusEffect(
     React.useCallback(() => {

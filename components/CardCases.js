@@ -33,6 +33,7 @@ const CardCases = ({ data }) => {
     }
   };
 
+
   return (
     <Swipeable
       renderRightActions={(progress, dragX) => (
@@ -58,11 +59,14 @@ const CardCases = ({ data }) => {
           </View>
           <MyText type="caption" style={styles.titleCase}>{data.titleCase}</MyText>
           <View style={styles.cardBottom}>
-            <Text style={styles.lastChange}>
-              Last change:{" "}
-              {moment(new Date(data.receiptDate).toISOString()).fromNow()}
+            <Text style={styles.lastChange}>   
+              {
+                isNaN(Date.parse(data.receiptDate))
+                ?null
+                : `Last change: ${moment(new Date(data.receiptDate).toISOString()).fromNow()}`
+              }
             </Text>
-            <Text style={styles.lastChange}>{data.receiptDate}</Text>
+            <Text style={styles.lastChange}>{isNaN(Date.parse(data.receiptDate)) ? null : data.receiptDate}</Text>
           </View>
         </View>
         {/* <MyButton title='X' onPress={()=>deleteCase(data.id)} /> */}

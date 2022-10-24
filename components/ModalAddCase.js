@@ -16,7 +16,6 @@ import { createCase } from "../src/utils/casesOperations";
 import { resetCases } from "../src/features/user";
 import { useDispatch, useSelector } from "react-redux";
 import MyText from "./MyText";
-import { View } from "./theme/Themed";
 import Colors from "../constants/colors";
 
 const ModalAddCase = ({ bottomSheetModalRef, snapPoints }) => {
@@ -29,18 +28,18 @@ const ModalAddCase = ({ bottomSheetModalRef, snapPoints }) => {
   const [errorNumber, setErrorNumber] = useState("");
 
   const addCase = async () => {
-
     if(numberCase.length!==13){
      return 
     }
-
     try {
       const data = await createCase(numberCase, id);
       if (data?.error) {
         return setErrorNumber(`Case number ${numberCase} not found`);
       }
+      if(data?.warning){
+        return setErrorNumber(`USCIS page not available at this time`)
+      }
       dispatch(resetCases(data));
-      console.log('pasoooooooooooooo')
       bottomSheetModalRef.current?.close();
       setNumerCase("");
     } catch (e) {

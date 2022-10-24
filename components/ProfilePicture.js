@@ -16,7 +16,7 @@ const ProfilePicture = () => {
 
 
   const savePhotoCloudinary = async(data)=>{
-    let apiUrl = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload/`
+    let apiUrl = `https://api.cloudinary.com/v1_1/cmacha2/image/upload/`
 
     try {
         const response = await fetch(apiUrl,{
@@ -43,7 +43,7 @@ const ProfilePicture = () => {
     let base64Img = `data:image/jpg;base64,${result.base64}`
     const data = new FormData()
     data.append('file', base64Img)
-    data.append('upload_preset',UPLOAD_PRESET)
+    data.append('upload_preset', 'CaseNumber08')
 
     if(!result.cancelled){
         savePhotoCloudinary(data)
