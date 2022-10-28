@@ -26,27 +26,32 @@ export default function Home() {
   React.useEffect(() => {
     const subscription = Notifications.addNotificationReceivedListener(
       (response) => {
-        const notificationData = response.notification.request.content.data;
-        switch(notificationData.type) {
-          case "LIKE_POST":
-            navigation.navigate("Post", { postID: notificationData.postID });
-            break;
-          case "COMMENT_POST":
-            navigation.navigate("Post", { postID: notificationData.postID });
-            break;
-          case "STARTED_CONVERSATION":
-            navigation.navigate("ChatRoom", { chatRoomID: notificationData.chatRoomID , contactInfo: notificationData.sender });
-            break;
-          case "CHANGE_STATUS_CASE":
-            navigation.navigate("CaseDetails", { caseID: notificationData.caseID });
-            break;
+        if (response.notification!==undefined) {
+          const notificationData = response.notification.request.content.data;
+          switch (notificationData.type) {
+            case "LIKE_POST":
+              navigation.navigate("Post", { postID: notificationData.postID });
+              break;
+            case "COMMENT_POST":
+              navigation.navigate("Post", { postID: notificationData.postID });
+              break;
+            case "STARTED_CONVERSATION":
+              navigation.navigate("ChatRoom", {
+                chatRoomID: notificationData.chatRoomID,
+                contactInfo: notificationData.sender,
+              });
+              break;
+            case "CHANGE_STATUS_CASE":
+              navigation.navigate("CaseDetails", {
+                caseID: notificationData.caseID,
+              });
+              break;
+          }
         }
       }
     );
     return () => subscription.remove();
   }, []);
-      
-
 
   useFocusEffect(
     React.useCallback(() => {
@@ -64,7 +69,6 @@ export default function Home() {
       };
     }, [])
   );
-
 
   async function fetchPost() {
     const { data } = await API.graphql(
@@ -102,11 +106,11 @@ export default function Home() {
   }
 
   return (
-    <View style={{ flex: 1,paddingHorizontal:0}}>
+    <View style={{ flex: 1, paddingHorizontal: 0 }}>
       <FlashList
         data={posts}
         contentContainerStyle={Platform.OS === "ios" && { paddingVertical: 30 }}
-        renderItem={({ item }) => <PostCard  {...item} />}
+        renderItem={({ item }) => <PostCard {...item} />}
         estimatedItemSize={200}
         ListHeaderComponent={() => (
           <ListHeader
@@ -119,12 +123,14 @@ export default function Home() {
         refreshing={loading}
         onRefresh={fetchPost}
         ListFooterComponent={() => {
-          if(posts.length === 99){
-          return <MyButton
-            title={loading ? "loading" : "Load more"}
-            disabled={loading || nextToken === null}
-            onPress={fetchMorePost}
-          />
+          if (posts.length === 99) {
+            return (
+              <MyButton
+                title={loading ? "loading" : "Load more"}
+                disabled={loading || nextToken === null}
+                onPress={fetchMorePost}
+              />
+            );
           }
         }}
       />

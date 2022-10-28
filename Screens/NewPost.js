@@ -16,7 +16,7 @@ export default function NewPost() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const theme = useColorScheme();
-  const charsRemaining = 300 - postContent.length;
+  const charsRemaining = 600 - postContent.length;
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -54,16 +54,16 @@ export default function NewPost() {
       <TextInput
         value={postContent}
         onChangeText={setPostContent}
-        maxLength={300}
+        maxLength={600}
         multiline
         style={[styles.input, { color: Colors[theme].text }]}
         placeholderTextColor={Colors[theme].text + "60"}
-        placeholder={"Code With Beto is Amazing!"}
+        placeholder={"Write your post here..."}
       />
       <MyText
         style={[
           { textAlign: "right" },
-          charsRemaining < 100 && charsRemaining > 30
+          charsRemaining < 150 && charsRemaining > 30
             ? { color: "orange" }
             : charsRemaining <= 30
             ? { color: "red" }

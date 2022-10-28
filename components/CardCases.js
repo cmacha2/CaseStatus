@@ -69,7 +69,6 @@ const CardCases = ({ data }) => {
             <Text style={styles.lastChange}>{isNaN(Date.parse(data.receiptDate)) ? null : data.receiptDate}</Text>
           </View>
         </View>
-        {/* <MyButton title='X' onPress={()=>deleteCase(data.id)} /> */}
       </Pressable>
     </Swipeable>
   );

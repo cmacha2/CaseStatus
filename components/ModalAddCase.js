@@ -22,6 +22,7 @@ const ModalAddCase = ({ bottomSheetModalRef, snapPoints }) => {
   const [numberCase, setNumerCase] = useState("");
   const theme = useColorScheme();
   const dispatch = useDispatch();
+  const { cases } = useSelector((state) => state.user);
   const { id } = useSelector((state) => state.user);
   const [errorFirstDigits, setErrorFirstDigits] = useState("");
   const [errorSize, setErrorSize] = useState("");
@@ -30,6 +31,9 @@ const ModalAddCase = ({ bottomSheetModalRef, snapPoints }) => {
   const addCase = async () => {
     if(numberCase.length!==13){
      return 
+    }
+    if(cases.some((item)=>item.receiptNumber===numberCase)){
+      return setErrorNumber(`This case ${numberCase} already exists`)
     }
     try {
       const data = await createCase(numberCase, id);

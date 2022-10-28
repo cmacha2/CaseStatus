@@ -28,6 +28,7 @@ export const getUser = /* GraphQL */ `
               items {
                 user {
                   id
+                  email
                   firstName
                   lastName
                   profilePicture
@@ -792,6 +793,7 @@ export const postsByDate = /* GraphQL */ `
               id
               firstName
               lastName
+              email
               profilePicture
             }
           }

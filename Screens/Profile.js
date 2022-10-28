@@ -76,7 +76,7 @@ export default function ContactProfile() {
     let base64Img = `data:image/jpg;base64,${result.base64}`
     const data = new FormData()
     data.append('file', base64Img)
-    data.append('upload_preset','CaseNumber08')
+    data.append('upload_preset','MigrantUS-APP')
 
     if(!result.cancelled){
         savePhotoCloudinary(data)

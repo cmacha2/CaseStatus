@@ -38,7 +38,7 @@ export default function Onboarding() {
         Welcome to
       </MyText>
       <MyText style={[styles.title, { marginBottom: 30 }]} type="title">
-        Only Chats
+        Migrant US
       </MyText>
       {appFeatures.map((feature, index) => (
         <View key={index} style={styles.itemContainer}>
@@ -92,9 +92,15 @@ const appFeatures = [
       "Start a conversation with friends, send messages at the speed of light",
   },
   {
+    icon: require("../assets/searchIcon.png"),
+    title: "Check the status of your cases",
+    description:
+      "Add your receipt number and stay alert to changes in the case",
+  },
+  {
     icon: require("../assets/bell.png"),
     title: "Keep updated with notifications",
     description:
-      "Get notified whenever someone likes your posts or sends you a message",
+      "Get notified whenever someone likes your posts, sends you a message or changes the status of your case",
   },
 ];

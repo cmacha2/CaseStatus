@@ -1,10 +1,30 @@
 import * as React from "react";
-import { Auth, API, graphqlOperation } from "aws-amplify";
+import { Auth, API, graphqlOperation,Hub, Amplify } from "aws-amplify";
+import { Platform,Linking } from "react-native";
 import {createUser} from "../src/graphql/mutations"
 import {useDispatch} from 'react-redux'
 import { setUser } from "../src/features/user";
 import { getUser } from "../src/graphql/queries";
 import { setChatRooms } from "../src/features/chatRooms";
+import * as WebBrowser from 'expo-web-browser';
+import awsconfig from '../src/aws-exports'
+
+async function urlOpener(url,redirectUrl) {
+  const { type, url: newUrl } = await WebBrowser.openAuthSessionAsync(url, redirectUrl);
+  if (type === 'success' && Platform.OS === 'ios') {
+    WebBrowser.dismissBrowser();
+    return Linking.openURL(newUrl);
+  }
+}
+
+Amplify.configure({
+  ...awsconfig,
+  oauth: {
+    ...awsconfig.oauth,
+    urlOpener,
+  },
+});
+
 
 const AuthContext = React.createContext({
   authState: "default",
@@ -42,6 +62,102 @@ function AuthProvider({ children }) {
   const [lastName, setLastName] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const dispatch = useDispatch();
+
+
+  React.useEffect(() => {
+    Hub.listen('auth', ({ payload: { event, data } }) => {
+      switch (event) {
+        case 'signIn': {
+          handleSignInWithProvider()
+          console.log('sign in with provider detected')
+          break;
+        }
+        case "signIn_failure":
+        case "cognitoHostedUI_failure":
+          console.log("Sign in failure", data);
+          break;
+      }
+    });
+  }, []);
+
+  async function handleSignInWithProvider() {
+    try {
+      setIsLoading(true);
+      const { attributes } = await Auth.currentAuthenticatedUser();
+
+      if (attributes.identities?.length > 0) {
+        console.log("attributes", attributes);
+        const { data } = await API.graphql(
+          graphqlOperation(getUser, { id: attributes.sub })
+        );
+        if (data.getUser) {
+          setIsLoading(true);
+          console.log("user found!", data);
+          const { notificationsList } = await getNotificationsByUserID(
+            attributes.sub
+          );
+          if (notificationsList) dispatch(setNotifications(notificationsList));
+          // console.log(data);
+          if (data.getUser) {
+            dispatch(
+              setUser({
+                id: attributes.sub,
+                firstName: data.getUser.firstName,
+                lastName: data.getUser.lastName,
+                profilePicture: data.getUser.profilePicture,
+                email: attributes.email.toLowerCase(),
+                status: data.getUser.status,
+                notificationToken: data.getUser.notificationToken,
+                latitude: data.getUser.latitude,
+                longitude: data.getUser.longitude,
+                cases: data.getUser.cases.items,
+              })
+            );
+            if (data.getUser.chatRooms.items !== null) {
+              dispatch(setChatRooms(data.getUser.chatRooms.items));
+            }
+          }
+          setIsLoading(false);
+        } else {
+          console.log("user not found!");
+          const userToSave = {
+            id: attributes.sub,
+            firstName: attributes.email.slice(0, attributes.email.indexOf("@")),
+            lastName: "",
+            profilePicture: null,
+            email: attributes.email.toLowerCase(),
+            status: null,
+            notificationToken: null,
+            latitude: null,
+            longitude: null,
+          };
+          try {
+            const userFromDB = await API.graphql(
+              graphqlOperation(createUser, {
+                input: userToSave,
+              })
+            );
+            dispatch(setUser(userToSave));
+            console.log("user saved to DB and Redux", userFromDB);
+            setIsLoading(false);
+          } catch (e) {
+            setIsLoading(false);
+            console.log("error saving user", e);
+          }
+        }
+      } else {
+        setIsLoading(false);
+        return;
+      }
+      setIsLoading(false);
+      // console.log(attributes);
+    } catch (e) {
+      console.log(e);
+      setIsLoading(false);
+    }
+  }
+
+
 
   async function handleSignIn() {
     if (!email || !password) {

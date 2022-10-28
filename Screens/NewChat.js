@@ -18,11 +18,14 @@ import {
   getUserByID,
   listAllUsers,
 } from "../src/utils/userOperations";
-import { createNotificationOnDB, sendPushNotification } from "../src/utils/notifications";
+import {
+  createNotificationOnDB,
+  sendPushNotification,
+} from "../src/utils/notifications";
 import { useNavigation } from "@react-navigation/native";
 import Colors from "../constants/colors";
 import { FlashList } from "@shopify/flash-list";
-import { Image,ActivityIndicator } from "react-native";
+import { Image, ActivityIndicator } from "react-native";
 
 export default function NewChat() {
   const theme = useColorScheme();
@@ -31,7 +34,7 @@ export default function NewChat() {
   const navigation = useNavigation();
   const [search, setSearch] = React.useState("");
   const [users, setUsers] = React.useState([]);
-  const [noResults, setNoResults] = React.useState(false);
+  const { chatRooms } = useSelector((state) => state.chatRooms);
   const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
@@ -53,26 +56,21 @@ export default function NewChat() {
     getUsers();
   }, []);
 
-
-  // search for user by email
-
-  // if user exists, create a chatroom
-
-  // after create chatroom create userChatRooms
-  // add current user to chatroom
-  // add contact user to chatroom
-
-  // set User Chatrooms to redux
-
-  // if success! take user to chatroom with contact
-  // send push notification to contact
-
-  // if error show alert
-
   async function handleNewChat(email) {
     try {
       if (email.toLowerCase().trim() === user.email) {
         alert("You can't send messages to yourself 😅");
+        return;
+      }
+
+      if (
+        chatRooms.map((items) =>
+          items.chatRoom.participants.items.find(
+            (item) => item.user.email === email
+          )
+        ).length > 0
+      ) {
+        alert("You already have a chat with this user");
         return;
       }
       setIsLoading(true);
@@ -85,20 +83,19 @@ export default function NewChat() {
       const newChatRoomID = await createNewChatRoom();
       await addUserToChatRoom(contact.id, newChatRoomID);
       await addUserToChatRoom(user.id, newChatRoomID);
-  
+
       const refreshedUser = await getUserByID(user.id);
 
       if (refreshedUser.chatRooms !== undefined) {
         dispatch(setChatRooms(refreshedUser.chatRooms.items));
       }
-      
 
       const notificationData = await createNotificationOnDB(
         user.id,
         contact.id,
         "STARTED_CONVERSATION",
         newChatRoomID
-      )
+      );
       await sendPushNotification(
         contact.notificationToken,
         "🚨 New conversation started!",
@@ -107,25 +104,26 @@ export default function NewChat() {
         } started a conversation with you`,
         notificationData
       );
-      
+
       setIsLoading(false);
-      Alert.alert("Success!", "Conversation started successfully", [
-        {
-          text: "Let's chat!",
-          onPress: () => navigation.navigate("ChatRoom", {
-            chatRoomID: newChatRoomID,
-            contactInfo: contact,
-          }),
-          style: "default",
-        },
-      ]);
-      
+      navigation.navigate("ChatRoom", {
+        chatRoomID: newChatRoomID,
+        contactInfo: contact,
+      });
+
     } catch (e) {
       alert("something went wrong 😅");
       setIsLoading(false);
     }
   }
 
+  if (isLoading) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color={Colors[theme].text} />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -150,7 +148,7 @@ export default function NewChat() {
         Suggested
       </MyText>
 
-      {noResults ? (
+      {!users.length ? (
         <MyText type="body" style={{ textAlign: "center", padding: 20 }}>
           No users found
         </MyText>

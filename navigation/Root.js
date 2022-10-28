@@ -37,8 +37,10 @@ export default function Root({ colorScheme }) {
 }
 
 function BottomNavigator() {
-  const {notifications} = useSelector(state => state.notifications)
-  const unSeenNotifications = notifications.filter(notification => notification.isSeseen === false)
+  const { notifications } = useSelector((state) => state.notifications);
+  const unSeenNotifications = notifications.filter(
+    (notification) => notification.isSeseen === false
+  );
 
   return (
     <Tab.Navigator initialRouteName="HomeStack">
@@ -75,7 +77,7 @@ function BottomNavigator() {
           headerShown: false,
         }}
       />
-            <Tab.Screen
+      {/* <Tab.Screen
         name="NotificationsStack"
         component={NotificationsStack}
         options={{
@@ -85,9 +87,10 @@ function BottomNavigator() {
           ),
           tabBarLabel: "Notifications",
           headerShown: false,
-          tabBarBadge: unSeenNotifications.length>0 ? unSeenNotifications.length : null,
+          tabBarBadge:
+            unSeenNotifications.length > 0 ? unSeenNotifications.length : null,
         }}
-      />
+      /> */}
       <Tab.Screen
         name="ProfileStack"
         component={ProfileStack}
@@ -99,11 +102,9 @@ function BottomNavigator() {
           tabBarLabel: "Profile",
         }}
       />
-
     </Tab.Navigator>
   );
 }
-
 
 function TabBarIcon(props) {
   return <Ionicons size={28} {...props} />;
@@ -133,7 +134,7 @@ function HomeStack() {
       <Stack.Screen
         name="NewPost"
         component={NewPost}
-        options={{ presentation: "modal" }}
+        options={{ presentation: "modal", headerTitle: "New Post" }}
       />
       <Stack.Screen
         name="Comments"
@@ -143,7 +144,7 @@ function HomeStack() {
       <Stack.Screen
         name="Profile"
         component={Profile}
-        options={{ presentation: "modal" }}
+        options={{ presentation: "modal", headerShown: false }}
       />
       <Stack.Screen
         name="Settings"
@@ -227,7 +228,13 @@ function ProfileStack() {
       initialRouteName="Profile"
       screenOptions={{ headerTitleAlign: "center" }}
     >
-      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          headerShown: false,
+        }}
+      />
       <Stack.Screen name="Settings" component={Settings} />
     </Stack.Navigator>
   );
@@ -239,9 +246,13 @@ function NotificationsStack() {
       initialRouteName="Notifications"
       screenOptions={{ headerTitleAlign: "center" }}
     >
-      <Stack.Screen name="Notifications" component={Notifications} options={{
+      <Stack.Screen
+        name="Notifications"
+        component={Notifications}
+        options={{
           headerShown: false,
-      }}/>
+        }}
+      />
       <Stack.Screen name="ShowPost" component={ShowPost} />
       <Stack.Screen name="ChatRoom" component={ChatRoom} />
       <Stack.Screen name="Cases" component={Cases} />

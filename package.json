@@ -50,7 +50,8 @@
     "react-native-screens": "~3.15.0",
     "react-native-web": "~0.18.7",
     "react-redux": "^8.0.4",
-    "req-uscis-status": "^1.0.3"
+    "req-uscis-status": "^1.0.3",
+    "expo-web-browser": "~11.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

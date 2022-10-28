@@ -140,7 +140,7 @@ export default function PostCard(post) {
     <View
       style={[
         styles.container,
-        { borderBottomColor: Colors[theme].text + "80" },
+        { borderColor: Colors[theme].text + "80" },
       ]}
     >
       <View style={{ paddingHorizontal: 17 }}>
@@ -235,8 +235,14 @@ export default function PostCard(post) {
 
 const styles = StyleSheet.create({
   container: {
+    // paddingVertical: 10,
+    // borderWidth: StyleSheet.hairlineWidth,
     paddingVertical: 10,
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    marginHorizontal: 5,
+    // borderBottomWidth: 2,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: 15,
+    marginVertical: 5,
   },
   image: {
     width: 50,
