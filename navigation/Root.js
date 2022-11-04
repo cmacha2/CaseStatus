@@ -22,6 +22,7 @@ import NewChat from "../Screens/NewChat";
 import Notifications from "../Screens/Notifications";
 import ShowPost from "../Screens/ShowPost";
 import { useSelector } from "react-redux";
+import Agreement from "../Screens/Agreement";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -120,6 +121,14 @@ function HomeStack() {
         name="Home"
         component={Home}
         options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Agreement"
+        component={Agreement}
+        options={{
+          presentation: "fullScreenModal",
           headerShown: false,
         }}
       />

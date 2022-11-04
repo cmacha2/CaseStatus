@@ -29,7 +29,7 @@ export default function Wrapper(){
   const theme = useColorScheme()
   return (
     <Provider store={store}>
-      <SafeAreaProvider>
+         <SafeAreaProvider>
       <StatusBar barStyle="StatusBarStyle" backgroundColor={Colors[theme].text}/>
       <App />
       </SafeAreaProvider>
