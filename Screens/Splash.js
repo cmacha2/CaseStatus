@@ -131,7 +131,7 @@ export default function Splash({ setIsLoading }) {
           }}>
               <Animated.Image source={Logo} style={{
                   width: Dimensions.get('window').width-170,
-                  height: Dimensions.get('window').height / 5.8,
+                  height: Dimensions.get('window').height / 5.6,
                   marginBottom: 20,
                   transform: [
                       { translateX: moveLogo.x },
@@ -142,8 +142,8 @@ export default function Splash({ setIsLoading }) {
               }}></Animated.Image>
 
                   <Animated.Image source={lettersLogo} style={{
-                   width: Dimensions.get('window').width-100,
-                   height: 35,
+                   width: Dimensions.get('window').width-80,
+                   height: 45,
                    marginBottom: 20,
                    transform: [
                       { translateX: moveLetters.x },

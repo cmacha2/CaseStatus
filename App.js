@@ -9,7 +9,7 @@ import "react-native-gesture-handler";
 import {Provider,useSelector,useDispatch} from "react-redux"
 import { setUser, resetUser } from "./src/features/user"
 import {setNotificationHandler} from "expo-notifications"
-import { StatusBar } from "react-native";
+import { StatusBar, Text } from "react-native";
 import { useColorScheme } from "react-native";
 import Colors from "./constants/colors";
 import { SafeAreaProvider } from "react-native-safe-area-context";

@@ -21,7 +21,7 @@ export default function NewPost() {
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <MyButton
+        <Button
           style={styles.postButton}
           onPress={onPublish}
           title={isLoading ? "Publishing" : "Publish"}
@@ -84,8 +84,9 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   postButton: {
-    width: 100,
+    width: 'auto',
     marginRight: 10,
     height: 'auto',
+    fontSize: 12,
   },
 });

@@ -53,15 +53,13 @@ export default function Home() {
     return () => subscription.remove();
   }, []);
 
+
+  
+
   useFocusEffect(
     React.useCallback(() => {
       let isActive = true;
       if (isActive) {
-        async function checkFirstLaunch() {
-          const firstLaunch = await AsyncStorage.getItem("@firstLaunch");
-          if (!firstLaunch) navigation.navigate("Onbording");
-        }
-        checkFirstLaunch();
         fetchPost();
       }
       return () => {
@@ -69,6 +67,20 @@ export default function Home() {
       };
     }, [])
   );
+
+
+  async function fetchPost() {
+    const { data } = await API.graphql(
+      graphqlOperation(postsByDate, {
+        type: "Post",
+        limit: 100,
+        sortDirection: "DESC",
+      })
+    );
+    setNextToken(data.postsByDate.nextToken);
+    dispatch(setPostsReducer(data.postsByDate.items));
+    setIsLoading(false);
+  }
 
   async function fetchPost() {
     const { data } = await API.graphql(

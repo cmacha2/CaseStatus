@@ -28,7 +28,8 @@
       },
       "permissions": ["android.permission.RECORD_AUDIO"],
       "package": "com.cmacha2.migrantUS",
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "versionCode": 3
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -47,5 +48,9 @@
         "projectId": "4901a2d6-9b99-4ebf-ad35-5bb79e5b7066"
       }
     }
+  },
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-8313384948150571~4698395620",
+    "ios_app_id": "ca-app-pub-8313384948150571~8903866960"
   }
 }

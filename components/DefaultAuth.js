@@ -23,7 +23,7 @@ export default function DefaultAuth() {
         title="Login"
         onPress={() => setAuthState("signIn")}
       />
-      <MyText
+      {/* <MyText
         type="caption"
         style={{ textAlign: "center", marginVertical: 12 }}
       >
@@ -37,7 +37,7 @@ export default function DefaultAuth() {
         <Text style={styles.googleText}>
           {isLoading ? "Loading..." : "Sign In With Google"}
         </Text>
-      </Pressable>
+      </Pressable> */}
       {/* <MyButton
         title="Sign In With Apple"
         type="secondary"

@@ -22,17 +22,71 @@ import NewChat from "../Screens/NewChat";
 import Notifications from "../Screens/Notifications";
 import ShowPost from "../Screens/ShowPost";
 import { useSelector } from "react-redux";
+import { SafeAreaView } from "react-native";
+import {
+  BannerAd,
+  BannerAdSize,
+  TestIds,
+} from "react-native-google-mobile-ads";
+import Agreement from "../Screens/Agreement";
+import { Text } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function Root({ colorScheme }) {
+  const [firstLaunch, setFirstLaunch] = React.useState(null);
+
+  React.useEffect(() => {
+    async function checkFirstLaunch() {
+      const firstLaunch = await AsyncStorage.getItem("@firstLaunch");
+      console.log(firstLaunch);
+      if (firstLaunch === null) setFirstLaunch(true);
+    }
+    checkFirstLaunch();
+  }, []);
+
   return (
     <NavigationContainer
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
     >
-      <BottomNavigator />
+      {firstLaunch === null ? (
+        <React.Fragment>
+          <BottomNavigator />
+          <BannerAd
+            unitId={"ca-app-pub-8313384948150571/1082885563"}
+            size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+            requestOptions={{
+              requestNonPersonalizedAdsOnly: true,
+            }}
+          />
+        </React.Fragment>
+      ) : (
+        <Conditions />
+      )}
     </NavigationContainer>
+  );
+}
+
+function Conditions() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="Agreement" component={Agreement} />
+
+      <Stack.Screen
+        name="Onbording"
+        component={Onbording}
+        options={{
+          presentation: "fullScreenModal",
+        }}
+      />
+      <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
+    </Stack.Navigator>
   );
 }
 
@@ -45,7 +99,7 @@ function BottomNavigator() {
   return (
     <Tab.Navigator initialRouteName="HomeStack">
       <Tab.Screen
-        name="HomeStack"
+        name={"HomeStack"}
         component={HomeStack}
         options={{
           tabBarIcon: ({ color }) => (
@@ -120,14 +174,6 @@ function HomeStack() {
         name="Home"
         component={Home}
         options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="Onbording"
-        component={Onbording}
-        options={{
-          presentation: "fullScreenModal",
           headerShown: false,
         }}
       />

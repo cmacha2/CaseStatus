@@ -24,8 +24,7 @@ export default function Onboarding() {
         await updateUserNotificationToken(id,token)
         dispatch(resetNotificationToken(token))
       }
-      await AsyncStorage.setItem("@firstLaunch", "true");
-      navigation.navigate("Home");
+      navigation.navigate("BottomNavigator");
       
     } catch (e) {
       console.log("Onboarding error", e);
