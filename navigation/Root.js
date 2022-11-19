@@ -22,6 +22,7 @@ import NewChat from "../Screens/NewChat";
 import Notifications from "../Screens/Notifications";
 import ShowPost from "../Screens/ShowPost";
 import { useSelector } from "react-redux";
+<<<<<<< HEAD
 import { SafeAreaView } from "react-native";
 import {
   BannerAd,
@@ -31,6 +32,9 @@ import {
 import Agreement from "../Screens/Agreement";
 import { Text } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+=======
+import Agreement from "../Screens/Agreement";
+>>>>>>> f5b44aa768794d08544de5d72e055e38e7f0a6ff
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -178,6 +182,25 @@ function HomeStack() {
         }}
       />
       <Stack.Screen
+<<<<<<< HEAD
+=======
+        name="Agreement"
+        component={Agreement}
+        options={{
+          presentation: "fullScreenModal",
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Onbording"
+        component={Onbording}
+        options={{
+          presentation: "fullScreenModal",
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+>>>>>>> f5b44aa768794d08544de5d72e055e38e7f0a6ff
         name="NewPost"
         component={NewPost}
         options={{ presentation: "modal", headerTitle: "New Post" }}
