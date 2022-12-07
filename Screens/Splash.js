@@ -142,13 +142,8 @@ export default function Splash({ setIsLoading }) {
               }}></Animated.Image>
 
                   <Animated.Image source={lettersLogo} style={{
-<<<<<<< HEAD
-                   width: Dimensions.get('window').width-80,
-                   height: 45,
-=======
-                   width: Dimensions.get('window').width-90,
-                   height: 35,
->>>>>>> f5b44aa768794d08544de5d72e055e38e7f0a6ff
+                   width: Dimensions.get('window').width-75,
+                   height: 40,
                    marginBottom: 20,
                    transform: [
                       { translateX: moveLetters.x },

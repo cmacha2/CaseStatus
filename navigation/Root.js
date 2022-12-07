@@ -23,6 +23,9 @@ import Notifications from "../Screens/Notifications";
 import ShowPost from "../Screens/ShowPost";
 import { useSelector } from "react-redux";
 import Agreement from "../Screens/Agreement";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { BannerAd, BannerAdSize } from "react-native-google-mobile-ads";
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();

@@ -2,7 +2,7 @@
 
 export const checkStatus = async (numberCase) => {
   try {
-    const response = await fetch(`http://3.87.52.235:3000`, {
+    const response = await fetch(`http://3.82.226.69:3000`, {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",

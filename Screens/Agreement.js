@@ -5,11 +5,7 @@ import {
   StyleSheet,
   View as DefaultView,
 } from "react-native";
-<<<<<<< HEAD
-import { View } from "../components/theme/Themed";
-=======
-import { View } from "../components/themed/Themed";
->>>>>>> f5b44aa768794d08544de5d72e055e38e7f0a6ff
+import {View} from '../components/theme/Themed.js'
 import MyText from "../components/MyText";
 import MyButton from "../components/MyButton";
 import { useNavigation } from "@react-navigation/native";
@@ -24,11 +20,7 @@ export default function Agreement() {
 
   async function handleOnContinue() {
     await AsyncStorage.setItem("@firstLaunch", "true");
-<<<<<<< HEAD
     navigation.navigate("Onbording");
-=======
-    navigation.navigate("Onboarding");
->>>>>>> f5b44aa768794d08544de5d72e055e38e7f0a6ff
   }
 
   return (
@@ -107,31 +99,19 @@ const styles = StyleSheet.create({
 
 const appFeatures = [
   {
-<<<<<<< HEAD
     icon: require("../assets/post.png"),
-=======
-    icon: require("../../assets/post.png"),
->>>>>>> f5b44aa768794d08544de5d72e055e38e7f0a6ff
     title: "Safety: Your Interactions with Other Members.",
     description:
       "You agree to treat other users in a courteous and respectful manner, both on and off our application and to be respectful when communicating with our team",
   },
   {
-<<<<<<< HEAD
     icon: require("../assets/message.png"),
-=======
-    icon: require("../../assets/message.png"),
->>>>>>> f5b44aa768794d08544de5d72e055e38e7f0a6ff
     title: "Other Members’ Content.",
     description:
       "Although Only Chats reserves the right to review and remove content that violates this Agreement, such content is the sole responsibility of the member who posts it, and Only Chats cannot guarantee that all content will comply with this Agreement. If you see content on the application that violates this Agreement, please report it within the application or via email to codewithbeto.dev@gmail.com.",
   },
   {
-<<<<<<< HEAD
     icon: require("../assets/bell.png"),
-=======
-    icon: require("../../assets/bell.png"),
->>>>>>> f5b44aa768794d08544de5d72e055e38e7f0a6ff
     title: "Objectionable Content.",
     description:
       "There is no tolerance for objectionable content or abusive users. Objectionable content includes but isn't exclusive to bullying, harassment, threatening, hate speech or symbols, sharing inapporpirate things, racism, and others. The violations of this section can cause the immediate and permanent removal of the user from the app without notice.",

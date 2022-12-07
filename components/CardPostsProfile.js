@@ -32,6 +32,7 @@ import { useNavigation } from "@react-navigation/native";
 import { getPost } from "../src/graphql/queries";
 
 export default function CardPostProfile({post, user}) {
+  const myUser = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const theme = useColorScheme();
   const navigation = useNavigation();
@@ -51,6 +52,63 @@ export default function CardPostProfile({post, user}) {
       dispatch(incrementLikesReducer(data));
       await incrementLikesMutation(id, likedBy, numberOfLikes, user.id);
     }
+  };
+
+  const sendReportEmail = async () => {
+    const url = `mailto:${"cristiancmg127@gmail.com"}?subject=Report&body=${
+      "This is an automatic email to the Inmigrants Reporting team. Please write any concerns above this paragraph and do not delete anything below. " +
+      "User ID: " +
+      user.id +
+      "\n" +
+      "Post ID: " +
+      id
+    }`;
+
+    Linking.openURL(url);
+    alert("Thank you for your report. We will review it as soon as possible.");
+  };
+
+  const handleReport = async () => {
+    Alert.alert(
+      "Report Post",
+      "Are you sure you want to report this post?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Report",
+          onPress: async () => {
+            await sendReportEmail();
+          },
+          style: "destructive",
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  const removePost = async () => {
+    Alert.alert(
+      "Delete Post",
+      "Are you sure you want to delete this post?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          onPress: async () => {
+            await deletePost(id);
+            dispatch(deletePostReducer(id));
+          },
+          style: "destructive",
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   const getComments = async () => {
@@ -92,6 +150,12 @@ export default function CardPostProfile({post, user}) {
               </MyText>
             </View>
           </Pressable>
+          <Ionicons
+            name="ellipsis-horizontal"
+            size={24}
+            color={Colors[theme].text + "70"}
+            onPress={myUser.id === user.id ? removePost : handleReport}
+          />
         </View>
         <MyText
           style={{ color: Colors[theme].text + "70", paddingVertical: 10 }}
